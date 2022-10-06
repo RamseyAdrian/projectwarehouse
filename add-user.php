@@ -1,9 +1,11 @@
 <?php
 session_start();
 include 'db.php';
-if ($_SESSION['role_login'] != 'admin') {
+if ($_SESSION['role_login'] == 'user' || $_SESSION['role_login'] == 'admin') {
 
     echo '<script>window.location="logout.php"</script>';
+} else if ($_SESSION['status_login'] != true) {
+    echo '<script>window.location="login.php"</script>';
 }
 
 
@@ -20,7 +22,10 @@ if ($_SESSION['role_login'] != 'admin') {
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Quicksand&display=swap" rel="stylesheet">
-    <script src="js/sweetalert.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.css" rel="stylesheet" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert-dev.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body>
@@ -31,7 +36,10 @@ if ($_SESSION['role_login'] != 'admin') {
             <ul>
                 <li><a href="dashboard.php">Dashboard</a></li>
                 <li><a href="profile.php">Profil</a></li>
+                <li><a href="category-data.php">Data Kategori</a></li>
                 <li><a href="product-data.php">Data Produk</a></li>
+                <li><a href="office-data.php">Perwakilan</a></li>
+                <li><a href="admin-data.php">Data Admin</a></li>
                 <li><a href="user-data.php">Data User</a></li>
                 <li><a href="order-table.php">Pesanan</a></li>
                 <li><a href="logout.php">Keluar</a></li>
@@ -95,8 +103,15 @@ if ($_SESSION['role_login'] != 'admin') {
                                             '" . $email . "',
                                             '" . $address . "'
                                             ) ");
-                        echo '<script>alert("Tambah data berhasil")</script>';
-                        echo '<script>window.location="user-data.php"</script>';
+                        echo '<script>Swal.fire({
+                                title: "Berhasil Tambah User !",
+                                text: "Klik OK Untuk Lanjut.",
+                                icon: "success"
+                              },
+                              function(){
+                                window.location="user-data.php"
+                              });
+                            </script>';
                     } else {
                         echo '<script>swal("ID or Username not available");</script>';
                     }

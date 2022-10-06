@@ -90,6 +90,27 @@ if ($_SESSION['role_login'] == 'user' || $_SESSION['role_login'] == 'admin') {
         </div>
     </div>
 
+    <script>
+        function confirmation(text, text2) {
+            swal({
+                title: text,
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!',
+                cancelButtonText: 'No, cancel!',
+                confirmButtonClass: 'btn btn-success',
+                cancelButtonClass: 'btn btn-danger',
+                buttonsStyling: false
+            }).then(function() {
+                location.href = text2;
+            }, function(dismiss) {
+                return false;
+            })
+        }
+    </script>
+
     <!-- Footer -->
     <footer>
         <div class="container">

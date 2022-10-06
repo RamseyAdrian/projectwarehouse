@@ -20,3 +20,8 @@ if (isset($_GET['idu'])) {
     $delete = mysqli_query($conn, "DELETE FROM data_user WHERE user_id = '" . $_GET['idu'] . "' ");
     echo '<script>window.location="user-data.php"</script>';
 }
+
+if (isset($_GET['ido'])) {
+    $delete = mysqli_query($conn, "DELETE FROM data_office WHERE office_id = '" . $_GET['ido'] . "' ");
+    echo '<script>window.location="office-data.php"</script>';
+}

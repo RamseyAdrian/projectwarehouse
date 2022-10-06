@@ -1,9 +1,11 @@
 <?php
 session_start();
 include 'db.php';
-if ($_SESSION['role_login'] != 'admin') {
+if ($_SESSION['role_login'] == 'user' || $_SESSION['role_login'] == 'admin') {
 
     echo '<script>window.location="logout.php"</script>';
+} else if ($_SESSION['status_login'] != true) {
+    echo '<script>window.location="login.php"</script>';
 }
 ?>
 
@@ -18,6 +20,7 @@ if ($_SESSION['role_login'] != 'admin') {
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Quicksand&display=swap" rel="stylesheet">
+    <script src="js/sweetalert.min.js"></script>
 </head>
 
 <body>
@@ -30,6 +33,7 @@ if ($_SESSION['role_login'] != 'admin') {
                 <li><a href="profile.php">Profil</a></li>
                 <li><a href="category-data.php">Data Kategori</a></li>
                 <li><a href="product-data.php">Data Produk</a></li>
+                <li><a href="office-data.php">Perwakilan</a></li>
                 <li><a href="admin-data.php">Data Admin</a></li>
                 <li><a href="user-data.php">Data User</a></li>
                 <li><a href="order-table.php">Pesanan</a></li>
@@ -41,7 +45,7 @@ if ($_SESSION['role_login'] != 'admin') {
     <!-- Content -->
     <div class="section">
         <div class="container">
-            <h3>Data Admin</h3>
+            <h3>Data Admin Tiap Perwakilan</h3>
             <div class="box">
                 <p><a href="add-user.php">Tambah Data Admin</a></p><br>
                 <!-- <button><a href="add-product.php" style="text-decoration:none ;">Tambah Data</a></button> -->
