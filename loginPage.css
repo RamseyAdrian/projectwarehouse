@@ -1,0 +1,100 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    background: url(login/img/background-login.png) ;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.card-container form .captcha {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.card-container form .captcha button {
+    margin: 0 auto;
+
+    /* margin-top: -10px; */
+
+    width: 225px;
+    height: 40px;
+
+    background: #1A1A1A;
+    border-radius: 5px;
+
+    color: #ffffff;
+    
+    font-weight: 500;
+    font-size: 14px;
+
+    cursor: pointer;
+}
+
+.card-container form .captcha button:hover {
+    background: hsl(249, 32%, 17%);
+}
+
+.card-container form .captcha .g-recaptcha {
+    margin-left: 23px;
+}
+
+.card-container {
+    background: #ffffff;
+    width: 350px;
+    height: 500px;
+
+    border-radius: 10px;
+
+    margin: 140px auto;
+}
+
+.logo-ombudsman {
+    display: flex;
+}
+
+.logo-ombudsman img {
+    width: 82px;
+    height: 72px;
+
+    margin-top: 40px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.input-container {
+    margin-top: 20px;
+}
+
+.input-container .text-input {
+    margin: 0 62px;
+    margin-bottom: 5px;
+
+    font-weight: 500;
+    font-size: 14px;
+}
+
+#login-field {
+    width: 225px;
+    height: 40px;
+
+    display: flex;
+    margin: 0 auto;
+
+    box-sizing: border-box;
+
+    padding-left: 10px;
+
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+
+    outline: none;
+}
+
