@@ -68,7 +68,7 @@ $fo = mysqli_fetch_object($qd);
 
 <body>
     <?php
-    $per_page_record = 4;  // Number of entries to show in a page.   
+    $per_page_record = 12;  // Number of entries to show in a page.   
     // Look for a GET variable page if not found default is 1.        
     if (isset($_GET["page"])) {
         $page  = $_GET["page"];
@@ -135,15 +135,22 @@ $fo = mysqli_fetch_object($qd);
             <h3>Produk Terbaru</h3>
             <div class="box">
                 <?php
-                $produk = mysqli_query($conn, "SELECT * FROM data_product WHERE product_status=1 ORDER BY product_id LIMIT $start_from, $per_page_record ");
+                $produk = mysqli_query($conn, "SELECT * FROM data_product LEFT JOIN data_office USING (office_id) WHERE product_status=1 ORDER BY product_id LIMIT $start_from, $per_page_record ");
+
                 if (mysqli_num_rows($produk) > 0) {
                     while ($p = mysqli_fetch_array($produk)) {
+
+
                 ?>
                         <a href="product-detail.php?id=<?php echo $p['product_id'] ?>">
+                            <?php
+
+                            ?>
                             <div class="col-4">
                                 <img src="produk/<?php echo $p['product_image'] ?>" alt="">
                                 <p class="nama"><?php echo substr($p['product_name'], 0, 30) ?></p>
-                                <p class="nama">Perwakilan : <?php echo $p['office_id'] ?></p>
+
+                                <p class="nama"><?php echo $p['office_name'] ?></p>
                                 <p class="nama">Sisa Stok : <?php echo $p['stock'] ?></p>
                                 <p class="harga">Rp<?php echo $p['product_price'] ?></p>
                             </div>
@@ -219,8 +226,6 @@ $fo = mysqli_fetch_object($qd);
             <small>Copyright &copy; 2022 - KP Ombudsman</small>
         </div>
     </div>
-
-
 </body>
 
 </html>

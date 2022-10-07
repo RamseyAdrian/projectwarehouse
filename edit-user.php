@@ -14,6 +14,7 @@ if (mysqli_num_rows($user) == 0) {
 }
 $u = mysqli_fetch_object($user);
 
+
 ?>
 
 <!DOCTYPE html>
@@ -31,6 +32,10 @@ $u = mysqli_fetch_object($user);
     <script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
     <script src="https://www.google.com/jsapi"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.css" rel="stylesheet" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert-dev.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body>
@@ -62,11 +67,27 @@ $u = mysqli_fetch_object($user);
                         <h4>ID User</h4>
                         <input type="text" name="id" class="input-control" value="<?php echo $u->user_id ?>" required>
                         <h4>Nama User</h4>
+                        <h4>Perwakilan</h4>
+                        <select name="perwakilan" class="input-control" required>
+                            <option value="">--Pilih Perwakilan</option>
+                            <?php
+                            $perwakilan = mysqli_query($conn, "SELECT * FROM data_office ORDER BY office_id");
+                            while ($fa_perwakilan = mysqli_fetch_array($perwakilan)) {
+                            ?>
+                                <option value="<?php echo $fa_perwakilan['office_id'] ?>" <?php echo ($fa_perwakilan['office_id'] == $u->office_id) ? 'selected' : ''; ?>><?php echo $fa_perwakilan['office_name'] ?></option>
+                            <?php
+                            }
+                            ?>
+                        </select>
                         <input type="text" name="nama" class="input-control" value="<?php echo $u->user_name ?>" required>
                         <h4>Username Akun</h4>
                         <input type="text" name="username" class="input-control" value="<?php echo $u->user_username ?>" required>
                         <h4>Password Akun</h4>
-                        <input type="text" name="pass" class="input-control" value="<?php echo $u->user_password ?>" required>
+                        <?php
+                        $pw = $u->user_password;
+                        $decode_pw = MD5($pw);
+                        ?>
+                        <input type="text" name="pass" class="input-control" value="<?php echo $decode_pw ?>" required>
                         <h4>Nomor Telfon</h4>
                         <input type="text" name="telp" class="input-control" value="<?php echo $u->user_telp ?>" required>
                         <h4>Email User</h4>
@@ -143,6 +164,18 @@ $u = mysqli_fetch_object($user);
                     <form action="" method="POST">
                         <h4>ID User</h4>
                         <input type="text" name="id" class="input-control" value="<?php echo $u->user_id ?>" required>
+                        <h4>Perwakilan</h4>
+                        <select name="perwakilan" class="input-control" required>
+                            <option value="">--Pilih Perwakilan</option>
+                            <?php
+                            $perwakilan = mysqli_query($conn, "SELECT * FROM data_office ORDER BY office_id");
+                            while ($fa_perwakilan = mysqli_fetch_array($perwakilan)) {
+                            ?>
+                                <option value="<?php echo $fa_perwakilan['office_id'] ?>" <?php echo ($fa_perwakilan['office_id'] == $u->office_id) ? 'selected' : ''; ?>><?php echo $fa_perwakilan['office_name'] ?></option>
+                            <?php
+                            }
+                            ?>
+                        </select>
                         <h4>Nama User</h4>
                         <input type="text" name="nama" class="input-control" value="<?php echo $u->user_name ?>" required>
                         <h4>Username Akun</h4>
@@ -161,6 +194,7 @@ $u = mysqli_fetch_object($user);
                     if (isset($_POST['submit'])) {
                         $nama = ucwords($_POST['nama']);
                         $id = $_POST['id'];
+                        $office = $_POST['perwakilan'];
                         $username = $_POST['username'];
                         $pass = $_POST['pass'];
                         $telp = $_POST['telp'];
@@ -170,6 +204,7 @@ $u = mysqli_fetch_object($user);
 
                         $update = mysqli_query($conn, "UPDATE data_user SET
                                             user_id = '" . $id . "',
+                                            office_id = '" . $office . "',
                                             user_name = '" . $nama . "',
                                             user_username = '" . $username . "',
                                             user_password = '" . MD5($pass) . "',
@@ -179,8 +214,15 @@ $u = mysqli_fetch_object($user);
                                             WHERE user_id = '" . $u->user_id . "'
                                             ");
                         if ($update) {
-                            echo '<script>alert("Edit data berhasil")</script>';
-                            echo '<script>window.location="user-data.php"</script>';
+                            echo '<script>Swal.fire({
+                                title: "Berhasil Edit User !",
+                                text: "Klik OK Untuk Lanjut.",
+                                icon: "success"
+                              },
+                              function(){
+                                window.location="user-data.php"
+                              });
+                            </script>';
                         } else {
                             echo 'gagal' . mysqli_error($conn);
                         }

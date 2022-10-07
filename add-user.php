@@ -55,6 +55,18 @@ if ($_SESSION['role_login'] == 'user' || $_SESSION['role_login'] == 'admin') {
                 <form action="" method="POST">
                     <h4>ID User</h4>
                     <input type="text" name="id" class="input-control" required>
+                    <h4>Perwakilan</h4>
+                    <select name="perwakilan" class="input-control" required>
+                        <option value="">--Pilih Perwakilan</option>
+                        <?php
+                        $perwakilan = mysqli_query($conn, "SELECT * FROM data_office ORDER BY office_id");
+                        while ($fa_perwakilan = mysqli_fetch_array($perwakilan)) {
+                        ?>
+                            <option value="<?php echo $fa_perwakilan['office_id'] ?>"><?php echo $fa_perwakilan['office_name'] ?></option>
+                        <?php
+                        }
+                        ?>
+                    </select>
                     <h4>Nama User</h4>
                     <input type="text" name="nama" class="input-control" required>
                     <h4>Username Akun</h4>
