@@ -7,7 +7,6 @@ if ($_SESSION['role_login'] == 'user') {
 } else if ($_SESSION['status_login'] != true) {
     echo '<script>window.location="login.php"</script>';
 }
-$idkantoradmin = $_SESSION['a_global']->office_id;
 ?>
 
 <!DOCTYPE html>
@@ -21,6 +20,10 @@ $idkantoradmin = $_SESSION['a_global']->office_id;
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Quicksand&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.css" rel="stylesheet" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert-dev.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body>
@@ -46,51 +49,41 @@ $idkantoradmin = $_SESSION['a_global']->office_id;
         <!-- Content -->
         <div class="section">
             <div class="container">
-                <h3>Data Produk</h3>
+                <h3>Data User</h3>
                 <div class="box">
-                    <p><a href="add-product.php">Tambah Data Produk</a></p><br>
+                    <p><a href="add-user.php">Tambah Data</a></p><br>
                     <!-- <button><a href="add-product.php" style="text-decoration:none ;">Tambah Data</a></button> -->
                     <table border="1" cellspacing="0" class="table">
                         <thead>
                             <tr>
                                 <th width="60px">No</th>
-                                <th>Perwakilan</th>
-                                <th>ID Kategori</th>
-                                <th>Kategori</th>
-                                <th>ID Produk</th>
-                                <th>Nama Produk</th>
-                                <th>Harga</th>
-                                <!-- <th>Deskripsi</th> -->
-                                <th>Gambar</th>
-                                <th>Status</th>
-                                <th>Stock</th>
+                                <!-- <th>Perwakilan</th> -->
+                                <th>ID User</th>
+                                <th>Nama User</th>
+                                <th>Username Akun</th>
+                                <th>Telpon User</th>
+                                <th>Email User</th>
+                                <th>Alamat User</th>
                                 <th width="150px">Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
                             <?php
                             $no = 1;
-                            $produk = mysqli_query($conn, "SELECT * FROM data_product LEFT JOIN data_category  USING (category_id) WHERE office_id = '" . $idkantoradmin . "' ORDER BY product_id DESC ");
-                            if (mysqli_num_rows($produk) > 0) {
-                                while ($row = mysqli_fetch_array($produk)) {
-                                    $idperwakilan = $row['office_id'];
-                                    $namaperwakilan = mysqli_query($conn, "SELECT * FROM data_office WHERE office_id = '" . $idperwakilan . "' ");
-                                    $row_np = mysqli_fetch_array($namaperwakilan);
+                            $user = mysqli_query($conn, "SELECT * FROM data_user ORDER BY user_id DESC ");
+                            if (mysqli_num_rows($user) > 0) {
+                                while ($row = mysqli_fetch_array($user)) {
                             ?>
                                     <tr>
                                         <td><?php echo $no++ ?></td>
-                                        <td><?php echo $row_np['office_name'] ?></td>
-                                        <td><?php echo $row['category_id'] ?></td>
-                                        <td><?php echo $row['category_name'] ?></td>
-                                        <td><?php echo $row['product_id'] ?></td>
-                                        <td><?php echo $row['product_name'] ?></td>
-                                        <td>Rp. <?php echo number_format($row['product_price']) ?></td>
-                                        <!-- <td><?php echo $row['product_description'] ?></td> -->
-                                        <td><a href="produk/<?php echo $row['product_image'] ?>"> <img src="produk/<?php echo $row['product_image'] ?>" width="50px"></a></td>
-                                        <td><?php echo ($row['product_status'] == 0) ? 'Tidak AKtif' : 'Aktif' ?></td>
-                                        <td><?php echo ($row['stock']) ?></td>
+                                        <td><?php echo $row['user_id'] ?></td>
+                                        <td><?php echo $row['user_name'] ?></td>
+                                        <td><?php echo $row['user_username'] ?></td>
+                                        <td><?php echo $row['user_telp'] ?></td>
+                                        <td><?php echo $row['user_email'] ?></td>
+                                        <td><?php echo $row['user_address'] ?></td>
                                         <td>
-                                            <a href="edit-product.php?id=<?php echo $row['product_id'] ?>">Edit</a> || <a href="delete-data.php?idp=<?php echo $row['product_id'] ?>" onclick="return confirm('R U Sure about dat ?') ">Hapus</a>
+                                            <a href="edit-user.php?id=<?php echo $row['user_id'] ?>">Edit</a> || <a href="delete-data.php?idu=<?php echo $row['user_id'] ?>" onclick="return confirm('R U Sure about dat ?') ">Hapus</a>
                                         </td>
                                     </tr>
                                 <?php }
@@ -108,10 +101,9 @@ $idkantoradmin = $_SESSION['a_global']->office_id;
         <!-- Footer -->
         <footer>
             <div class="container">
-                <small>Copyright &copy; 2022 - Universitas Pertamina</small>
+                <small>Copyright &copy; 2022 - Ramsey Adrian</small>
             </div>
         </footer>
-        <!--------------------------------------------------------------------------------- SUPER ADMIN ---------------------------------------------------------------------------->
     <?php
     } else if ($_SESSION['role_login'] == 'super') {
     ?>
@@ -136,51 +128,41 @@ $idkantoradmin = $_SESSION['a_global']->office_id;
         <!-- Content -->
         <div class="section">
             <div class="container">
-                <h3>Data Produk</h3>
+                <h3>Data User</h3>
                 <div class="box">
-                    <p><a href="add-product.php">Tambah Data Produk</a></p><br>
+                    <p><a href="add-user.php">Tambah Data</a></p><br>
                     <!-- <button><a href="add-product.php" style="text-decoration:none ;">Tambah Data</a></button> -->
                     <table border="1" cellspacing="0" class="table">
                         <thead>
                             <tr>
                                 <th width="60px">No</th>
-                                <th>Perwakilan</th>
-                                <th>ID Kategori</th>
-                                <th>Kategori</th>
-                                <th>ID Produk</th>
-                                <th>Nama Produk</th>
-                                <th>Harga</th>
-                                <!-- <th>Deskripsi</th> -->
-                                <th>Gambar</th>
-                                <th>Status</th>
-                                <th>Stock</th>
+                                <!-- <th>Perwakilan</th> -->
+                                <th>ID User</th>
+                                <th>Nama User</th>
+                                <th>Username Akun</th>
+                                <th>Telpon User</th>
+                                <th>Email User</th>
+                                <th>Alamat User</th>
                                 <th width="150px">Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
                             <?php
                             $no = 1;
-                            $produk = mysqli_query($conn, "SELECT * FROM data_product LEFT JOIN data_category  USING (category_id) ORDER BY product_id DESC ");
-                            if (mysqli_num_rows($produk) > 0) {
-                                while ($row = mysqli_fetch_array($produk)) {
-                                    $idperwakilan = $row['office_id'];
-                                    $namaperwakilan = mysqli_query($conn, "SELECT * FROM data_office WHERE office_id = '" . $idperwakilan . "' ");
-                                    $row_np = mysqli_fetch_array($namaperwakilan);
+                            $user = mysqli_query($conn, "SELECT * FROM data_user ORDER BY user_id DESC ");
+                            if (mysqli_num_rows($user) > 0) {
+                                while ($row = mysqli_fetch_array($user)) {
                             ?>
                                     <tr>
                                         <td><?php echo $no++ ?></td>
-                                        <td><?php echo $row_np['office_name'] ?></td>
-                                        <td><?php echo $row['category_id'] ?></td>
-                                        <td><?php echo $row['category_name'] ?></td>
-                                        <td><?php echo $row['product_id'] ?></td>
-                                        <td><?php echo $row['product_name'] ?></td>
-                                        <td>Rp. <?php echo number_format($row['product_price']) ?></td>
-                                        <!-- <td><?php echo $row['product_description'] ?></td> -->
-                                        <td><a href="produk/<?php echo $row['product_image'] ?>"> <img src="produk/<?php echo $row['product_image'] ?>" width="50px"></a></td>
-                                        <td><?php echo ($row['product_status'] == 0) ? 'Tidak AKtif' : 'Aktif' ?></td>
-                                        <td><?php echo ($row['stock']) ?></td>
+                                        <td><?php echo $row['user_id'] ?></td>
+                                        <td><?php echo $row['user_name'] ?></td>
+                                        <td><?php echo $row['user_username'] ?></td>
+                                        <td><?php echo $row['user_telp'] ?></td>
+                                        <td><?php echo $row['user_email'] ?></td>
+                                        <td><?php echo $row['user_address'] ?></td>
                                         <td>
-                                            <a href="edit-product.php?id=<?php echo $row['product_id'] ?>">Edit</a> || <a href="delete-data.php?idp=<?php echo $row['product_id'] ?>" onclick="return confirm('R U Sure about dat ?') ">Hapus</a>
+                                            <a href="edit-user.php?id=<?php echo $row['user_id'] ?>">Edit</a> || <a href="delete-data.php?idu=<?php echo $row['user_id'] ?>" onclick="return confirm('R U Sure about dat ?') ">Hapus</a>
                                         </td>
                                     </tr>
                                 <?php }

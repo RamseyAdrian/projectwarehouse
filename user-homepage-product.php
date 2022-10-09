@@ -1,14 +1,9 @@
 <?php
+error_reporting(0);
 session_start();
 include 'db.php';
 $kontak = mysqli_query($conn, "SELECT admin_telp, admin_email, admin_address FROM data_admin WHERE admin_id = 1");
 $a = mysqli_fetch_object($kontak);
-if ($_SESSION['role_login'] != 'user') {
-
-    echo '<script>window.location="logout.php"</script>';
-} else if ($_SESSION['status_login'] != true) {
-    echo '<script>window.location="login.php"</script>';
-}
 
 $qd = mysqli_query($conn, "SELECT * FROM data_office WHERE office_id = 11");
 $fo = mysqli_fetch_object($qd);
@@ -25,10 +20,7 @@ $fo = mysqli_fetch_object($qd);
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Quicksand&display=swap" rel="stylesheet">
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css" />
+    <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
     <style>
         table {
             border-collapse: collapse;
@@ -71,7 +63,7 @@ $fo = mysqli_fetch_object($qd);
 
 <body>
     <?php
-    $per_page_record = 12;  // Number of entries to show in a page.   
+    $per_page_record = 4;  // Number of entries to show in a page.   
     // Look for a GET variable page if not found default is 1.        
     if (isset($_GET["page"])) {
         $page  = $_GET["page"];
@@ -104,43 +96,24 @@ $fo = mysqli_fetch_object($qd);
     <div class="search">
         <div class="container">
             <form action="homepage-product.php" method="GET">
-                <input type="text" name="search" placeholder="cari produk">
+                <input type="text" name="search" placeholder="cari produk" value="<?php echo $_GET['search'] ?>">
                 <input type="submit" name="cari" value="Cari">
             </form>
         </div>
     </div>
 
-    <!--Category-->
-    <div class="section">
-        <div class="container">
-            <h3>Kategori</h3>
-            <div class="box">
-                <?php
-                $kategori = mysqli_query($conn, "SELECT * FROM data_category ORDER BY category_id DESC");
-                if (mysqli_num_rows($kategori) > 0) {
-                    while ($k = mysqli_fetch_array($kategori)) {
-                ?>
-                        <a href="user-homepage-product.php?kat=<?php echo $k['category_id'] ?> ">
-                            <div class="col-5">
-                                <img src="" width="50px" style="margin-bottom: 5px;">
-                                <p><?php echo $k['category_name'] ?></p>
-                            </div>
-                        </a>
-                    <?php }
-                } else { ?>
-                    <p>Tidak Ada Kategori</p>
-                <?php } ?>
-            </div>
-        </div>
-    </div>
+    <!-- New Product -->
 
-    <!--New Product-->
     <div class="section">
         <div class="container">
-            <h3>Produk Terbaru</h3>
+            <h3>Produk</h3>
             <div class="box">
                 <?php
-                $produk = mysqli_query($conn, "SELECT * FROM data_product WHERE product_status=1 ORDER BY product_id LIMIT $start_from, $per_page_record ");
+                if ($_GET['search'] != '' || $_GET['kat'] != '') {
+                    $where = "AND product_name LIKE '%" . $_GET['search'] . "%' AND category_id LIKE '%" . $_GET['kat'] . "%' ";
+                }
+                $produk = mysqli_query($conn, "SELECT * FROM data_product WHERE product_status=1 $where
+                ORDER BY product_id LIMIT $start_from, $per_page_record ");
                 if (mysqli_num_rows($produk) > 0) {
                     while ($p = mysqli_fetch_array($produk)) {
                 ?>
@@ -148,8 +121,6 @@ $fo = mysqli_fetch_object($qd);
                             <div class="col-4">
                                 <img src="produk/<?php echo $p['product_image'] ?>" alt="">
                                 <p class="nama"><?php echo substr($p['product_name'], 0, 30) ?></p>
-                                <p class="nama">Perwakilan : <?php echo $p['office_id'] ?></p>
-                                <p class="nama">Sisa Stok : <?php echo $p['stock'] ?></p>
                                 <p class="harga">Rp<?php echo $p['product_price'] ?></p>
                             </div>
                         </a>
@@ -175,22 +146,22 @@ $fo = mysqli_fetch_object($qd);
             $pagLink = "";
 
             if ($page >= 2) {
-                echo "<a href='user-home.php?page=" . ($page - 1) . "'>  Prev </a>";
+                echo "<a href='user-homepage-product.php?page=" . ($page - 1) . "'>  Prev </a>";
             }
 
             for ($i = 1; $i <= $total_pages; $i++) {
                 if ($i == $page) {
-                    $pagLink .= "<a class = 'active' href='user-home.php?page="
+                    $pagLink .= "<a class = 'active' href='user-homepage-product.php?page="
                         . $i . "'>" . $i . " </a>";
                 } else {
-                    $pagLink .= "<a href='user-home.php?page=" . $i . "'>   
+                    $pagLink .= "<a href='user-homepage-product.php?page=" . $i . "'>   
                                         " . $i . " </a>";
                 }
             };
             echo $pagLink;
 
             if ($page < $total_pages) {
-                echo "<a href='user-home.php?page=" . ($page + 1) . "'>  Next </a>";
+                echo "<a href='user-homepage-product.php?page=" . ($page + 1) . "'>  Next </a>";
             }
             ?>
         </div><br><br><br><br>
@@ -200,15 +171,6 @@ $fo = mysqli_fetch_object($qd);
             <button onclick="go2Page();">Go</button>
         </div> -->
     </center>
-
-
-    <script>
-        function go2Page() {
-            var page = document.getElementById("page").value;
-            page = ((page > <?php echo $total_pages; ?>) ? <?php echo $total_pages; ?> : ((page < 1) ? 1 : page));
-            window.location.href = 'index.php?page=' + page;
-        }
-    </script>
 
     <!-- Footer -->
     <div class="footer">

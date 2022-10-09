@@ -102,11 +102,13 @@ if ($_SESSION['role_login'] == 'user' || $_SESSION['role_login'] == 'admin') {
                         $telp = $_POST['telp'];
                         $email = $_POST['email'];
                         $address = $_POST['address'];
+                        $perwakilan = $_POST['perwakilan'];
+
                         // $location = $_POST[""];
 
                         $insert = mysqli_query($conn, "INSERT INTO data_user VALUES (
                                             '" . $id . "',
-                                            '11',
+                                            '" . $perwakilan . "',
                                             'Jakarta',
                                             '" . $nama . "',
                                             '" . $username . "',
@@ -125,7 +127,14 @@ if ($_SESSION['role_login'] == 'user' || $_SESSION['role_login'] == 'admin') {
                               });
                             </script>';
                     } else {
-                        echo '<script>swal("ID or Username not available");</script>';
+                        echo '<script>Swal.fire({
+                            title: "ID tidak tersedia",
+                            text: "Input ID selain ini",
+                            icon: "error"
+                        },
+                        function(){
+                            window.location="user-data.php"
+                        })</script>';
                     }
                 }
                 ?>

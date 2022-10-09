@@ -1,9 +1,12 @@
 <?php
 session_start();
 include 'db.php';
-if ($_SESSION['status_login'] != true) {
+if ($_SESSION['role_login'] != 'user') {
+    echo '<script>window.location="logout.php"</script>';
+} else if ($_SESSION['status_login'] != true) {
     echo '<script>window.location="login.php"</script>';
 }
+
 
 $query = mysqli_query($conn, "SELECT * FROM data_user WHERE user_id = '" . $_SESSION['id'] . "' ");
 $d = mysqli_fetch_object($query);
@@ -27,11 +30,12 @@ $d = mysqli_fetch_object($query);
     <!-- header -->
     <header>
         <div class="container">
-            <h1><a href="dashboard.php">KP Ombudsman</a></h1>
+            <h1><a href="user-home.php">KP Ombudsman</a></h1>
             <ul>
-                <li><a href="homepage-product.php">Produk</a></li>
+                <li><a href="user-homepage-product.php">Produk</a></li>
+                <li><a href="user-cart.php">Keranjang</a></li>
                 <li><a href="user-profile.php">Profil Saya</a></li>
-                <li><a href="index.php">Log out</a></li>
+                <li><a href="logout.php">Log out</a></li>
             </ul>
         </div>
     </header>
