@@ -42,6 +42,7 @@ $fo = mysqli_fetch_object($qd);
             <ul>
                 <li><a href="user-homepage-product.php">Produk</a></li>
                 <li><a href="user-cart.php">Keranjang</a></li>
+                <li><a href="user-order.php">Pesanan</a></li>
                 <li><a href="user-profile.php">Profil Saya</a></li>
                 <li><a href="logout.php">Log out</a></li>
             </ul>

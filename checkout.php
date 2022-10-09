@@ -45,12 +45,12 @@ $row_np = mysqli_fetch_array($namaperwakilan);
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-lg-6 px-4 pb-4" id="order">
-                    <h4 class="text-center text-info p-2" style="font-weight:bolder ;">Complete your order!</h4>
+                    <h4 class="text-center text-info p-2" style="font-weight:bolder ;">Selesaikan Pesanan Anda</h4>
                     <div class="jumbotron p-3 mb-2 text-center">
-                        <h6 class="lead" style="font-weight:bolder ;"><b>Product(s) : </b>
+                        <h6 class="lead" style="font-weight:bolder ;"><b>Produk : </b>
                             <?php
                             $no = 1;
-                            $orderid = rand();
+
                             $keranjang = mysqli_query($conn, "SELECT * FROM data_cart LEFT JOIN data_category USING (category_id) LEFT JOIN data_product USING (product_id) WHERE data_cart.user_id = '" . $iduser . "' AND data_cart.office_id = '" . $kantoruser . "' ");
                             if (mysqli_num_rows($keranjang) > 0) {
                                 while ($fo_keranjang = mysqli_fetch_array($keranjang)) {
@@ -95,16 +95,16 @@ $row_np = mysqli_fetch_array($namaperwakilan);
                                 <input type="tel" name="office" class="form-control" value="<?php echo $row_np['office_name'] ?>" readonly>
                             </div>
                             <div class="form-group">
-                                <input type="submit" name="submit" value="Place Order" class="btn btn-danger btn-block">
+                                <input type="submit" name="submit" value="Pesan Sekarang" class="btn btn-danger btn-block">
                             </div>
                     </form>
                     <?php
                     if (isset($_POST['submit'])) {
-                        $nomer = 1;
+
                         $keranjang1 = mysqli_query($conn, "SELECT * FROM data_cart LEFT JOIN data_category USING (category_id) LEFT JOIN data_product USING (product_id) WHERE data_cart.user_id = '" . $iduser . "' AND data_cart.office_id = '" . $kantoruser . "' ");
                         if (mysqli_num_rows($keranjang1) > 0) {
                             while ($fo_keranjang1 = mysqli_fetch_array($keranjang1)) {
-                                $number = $nomer++;
+                                $orderid = rand();
                                 $iduser = $_POST['id'];
                                 $namauser = $_POST['name'];
                                 $emailuser = $_POST['email'];
@@ -121,7 +121,6 @@ $row_np = mysqli_fetch_array($namaperwakilan);
 
                                 if ($insert) {
                                     $insert = mysqli_query($conn, "INSERT INTO data_transaction VALUES (
-                                        '" . $number . "',
                                         '" . $orderid . "',
                                         '" . $iduser . "',
                                         '" . $namauser . "',

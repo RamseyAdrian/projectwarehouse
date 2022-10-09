@@ -8,7 +8,7 @@ if ($_SESSION['role_login'] == 'user') {
     echo '<script>window.location="login.php"</script>';
 }
 
-$keranjang = mysqli_query($conn, "SELECT * FROM data_cart")
+$kantoradmin = $_SESSION['a_global']->office_id;
 ?>
 
 <!DOCTYPE html>
@@ -56,13 +56,50 @@ $keranjang = mysqli_query($conn, "SELECT * FROM data_cart")
                     <table border="1" cellspacing="0" class="table">
                         <thead>
                             <tr>
-                                <th>Order ID</th>
+                                <th>No</th>
+                                <th>ID Pesanan</th>
                                 <th>ID User</th>
                                 <th>Nama</th>
+                                <th>Barang</th>
                                 <th>Waktu</th>
-                                <th>Status</th>
+                                <th>Aksi</th>
                             </tr>
                         </thead>
+                        <tbody>
+                            <?php
+                            $no = 1;
+                            $trans = mysqli_query($conn, "SELECT * FROM data_transaction LEFT JOIN data_product USING (product_id) WHERE data_transaction.office_id = '" . $kantoradmin . "' ");
+                            if (mysqli_num_rows($trans) > 0) {
+
+                                while ($fo_trans = mysqli_fetch_array($trans)) {
+                            ?>
+                                    <tr>
+                                        <td><?php echo $no++ ?></td>
+                                        <td><?php echo $fo_trans['order_id'] ?></td>
+                                        <td><?php echo $fo_trans['user_id'] ?></td>
+                                        <td><?php echo $fo_trans['user_name'] ?></td>
+                                        <td><?php echo $fo_trans['product_name'] ?></td>
+                                        <td><?php echo $fo_trans['created'] ?></td>
+                                        <td>
+                                            <a href="edit-order.php?id=<?php echo $fo_trans['order_id'] ?>">Detail</a>
+                                        </td>
+                                    </tr>
+                                <?php
+                                }
+
+
+
+                                ?>
+
+
+                            <?php
+                            } else {
+                            ?>
+                                <td colspan="8">Tidak Ada Data</td>
+                            <?php
+                            }
+                            ?>
+                        </tbody>
                     </table>
                 </div>
             </div>
@@ -96,14 +133,52 @@ $keranjang = mysqli_query($conn, "SELECT * FROM data_cart")
                     <table border="1" cellspacing="0" class="table">
                         <thead>
                             <tr>
-                                <th>Order ID</th>
+                                <th>No</th>
                                 <th>Perwakilan</th>
+                                <th>ID Pesanan</th>
                                 <th>ID User</th>
                                 <th>Nama</th>
+                                <th>Barang</th>
                                 <th>Waktu</th>
-                                <th>Status</th>
+                                <th>Aksi</th>
                             </tr>
                         </thead>
+                        <tbody>
+                            <?php
+                            $no = 1;
+                            $trans = mysqli_query($conn, "SELECT * FROM data_transaction LEFT JOIN data_product USING (product_id) ");
+                            if (mysqli_num_rows($trans) > 0) {
+
+                                while ($fo_trans = mysqli_fetch_array($trans)) {
+                            ?>
+                                    <tr>
+                                        <td><?php echo $no++ ?></td>
+                                        <td><?php echo $fo_trans['office_name'] ?></td>
+                                        <td><?php echo $fo_trans['order_id'] ?></td>
+                                        <td><?php echo $fo_trans['user_id'] ?></td>
+                                        <td><?php echo $fo_trans['user_name'] ?></td>
+                                        <td><?php echo $fo_trans['product_name'] ?></td>
+                                        <td><?php echo $fo_trans['created'] ?></td>
+                                        <td>
+                                            <a href="edit-order.php?id=<?php echo $fo_trans['order_id'] ?>">Detail</a>
+                                        </td>
+                                    </tr>
+                                <?php
+                                }
+
+
+
+                                ?>
+
+
+                            <?php
+                            } else {
+                            ?>
+                                <td colspan="8">Tidak Ada Data</td>
+                            <?php
+                            }
+                            ?>
+                        </tbody>
                     </table>
                 </div>
             </div>

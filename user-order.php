@@ -50,40 +50,38 @@ $kantoruser = $_SESSION['a_global']->office_id;
     <!-- Content -->
     <div class="section">
         <div class="container">
-            <h3>Keranjang</h3>
+            <h3>Pesanan Saya</h3>
             <div class="box">
                 <table border="1" cellspacing="0" class="table">
                     <thead>
                         <tr>
                             <th>No</th>
-                            <th>Gambar</th>
-                            <th>ID Barang</th>
-                            <th>Kategori</th>
-                            <th>Produk</th>
-                            <th>Kuantitas</th>
-                            <th>Edit/Hapus</th>
+                            <th>ID Pesanan</th>
+                            <th>Barang</th>
+                            <th>Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
                         <?php
                         $no = 1;
-                        $keranjang = mysqli_query($conn, "SELECT * FROM data_cart LEFT JOIN data_category USING (category_id) LEFT JOIN data_product USING (product_id) WHERE data_cart.user_id = '" . $iduser . "' AND data_cart.office_id = '" . $kantoruser . "' ");
-                        if (mysqli_num_rows($keranjang) > 0) {
-                            while ($fo_keranjang = mysqli_fetch_array($keranjang)) {
+                        $trans = mysqli_query($conn, "SELECT * FROM data_transaction LEFT JOIN data_product USING (product_id) WHERE data_transaction.user_id = '" . $iduser . "' AND data_transaction.office_id = '" . $kantoruser . "' ");
+                        if (mysqli_num_rows($trans) > 0) {
+
+                            while ($fo_trans = mysqli_fetch_array($trans)) {
                         ?>
                                 <tr>
                                     <td><?php echo $no++ ?></td>
-                                    <td><a href="produk/<?php echo $fo_keranjang['product_image'] ?>"> <img src="produk/<?php echo $fo_keranjang['product_image'] ?>" width="50px"></a></td>
-                                    <td><?php echo $fo_keranjang['product_id'] ?></td>
-                                    <td><?php echo $fo_keranjang['category_name'] ?></td>
-                                    <td><?php echo $fo_keranjang['product_name'] ?></td>
-                                    <td><?php echo $fo_keranjang['quantity'] ?></td>
+                                    <td><?php echo $fo_trans['order_id'] ?></td>
+                                    <td><?php echo $fo_trans['product_name'] ?></td>
                                     <td>
-                                        <a href="edit-product.php?id=<?php echo $row['product_id'] ?>">Edit</a> || <a href="delete-data.php?idp=<?php echo $row['product_id'] ?>" onclick="return confirm('R U Sure about dat ?') ">Hapus</a>
+                                        <a href="edit-product.php?id=<?php echo $row['product_id'] ?>">Detail</a>
                                     </td>
                                 </tr>
                             <?php
                             }
+
+
+
                             ?>
 
 
