@@ -8,7 +8,7 @@ if ($_SESSION['role_login'] == 'user') {
     echo '<script>window.location="login.php"</script>';
 }
 
-$user = mysqli_query($conn, "SELECT * FROM data_user WHERE user_id = '" . $_GET['id'] . "' ");
+$user = mysqli_query($conn, "SELECT * FROM data_admin WHERE admin_id = '" . $_GET['id'] . "' ");
 if (mysqli_num_rows($user) == 0) {
     echo '<script>window.location="user-data.php"</script>';
 }

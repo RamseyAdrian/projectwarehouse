@@ -47,7 +47,7 @@ if ($_SESSION['role_login'] == 'user' || $_SESSION['role_login'] == 'admin') {
         <div class="container">
             <h3>Data Admin Tiap Perwakilan</h3>
             <div class="box">
-                <p><a href="add-user.php">Tambah Data Admin</a></p><br>
+                <p><a href="add-admin.php">Tambah Data Admin</a></p><br>
                 <!-- <button><a href="add-product.php" style="text-decoration:none ;">Tambah Data</a></button> -->
                 <table border="1" cellspacing="0" class="table">
                     <thead>
@@ -96,7 +96,7 @@ if ($_SESSION['role_login'] == 'user' || $_SESSION['role_login'] == 'admin') {
     <!-- Footer -->
     <footer>
         <div class="container">
-            <small>Copyright &copy; 2022 - Ramsey Adrian</small>
+            <small>Copyright &copy; 2022 - Universitas Pertamina</small>
         </div>
     </footer>
 

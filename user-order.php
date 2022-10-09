@@ -74,7 +74,7 @@ $kantoruser = $_SESSION['a_global']->office_id;
                                     <td><?php echo $fo_trans['order_id'] ?></td>
                                     <td><?php echo $fo_trans['product_name'] ?></td>
                                     <td>
-                                        <a href="edit-product.php?id=<?php echo $row['product_id'] ?>">Detail</a>
+                                        <a href="view-order.php?id=<?php echo $fo_trans['order_id'] ?>">Detail</a>
                                     </td>
                                 </tr>
                             <?php
