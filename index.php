@@ -37,10 +37,6 @@ $fo = mysqli_fetch_object($qd);
             margin: 20px 0px;
         }
 
-        input,
-        button {
-            height: 34px;
-        }
 
         .pagination {
             display: inline-block;
@@ -96,11 +92,6 @@ $fo = mysqli_fetch_object($qd);
                 <input type="text" name="search" placeholder="cari produk">
                 <input type="submit" name="cari" value="Cari">
             </form>
-            <div>
-                <a href="">
-                    <box-icon name='cart'></box-icon>
-                </a>
-            </div>
 
         </div>
     </div>

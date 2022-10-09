@@ -134,7 +134,8 @@ $row_np = mysqli_fetch_array($namaperwakilan);
                                         '" . $namakategori . "',
                                         '" . $kuantitas . "',
                                         NOW(),
-                                        '0'
+                                        '0',
+                                        null
                                     )");
 
                                     $delete = mysqli_query($conn, "DELETE FROM data_cart WHERE data_cart.user_id = '" . $iduser . "' AND data_cart.office_id = '" . $kantoruser . "' ");

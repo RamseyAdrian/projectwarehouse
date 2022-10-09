@@ -1,7 +1,7 @@
 <?php
 session_start();
 include 'db.php';
-if ($_SESSION['role_login'] != 'user') {
+if ($_SESSION['role_login'] == 'user') {
 
     echo '<script>window.location="logout.php"</script>';
 } else if ($_SESSION['status_login'] != true) {
@@ -37,13 +37,14 @@ $fo_trans = mysqli_fetch_object($trans);
     <!-- header -->
     <header>
         <div class="container">
-            <h1><a href="user-home.php">KP Ombudsman</a></h1>
+            <h1><a href="dashboard.php">KP Ombudsman</a></h1>
             <ul>
-                <li><a href="user-homepage-product.php">Produk</a></li>
-                <li><a href="user-cart.php">Keranjang</a></li>
-                <li><a href="user-order.php">Pesanan</a></li>
-                <li><a href="user-profile.php">Profil Saya</a></li>
-                <li><a href="logout.php">Log out</a></li>
+                <li><a href="dashboard.php">Dashboard</a></li>
+                <li><a href="profile.php">Profil</a></li>
+                <li><a href="product-data.php">Data Produk</a></li>
+                <li><a href="user-data.php">Data User</a></li>
+                <li><a href="order-table.php">Pesanan</a></li>
+                <li><a href="logout.php">Keluar</a></li>
             </ul>
         </div>
     </header>
@@ -72,58 +73,44 @@ $fo_trans = mysqli_fetch_object($trans);
                     <input type="text" name="quantity" class="input-control" value="<?php echo $fo_trans->quantity ?>" readonly>
                     <h4>Waktu Pesanan Dibuat</h4>
                     <input type="text" name="waktu" class="input-control" value="<?php echo $fo_trans->created ?>" readonly>
-                    <h4>Catatan Dari Admin</h4>
-                    <textarea name="notes" class="input-control" readonly><?php echo $fo_trans->notes ?></textarea><br>
+                    <h4>Catatan Untuk User</h4>
+                    <textarea name="notes" class="input-control"><?php echo $fo_trans->notes ?></textarea><br>
                     <h4>Status Barang</h4>
-                    <input type="text" name="status" class="input-control" value="<?php
-                                                                                    if ($fo_trans->status == 0) {
-                                                                                        echo "Belum Disetujui";
-                                                                                    } else if ($fo_trans->status == 1) {
-                                                                                        echo "Disetujui";
-                                                                                    }
-                                                                                    ?>" readonly>
-                    <?php
-                    if ($fo_trans->status == 0) {
-                    ?>
-                        <input type="submit" name="wait" value="Kembali Menunggu" class="btn">
-                    <?php
-                    } else if ($fo_trans->status == 1) {
-                    ?>
-                        <input type="submit" name="submit" value="Ambil Barang" class="btn">
-                    <?php
-                    }
-                    ?>
+                    <select name="status" class="input-control">
+                        <option value="">--Pilih--</option>
+                        <option value="1" <?php echo ($fo_trans->status == 1) ? 'selected' : ''; ?>>Disetujui</option>
+                        <option value="0" <?php echo ($fo_trans->status == 0) ? 'selected' : ''; ?>>Belum Disetujui</option>
+                        <option value="2" <?php echo ($fo_trans->status == 2) ? 'selected' : ''; ?>>Tidak Disetujui</option>
+                    </select>
+                    <input type="submit" name="submit" value="Submit" class="btn">
                 </form>
                 <?php
                 if (isset($_POST['submit'])) {
+                    $statusbarang = $_POST['status'];
+                    $notes = $_POST['notes'];
+                    $idorder = $_POST['idorder'];
 
-                    //query update data produk
-                    $update = mysqli_query($conn, "UPDATE data_product SET 
-                            category_id = '" . $kategori . "',
-                            product_name= '" . $nama . "',
-                            product_price = '" . $harga . "',
-                            product_description = '" . $deskripsi . "',
-                            product_image = '" . $namagambar . "',
-                            product_status = '" . $status . "',
-                            stock = '" . $stok . "'
-                            WHERE product_id = '" . $p->product_id . "'
+                    //query update data transaksi
+                    $update = mysqli_query($conn, "UPDATE data_transaction SET 
+                            status = '" . $statusbarang . "',
+                            notes = '" . $notes . "'
+                            WHERE data_transaction.order_id = '" . $idorder . "'
+
                     ");
 
                     if ($update) {
                         echo '<script>Swal.fire({
-                            title: "Anda telah mengambil Pesanan !",
+                            title: "Update Pesanan Berhasil",
                             text: "Klik OK Untuk Lanjut.",
                             icon: "success"
                           },
                           function(){
-                            window.location="user-home.php"
+                            window.location="order-table.php"
                           });
                         </script>';
                     } else {
                         echo 'gagal' . mysqli_error($conn);
                     }
-                } else if (isset($_POST['wait'])) {
-                    echo '<script>window.location="user-order.php"</script>';
                 }
                 ?>
             </div>

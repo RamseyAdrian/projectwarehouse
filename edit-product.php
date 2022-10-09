@@ -94,48 +94,6 @@ $p = mysqli_fetch_object($produk);
                 </form>
                 <?php
                 if (isset($_POST['submit'])) {
-
-                    //data input dari form
-                    $kategori = $_POST['kategori'];
-                    $nama = $_POST['nama'];
-                    $harga = $_POST['harga'];
-                    $deskripsi = $_POST['deskripsi'];
-                    $status = $_POST['status'];
-                    $foto = $_POST['foto'];
-                    $stok = $_POST['stok'];
-
-                    //data gambar baru
-                    $filename = $_FILES['gambar']['name'];
-                    $tmp_name = $_FILES['gambar']['tmp_name'];
-
-                    $type1 = explode('.', $filename);
-                    $type2 = $type1[1];
-
-                    $newname = 'produk' . time() . '.' . $type2;
-
-                    // return isset($type2) ? $type2 : null;
-
-                    //menampung data format file yang diizinkan
-                    $tipe_diizinkan = array('jpg', 'jpeg', 'png', 'gif');
-
-                    //jika admin ganti gambar
-                    if ($filename != '') {
-                        if (!in_array($type2, $tipe_diizinkan)) {
-                            echo '<script>alert("Format file tidak diizinkan")</script>';
-                        } else {
-
-                            unlink('./produk/' . $foto);
-
-                            move_uploaded_file($tmp_name, './produk/' . $newname);
-                            echo '<script>alert("Berhasil Upload")</script>';
-
-                            $namagambar = $newname;
-                        }
-                    } else {
-                        //jika admin tidak ganti gambar
-                        $namagambar = $foto;
-                    }
-
                     //query update data produk
                     $update = mysqli_query($conn, "UPDATE data_product SET 
                             category_id = '" . $kategori . "',

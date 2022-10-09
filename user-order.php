@@ -58,6 +58,7 @@ $kantoruser = $_SESSION['a_global']->office_id;
                             <th>No</th>
                             <th>ID Pesanan</th>
                             <th>Barang</th>
+                            <th>Status</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>
@@ -73,6 +74,15 @@ $kantoruser = $_SESSION['a_global']->office_id;
                                     <td><?php echo $no++ ?></td>
                                     <td><?php echo $fo_trans['order_id'] ?></td>
                                     <td><?php echo $fo_trans['product_name'] ?></td>
+                                    <td><?php
+                                        if ($fo_trans['status'] == 0) {
+                                            echo "Belum disetujui";
+                                        } else if ($fo_trans['status'] == 1) {
+                                            echo "Disetujui";
+                                        } else if ($fo_trans['status'] == 2) {
+                                            echo "Tidak Disetujui";
+                                        }
+                                        ?></td>
                                     <td>
                                         <a href="view-order.php?id=<?php echo $fo_trans['order_id'] ?>">Detail</a>
                                     </td>

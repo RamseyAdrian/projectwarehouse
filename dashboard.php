@@ -78,7 +78,7 @@ $piequeryrecords = mysqli_query($conn, $piequery);
                     <h4><?php echo $_SESSION['a_global']->admin_name ?></h4>
                     <h4>Admin ID : <?php echo $_SESSION['a_global']->admin_id ?></h4>
                 </div>
-                <h2>Table & Chart</h2>
+                <!-- <h2>Table & Chart</h2>
                 <div class="box">
                     <div class="pie-chart" id="chartDiv"></div>
                     <div class="text-center"></div>
@@ -109,7 +109,7 @@ $piequeryrecords = mysqli_query($conn, $piequery);
                             chart.draw(data, options);
                         }
                     </script>
-                </div>
+                </div> -->
             </div>
         </div>
 
@@ -155,7 +155,7 @@ $piequeryrecords = mysqli_query($conn, $piequery);
                     <h4><?php echo $_SESSION['a_global']->super_name ?></h4>
                     <!-- <h4>Super Admin ID : <?php echo $_SESSION['a_global']->super_admin_id ?></h4> -->
                 </div>
-                <h2>Table & Chart</h2>
+                <!-- <h2>Table & Chart</h2>
                 <div class="box">
                     <div class="pie-chart" id="chartDiv"></div>
                     <div class="text-center"></div>
@@ -186,7 +186,7 @@ $piequeryrecords = mysqli_query($conn, $piequery);
                             chart.draw(data, options);
                         }
                     </script>
-                </div>
+                </div> -->
             </div>
         </div>
 

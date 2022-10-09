@@ -62,6 +62,7 @@ $kantoradmin = $_SESSION['a_global']->office_id;
                                 <th>Nama</th>
                                 <th>Barang</th>
                                 <th>Waktu</th>
+                                <th>Status</th>
                                 <th>Aksi</th>
                             </tr>
                         </thead>
@@ -80,6 +81,15 @@ $kantoradmin = $_SESSION['a_global']->office_id;
                                         <td><?php echo $fo_trans['user_name'] ?></td>
                                         <td><?php echo $fo_trans['product_name'] ?></td>
                                         <td><?php echo $fo_trans['created'] ?></td>
+                                        <td><?php
+                                            if ($fo_trans['status'] == 0) {
+                                                echo "Belum disetujui";
+                                            } else if ($fo_trans['status'] == 1) {
+                                                echo "Disetujui";
+                                            } else if ($fo_trans['status'] == 2) {
+                                                echo "Tidak Disetujui";
+                                            }
+                                            ?></td>
                                         <td>
                                             <a href="edit-order.php?id=<?php echo $fo_trans['order_id'] ?>">Detail</a>
                                         </td>
@@ -140,6 +150,7 @@ $kantoradmin = $_SESSION['a_global']->office_id;
                                 <th>Nama</th>
                                 <th>Barang</th>
                                 <th>Waktu</th>
+                                <th>Status</th>
                                 <th>Aksi</th>
                             </tr>
                         </thead>
@@ -159,6 +170,15 @@ $kantoradmin = $_SESSION['a_global']->office_id;
                                         <td><?php echo $fo_trans['user_name'] ?></td>
                                         <td><?php echo $fo_trans['product_name'] ?></td>
                                         <td><?php echo $fo_trans['created'] ?></td>
+                                        <td><?php
+                                            if ($fo_trans['status'] == 0) {
+                                                echo "Belum disetujui";
+                                            } else if ($fo_trans['status'] == 1) {
+                                                echo "Disetujui";
+                                            } else if ($fo_trans['status'] == 2) {
+                                                echo "Tidak Disetujui";
+                                            }
+                                            ?></td>
                                         <td>
                                             <a href="edit-order.php?id=<?php echo $fo_trans['order_id'] ?>">Detail</a>
                                         </td>
