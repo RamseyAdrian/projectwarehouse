@@ -1,121 +1,158 @@
 <?php
-// Include the configuration file 
-require_once 'cart/config.php';
+session_start();
+include 'db.php';
+if ($_SESSION['role_login'] != 'user') {
 
-// Initialize shopping cart class 
-include_once 'cart/Cart.class.php';
-$cart = new Cart;
-
-// If the cart is empty, redirect to the products page 
-if ($cart->total_items() <= 0) {
-    header("Location: index.php");
+    echo '<script>window.location="logout.php"</script>';
+} else if ($_SESSION['status_login'] != true) {
+    echo '<script>window.location="login.php"</script>';
 }
 
-// Get posted form data from session 
-$postData = !empty($_SESSION['postData']) ? $_SESSION['postData'] : array();
-unset($_SESSION['postData']);
 
-// Get status message from session 
-$sessData = !empty($_SESSION['sessData']) ? $_SESSION['sessData'] : '';
-if (!empty($sessData['status']['msg'])) {
-    $statusMsg = $sessData['status']['msg'];
-    $statusMsgType = $sessData['status']['type'];
-    unset($_SESSION['sessData']['status']);
-}
+
+$iduser = $_SESSION['a_global']->user_id;
+$kantoruser = $_SESSION['a_global']->office_id;
+
+$namaperwakilan = mysqli_query($conn, "SELECT * FROM data_office WHERE office_id = '" . $kantoruser . "' ");
+$row_np = mysqli_fetch_array($namaperwakilan);
+
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-    <title>Checkout - PHP Shopping Cart Tutorial</title>
-    <meta charset="utf-8">
-
-    <!-- Bootstrap core CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-
-
-    <!-- Custom style -->
-    <link href="css/style.css" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KP Ombudsman</title>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.css" rel="stylesheet" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert-dev.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.min.css' />
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css' />
 </head>
 
 <body>
-    <div class="container">
-        <h1>CHECKOUT</h1>
-        <div class="col-12">
-            <div class="checkout">
-                <div class="row">
-                    <?php if (!empty($statusMsg) && ($statusMsgType == 'success')) { ?>
-                        <div class="col-md-12">
-                            <div class="alert alert-success"><?php echo $statusMsg; ?></div>
-                        </div>
-                    <?php } elseif (!empty($statusMsg) && ($statusMsgType == 'error')) { ?>
-                        <div class="col-md-12">
-                            <div class="alert alert-danger"><?php echo $statusMsg; ?></div>
-                        </div>
-                    <?php } ?>
 
-                    <div class="col-md-4 order-md-2 mb-4">
-                        <h4 class="d-flex justify-content-between align-items-center mb-3">
-                            <span class="text-muted">Your Cart</span>
-                            <span class="badge badge-secondary badge-pill"><?php echo $cart->total_items(); ?></span>
-                        </h4>
-                        <ul class="list-group mb-3">
+
+    <!-- Content -->
+    <div class="section">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-6 px-4 pb-4" id="order">
+                    <h4 class="text-center text-info p-2" style="font-weight:bolder ;">Complete your order!</h4>
+                    <div class="jumbotron p-3 mb-2 text-center">
+                        <h6 class="lead" style="font-weight:bolder ;"><b>Product(s) : </b>
                             <?php
-                            if ($cart->total_items() > 0) {
-                                // Get cart items from session 
-                                $cartItems = $cart->contents();
-                                foreach ($cartItems as $item) {
+                            $no = 1;
+                            $orderid = rand();
+                            $keranjang = mysqli_query($conn, "SELECT * FROM data_cart LEFT JOIN data_category USING (category_id) LEFT JOIN data_product USING (product_id) WHERE data_cart.user_id = '" . $iduser . "' AND data_cart.office_id = '" . $kantoruser . "' ");
+                            if (mysqli_num_rows($keranjang) > 0) {
+                                while ($fo_keranjang = mysqli_fetch_array($keranjang)) {
+                                    echo '<br>';
+                                    echo $no++, '. ';
+                                    echo $fo_keranjang['product_name'], " (", $fo_keranjang['quantity'], ")";
+
                             ?>
-                                    <li class="list-group-item d-flex justify-content-between lh-condensed">
-                                        <div>
-                                            <h6 class="my-0"><?php echo $item["name"]; ?></h6>
-                                            <small class="text-muted"><?php echo CURRENCY_SYMBOL . $item["price"]; ?>(<?php echo $item["qty"]; ?>)</small>
-                                        </div>
-                                        <span class="text-muted"><?php echo CURRENCY_SYMBOL . $item["subtotal"]; ?></span>
-                                    </li>
-                            <?php }
-                            } ?>
-                            <li class="list-group-item d-flex justify-content-between">
-                                <span>Total (<?php echo CURRENCY; ?>)</span>
-                                <strong><?php echo CURRENCY_SYMBOL . $cart->total(); ?></strong>
-                            </li>
-                        </ul>
-                        <a href="index.php" class="btn btn-sm btn-info">+ add items</a>
+                                <?php
+                                }
+                                ?>
+
+
+                            <?php
+                            }
+                            ?>
+                        </h6>
                     </div>
-                    <div class="col-md-8 order-md-1">
-                        <h4 class="mb-3">Contact Details</h4>
-                        <form method="post" action="cartAction.php">
-                            <div class="row">
-                                <div class="col-md-6 mb-3">
-                                    <label for="first_name">First Name</label>
-                                    <input type="text" class="form-control" name="first_name" value="<?php echo !empty($postData['first_name']) ? $postData['first_name'] : ''; ?>" required>
-                                </div>
-                                <div class="col-md-6 mb-3">
-                                    <label for="last_name">Last Name</label>
-                                    <input type="text" class="form-control" name="last_name" value="<?php echo !empty($postData['last_name']) ? $postData['last_name'] : ''; ?>" required>
-                                </div>
+                    <form action="" method="post" id="placeOrder">
+
+                        <!-- <div class="form-group">
+                            <h4>Order ID</h4>
+                            <input type="text" name="name" class="form-control" value="<?php echo $orderid ?>" readonly>
+                        </div> -->
+                        <div class="form-group">
+                            <h4>ID User</h4>
+                            <input type="text" name="id" class="form-control" value="<?php echo $_SESSION['a_global']->user_id ?>" readonly>
+                        </div>
+                        <div class="form-group">
+                            <h4>Nama</h4>
+                            <input type="text" name="name" class="form-control" value="<?php echo $_SESSION['a_global']->user_name ?>" readonly </div>
+                            <div class="form-group">
+                                <h4>Email</h4>
+                                <input type="email" name="email" class="form-control" value="<?php echo $_SESSION['a_global']->user_email ?>" required>
                             </div>
-                            <div class="mb-3">
-                                <label for="email">Email</label>
-                                <input type="email" class="form-control" name="email" value="<?php echo !empty($postData['email']) ? $postData['email'] : ''; ?>" required>
+                            <div class="form-group">
+                                <h4>Nomor Telfon</h4>
+                                <input type="tel" name="phone" class="form-control" value="<?php echo $_SESSION['a_global']->user_telp ?>" required>
                             </div>
-                            <div class="mb-3">
-                                <label for="phone">Phone</label>
-                                <input type="text" class="form-control" name="phone" value="<?php echo !empty($postData['phone']) ? $postData['phone'] : ''; ?>" required>
+                            <div class="form-group">
+                                <h4>Perwakilan</h4>
+                                <input type="tel" name="office" class="form-control" value="<?php echo $row_np['office_name'] ?>" readonly>
                             </div>
-                            <div class="mb-3">
-                                <label for="last_name">Address</label>
-                                <input type="text" class="form-control" name="address" value="<?php echo !empty($postData['address']) ? $postData['address'] : ''; ?>" required>
+                            <div class="form-group">
+                                <input type="submit" name="submit" value="Place Order" class="btn btn-danger btn-block">
                             </div>
-                            <input type="hidden" name="action" value="placeOrder" />
-                            <input class="btn btn-success btn-block" type="submit" name="checkoutSubmit" value="Place Order">
-                        </form>
-                    </div>
+                    </form>
+                    <?php
+                    if (isset($_POST['submit'])) {
+                        $nomer = 1;
+                        $keranjang1 = mysqli_query($conn, "SELECT * FROM data_cart LEFT JOIN data_category USING (category_id) LEFT JOIN data_product USING (product_id) WHERE data_cart.user_id = '" . $iduser . "' AND data_cart.office_id = '" . $kantoruser . "' ");
+                        if (mysqli_num_rows($keranjang1) > 0) {
+                            while ($fo_keranjang1 = mysqli_fetch_array($keranjang1)) {
+                                $number = $nomer++;
+                                $iduser = $_POST['id'];
+                                $namauser = $_POST['name'];
+                                $emailuser = $_POST['email'];
+                                $telpuser = $_POST['phone'];
+                                $namakantor = $_POST['office'];
+                                $idkantor = $kantoruser;
+                                $productname = $fo_keranjang1['product_name'];
+                                $idkategori = $fo_keranjang1['category_id'];
+                                $namakategori = $fo_keranjang1['category_name'];
+                                $idproduk = $fo_keranjang1['product_id'];
+                                $namaproduk = $fo_keranjang1['product_name'];
+                                $kuantitas = $fo_keranjang1["quantity"];
+                                $insert = true;
+
+                                if ($insert) {
+                                    $insert = mysqli_query($conn, "INSERT INTO data_transaction VALUES (
+                                        '" . $number . "',
+                                        '" . $orderid . "',
+                                        '" . $iduser . "',
+                                        '" . $namauser . "',
+                                        '" . $emailuser . "',
+                                        '" . $telpuser . "',
+                                        '" . $idkantor . "',
+                                        '" . $namakantor . "',
+                                        '" . $idproduk . "',
+                                        '" . $namaproduk . "',
+                                        '" . $idkategori . "',
+                                        '" . $namakategori . "',
+                                        '" . $kuantitas . "',
+                                        NOW(),
+                                        '0'
+                                    )");
+
+                                    $delete = mysqli_query($conn, "DELETE FROM data_cart WHERE data_cart.user_id = '" . $iduser . "' AND data_cart.office_id = '" . $kantoruser . "' ");
+                                } else {
+                                    echo 'gagal' . mysqli_error($conn);
+                                }
+                            }
+                        }
+                        echo '<script>alert("Berhasil Order")</script>';
+                        echo '<script>window.location="user-home.php"</script>';
+                    }
+                    ?>
                 </div>
             </div>
         </div>
     </div>
+
 </body>
 
 </html>

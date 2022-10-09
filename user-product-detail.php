@@ -2,14 +2,22 @@
 session_start();
 error_reporting(0);
 include 'db.php';
+if ($_SESSION['role_login'] != 'user') {
+    echo '<script>window.location="logout.php"</script>';
+} else if ($_SESSION['status_login'] != true) {
+    echo '<script>window.location="login.php"</script>';
+}
+
+
 $kontak = mysqli_query($conn, "SELECT admin_telp, admin_email, admin_address FROM data_admin WHERE admin_id = 1");
 $a = mysqli_fetch_object($kontak);
 
-$produk = mysqli_query($conn, "SELECT * FROM data_product WHERE product_id = '" . $_GET['id'] . "' ");
+$produk = mysqli_query($conn, "SELECT * FROM data_product LEFT JOIN data_category  USING (category_id) WHERE product_id = '" . $_GET['id'] . "' ");
 $p = mysqli_fetch_object($produk);
 
 $qd = mysqli_query($conn, "SELECT * FROM data_office WHERE office_id = 11");
 $fo = mysqli_fetch_object($qd);
+
 ?>
 
 <!DOCTYPE html>
@@ -65,17 +73,44 @@ $fo = mysqli_fetch_object($qd);
                     <img src="produk/<?php echo $p->product_image ?>" width="100%">
                 </div>
                 <div class="col-2">
+                    <form action="" method="POST">
+                        <h3><?php echo $p->product_name ?></h3>
+                        <h4>RP. <?php echo number_format($p->product_price)  ?></h4>
+                        <h4>Stok Barang : <?php echo $p->stock ?> </h4>
+                        <p>Deskripsi : <br>
+                            <?php echo $p->product_description ?>
+                        </p>
+                        <h4>Jumlah</h4>
+                        <input type="text" name="qty" class="input-control" required>
+                        <input type="submit" name="submit" value="Masukkan Keranjang" class="btn">
+                    </form>
                     <?php
+                    if (isset($_POST['submit'])) {
+                        $iduser = $_SESSION['a_global']->user_id;
+                        $idkantor = $_SESSION['a_global']->office_id;
+                        $idbarang = $p->product_id;
+                        $idkategori = $p->category_id;
+                        $jumlah = $_POST['qty'];
+                        $insert = true;
 
+
+                        if ($insert) {
+                            $insert = mysqli_query($conn, "INSERT INTO data_cart VALUES (
+                                '" . $iduser . "',
+                                '" . $idkantor . "',
+                                '" . $idbarang . "',
+                                '" . $idkategori . "',
+                                '" . $jumlah . "',
+                                NOW(),
+                                NOW()
+                            )");
+                            echo '<script>alert("Berhasil masuk ke keranjang")</script>';
+                            echo '<script>window.location="user-home.php"</script>';
+                        } else {
+                            echo 'gagal' . mysqli_error($conn);
+                        }
+                    }
                     ?>
-                    <h3><?php echo $p->product_name ?></h3>
-                    <h4>RP. <?php echo number_format($p->product_price)  ?></h4>
-                    <h4>Stok Barang : <?php echo $p->stock ?> </h4>
-                    <p>Deskripsi : <br>
-                        <?php echo $p->product_description ?>
-                    </p>
-                    <input type="submit" name="pesan" value="Masukkan Keranjang" class="order-button">
-                    <h4><a href="">Masukkan Keranjang</a></h4>
                 </div>
             </div>
         </div>

@@ -8,10 +8,10 @@ if ($_SESSION['role_login'] != 'user') {
     echo '<script>window.location="login.php"</script>';
 }
 
-$query = mysqli_query($conn, "SELECT * FROM data_user WHERE user_id = '" . $_SESSION['id'] . "' ");
-$d = mysqli_fetch_object($query);
+$iduser = $_SESSION['a_global']->user_id;
+$kantoruser = $_SESSION['a_global']->office_id;
 
-$keranjang = mysqli_query($conn, "SELECT * FROM ")
+// header("refresh: 3;");
 ?>
 
 <!DOCTYPE html>
@@ -54,6 +54,7 @@ $keranjang = mysqli_query($conn, "SELECT * FROM ")
                 <table border="1" cellspacing="0" class="table">
                     <thead>
                         <tr>
+                            <th>No</th>
                             <th>Gambar</th>
                             <th>ID Barang</th>
                             <th>Kategori</th>
@@ -62,8 +63,45 @@ $keranjang = mysqli_query($conn, "SELECT * FROM ")
                             <th>Edit/Hapus</th>
                         </tr>
                     </thead>
+                    <tbody>
+                        <?php
+                        $no = 1;
+                        $keranjang = mysqli_query($conn, "SELECT * FROM data_cart LEFT JOIN data_category USING (category_id) LEFT JOIN data_product USING (product_id) WHERE data_cart.user_id = '" . $iduser . "' AND data_cart.office_id = '" . $kantoruser . "' ");
+                        if (mysqli_num_rows($keranjang) > 0) {
+                            while ($fo_keranjang = mysqli_fetch_array($keranjang)) {
+                        ?>
+                                <tr>
+                                    <td><?php echo $no++ ?></td>
+                                    <td><a href="produk/<?php echo $fo_keranjang['product_image'] ?>"> <img src="produk/<?php echo $fo_keranjang['product_image'] ?>" width="50px"></a></td>
+                                    <td><?php echo $fo_keranjang['product_id'] ?></td>
+                                    <td><?php echo $fo_keranjang['category_name'] ?></td>
+                                    <td><?php echo $fo_keranjang['product_name'] ?></td>
+                                    <td><?php echo $fo_keranjang['quantity'] ?></td>
+                                    <td>
+                                        <a href="edit-product.php?id=<?php echo $row['product_id'] ?>">Edit</a> || <a href="delete-data.php?idp=<?php echo $row['product_id'] ?>" onclick="return confirm('R U Sure about dat ?') ">Hapus</a>
+                                    </td>
+                                </tr>
+                            <?php
+                            }
+                            ?>
+
+
+                        <?php
+                        } else {
+                        ?>
+                            <td colspan="8">Tidak Ada Data</td>
+                        <?php
+                        }
+                        ?>
+                    </tbody>
                 </table>
             </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="container">
+            <a href="checkout.php" class="btn">Checkout</a>
         </div>
     </div>
 

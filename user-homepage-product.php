@@ -34,11 +34,6 @@ $user_office = $_SESSION['a_global']->office_id;
             margin: 20px 0px;
         }
 
-        input,
-        button {
-            height: 34px;
-        }
-
         .pagination {
             display: inline-block;
         }
@@ -65,7 +60,7 @@ $user_office = $_SESSION['a_global']->office_id;
 
 <body>
     <?php
-    $per_page_record = 4;  // Number of entries to show in a page.   
+    $per_page_record = 12;  // Number of entries to show in a page.   
     // Look for a GET variable page if not found default is 1.        
     if (isset($_GET["page"])) {
         $page  = $_GET["page"];

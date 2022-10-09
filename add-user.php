@@ -1,7 +1,7 @@
 <?php
 session_start();
 include 'db.php';
-if ($_SESSION['role_login'] == 'user' || $_SESSION['role_login'] == 'admin') {
+if ($_SESSION['role_login'] == 'user') {
 
     echo '<script>window.location="logout.php"</script>';
 } else if ($_SESSION['status_login'] != true) {
