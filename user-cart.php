@@ -1,12 +1,17 @@
 <?php
 session_start();
 include 'db.php';
-if ($_SESSION['role_login'] == 'user') {
+if ($_SESSION['role_login'] != 'user') {
 
     echo '<script>window.location="logout.php"</script>';
 } else if ($_SESSION['status_login'] != true) {
     echo '<script>window.location="login.php"</script>';
 }
+
+$query = mysqli_query($conn, "SELECT * FROM data_user WHERE user_id = '" . $_SESSION['id'] . "' ");
+$d = mysqli_fetch_object($query);
+
+$keranjang = mysqli_query($conn, "SELECT * FROM ")
 ?>
 
 <!DOCTYPE html>
@@ -27,165 +32,40 @@ if ($_SESSION['role_login'] == 'user') {
 </head>
 
 <body>
-    <!--------------------------------------------------------------------------------- ADMIN ---------------------------------------------------------------------------->
-    <?php
-    if ($_SESSION['role_login'] == 'admin') {
-    ?>
-        <!-- header -->
-        <header>
-            <div class="container">
-                <h1><a href="dashboard.php">KP Ombudsman</a></h1>
-                <ul>
-                    <li><a href="dashboard.php">Dashboard</a></li>
-                    <li><a href="profile.php">Profil</a></li>
-                    <li><a href="product-data.php">Data Produk</a></li>
-                    <li><a href="user-data.php">Data User</a></li>
-                    <li><a href="order-table.php">Pesanan</a></li>
-                    <li><a href="logout.php">Keluar</a></li>
-                </ul>
-            </div>
-        </header>
 
-        <!-- Content -->
-        <div class="section">
-            <div class="container">
-                <h3>Data User</h3>
-                <div class="box">
-                    <p><a href="add-user.php">Tambah Data</a></p><br>
-                    <!-- <button><a href="add-product.php" style="text-decoration:none ;">Tambah Data</a></button> -->
-                    <table border="1" cellspacing="0" class="table">
-                        <thead>
-                            <tr>
-                                <th width="60px">No</th>
-                                <!-- <th>Perwakilan</th> -->
-                                <th>ID User</th>
-                                <th>Nama User</th>
-                                <th>Username Akun</th>
-                                <th>Telpon User</th>
-                                <th>Email User</th>
-                                <th>Alamat User</th>
-                                <th width="150px">Aksi</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php
-                            $no = 1;
-                            $user = mysqli_query($conn, "SELECT * FROM data_user ORDER BY user_id DESC ");
-                            if (mysqli_num_rows($user) > 0) {
-                                while ($row = mysqli_fetch_array($user)) {
-                            ?>
-                                    <tr>
-                                        <td><?php echo $no++ ?></td>
-                                        <td><?php echo $row['user_id'] ?></td>
-                                        <td><?php echo $row['user_name'] ?></td>
-                                        <td><?php echo $row['user_username'] ?></td>
-                                        <td><?php echo $row['user_telp'] ?></td>
-                                        <td><?php echo $row['user_email'] ?></td>
-                                        <td><?php echo $row['user_address'] ?></td>
-                                        <td>
-                                            <a href="edit-user.php?id=<?php echo $row['user_id'] ?>">Edit</a> || <a href="delete-data.php?idu=<?php echo $row['user_id'] ?>" onclick="return confirm('R U Sure about dat ?') ">Hapus</a>
-                                        </td>
-                                    </tr>
-                                <?php }
-                            } else { ?>
-                                <tr>
-                                    <td colspan="8">Tidak Ada Data</td>
-                                </tr>
-                            <?php } ?>
-                        </tbody>
-                    </table>
-                </div>
+    <!-- header -->
+    <header>
+        <div class="container">
+            <h1><a href="user-home.php">KP Ombudsman</a></h1>
+            <ul>
+                <li><a href="user-homepage-product.php">Produk</a></li>
+                <li><a href="user-cart.php">Keranjang</a></li>
+                <li><a href="user-profile.php">Profil Saya</a></li>
+                <li><a href="logout.php">Log out</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <!-- Content -->
+    <div class="section">
+        <div class="container">
+            <h3>Keranjang</h3>
+            <div class="box">
+                <table border="1" cellspacing="0" class="table">
+                    <thead>
+                        <tr>
+                            <th>Gambar</th>
+                            <th>ID Barang</th>
+                            <th>Kategori</th>
+                            <th>Produk</th>
+                            <th>Kuantitas</th>
+                            <th>Edit/Hapus</th>
+                        </tr>
+                    </thead>
+                </table>
             </div>
         </div>
-
-        <!-- Footer -->
-        <footer>
-            <div class="container">
-                <small>Copyright &copy; 2022 - Ramsey Adrian</small>
-            </div>
-        </footer>
-    <?php
-    } else if ($_SESSION['role_login'] == 'super') {
-    ?>
-        <!-- header -->
-        <header>
-            <div class="container">
-                <h1><a href="dashboard.php">KP Ombudsman</a></h1>
-                <ul>
-                    <li><a href="dashboard.php">Dashboard</a></li>
-                    <li><a href="profile.php">Profil</a></li>
-                    <li><a href="category-data.php">Data Kategori</a></li>
-                    <li><a href="product-data.php">Data Produk</a></li>
-                    <li><a href="office-data.php">Perwakilan</a></li>
-                    <li><a href="admin-data.php">Data Admin</a></li>
-                    <li><a href="user-data.php">Data User</a></li>
-                    <li><a href="order-table.php">Pesanan</a></li>
-                    <li><a href="logout.php">Keluar</a></li>
-                </ul>
-            </div>
-        </header>
-
-        <!-- Content -->
-        <div class="section">
-            <div class="container">
-                <h3>Data User</h3>
-                <div class="box">
-                    <p><a href="add-user.php">Tambah Data</a></p><br>
-                    <!-- <button><a href="add-product.php" style="text-decoration:none ;">Tambah Data</a></button> -->
-                    <table border="1" cellspacing="0" class="table">
-                        <thead>
-                            <tr>
-                                <th width="60px">No</th>
-                                <!-- <th>Perwakilan</th> -->
-                                <th>ID User</th>
-                                <th>Nama User</th>
-                                <th>Username Akun</th>
-                                <th>Telpon User</th>
-                                <th>Email User</th>
-                                <th>Alamat User</th>
-                                <th width="150px">Aksi</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php
-                            $no = 1;
-                            $user = mysqli_query($conn, "SELECT * FROM data_user ORDER BY user_id DESC ");
-                            if (mysqli_num_rows($user) > 0) {
-                                while ($row = mysqli_fetch_array($user)) {
-                            ?>
-                                    <tr>
-                                        <td><?php echo $no++ ?></td>
-                                        <td><?php echo $row['user_id'] ?></td>
-                                        <td><?php echo $row['user_name'] ?></td>
-                                        <td><?php echo $row['user_username'] ?></td>
-                                        <td><?php echo $row['user_telp'] ?></td>
-                                        <td><?php echo $row['user_email'] ?></td>
-                                        <td><?php echo $row['user_address'] ?></td>
-                                        <td>
-                                            <a href="edit-user.php?id=<?php echo $row['user_id'] ?>">Edit</a> || <a href="delete-data.php?idu=<?php echo $row['user_id'] ?>" onclick="return confirm('R U Sure about dat ?') ">Hapus</a>
-                                        </td>
-                                    </tr>
-                                <?php }
-                            } else { ?>
-                                <tr>
-                                    <td colspan="8">Tidak Ada Data</td>
-                                </tr>
-                            <?php } ?>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-
-        <!-- Footer -->
-        <footer>
-            <div class="container">
-                <small>Copyright &copy; 2022 - Ramsey Adrian</small>
-            </div>
-        </footer>
-    <?php
-    }
-    ?>
+    </div>
 
 </body>
 

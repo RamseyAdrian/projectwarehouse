@@ -49,7 +49,7 @@ $fo = mysqli_fetch_object($qd);
     <!--search-->
     <div class="search">
         <div class="container">
-            <form action="produk.php" method="GET">
+            <form action="user-homepage-product.php" method="GET">
                 <input type="text" name="search" placeholder="cari produk" value="<?php echo $_GET['search'] ?>">
                 <input type="submit" name="cari" value="Cari">
             </form>

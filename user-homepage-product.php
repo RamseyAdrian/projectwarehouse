@@ -7,6 +7,8 @@ $a = mysqli_fetch_object($kontak);
 
 $qd = mysqli_query($conn, "SELECT * FROM data_office WHERE office_id = 11");
 $fo = mysqli_fetch_object($qd);
+
+$user_office = $_SESSION['a_global']->office_id;
 ?>
 
 <!DOCTYPE html>
@@ -112,7 +114,7 @@ $fo = mysqli_fetch_object($qd);
                 if ($_GET['search'] != '' || $_GET['kat'] != '') {
                     $where = "AND product_name LIKE '%" . $_GET['search'] . "%' AND category_id LIKE '%" . $_GET['kat'] . "%' ";
                 }
-                $produk = mysqli_query($conn, "SELECT * FROM data_product WHERE product_status=1 $where
+                $produk = mysqli_query($conn, "SELECT * FROM data_product LEFT JOIN data_office USING (office_id) WHERE product_status=1 AND office_id = '" . $user_office . "' $where
                 ORDER BY product_id LIMIT $start_from, $per_page_record ");
                 if (mysqli_num_rows($produk) > 0) {
                     while ($p = mysqli_fetch_array($produk)) {

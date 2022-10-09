@@ -109,7 +109,7 @@ if ($_SESSION['role_login'] == 'user' || $_SESSION['role_login'] == 'admin') {
                         $insert = mysqli_query($conn, "INSERT INTO data_user VALUES (
                                             '" . $id . "',
                                             '" . $perwakilan . "',
-                                            'Jakarta',
+                                            'Indonesia',
                                             '" . $nama . "',
                                             '" . $username . "',
                                             '" . MD5($pass) . "',
