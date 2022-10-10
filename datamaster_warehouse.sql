@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 07, 2022 at 01:59 AM
+-- Generation Time: Oct 10, 2022 at 02:35 AM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 8.1.6
 
@@ -30,7 +30,6 @@ SET time_zone = "+00:00";
 CREATE TABLE `data_admin` (
   `admin_id` int(11) NOT NULL,
   `office_id` int(15) NOT NULL,
-  `admin_location` varchar(50) NOT NULL,
   `admin_name` varchar(50) NOT NULL,
   `admin_username` varchar(50) NOT NULL,
   `admin_password` varchar(100) NOT NULL,
@@ -43,9 +42,32 @@ CREATE TABLE `data_admin` (
 -- Dumping data for table `data_admin`
 --
 
-INSERT INTO `data_admin` (`admin_id`, `office_id`, `admin_location`, `admin_name`, `admin_username`, `admin_password`, `admin_telp`, `admin_email`, `admin_address`) VALUES
-(2, 12, 'Jawa', 'Alby', 'alby', '4e22d85ac6c328be1716f5489eea41a5', '013978268', 'alby@email.com', 'Jalan Cipulir'),
-(99, 11, 'Jakarta', 'Ramsey Adrian', 'admin', '21232f297a57a5a743894a0e4a801fc3', '082286486', 'adrianramsey@gmail.com', 'Jalan Terus Pantang Mundur Uye');
+INSERT INTO `data_admin` (`admin_id`, `office_id`, `admin_name`, `admin_username`, `admin_password`, `admin_telp`, `admin_email`, `admin_address`) VALUES
+(99, 11, 'Admin', 'admin', '21232f297a57a5a743894a0e4a801fc3', '082286486', 'adrianramsey@gmail.com', 'Jalan Terus Pantang Mundur '),
+(245, 2, 'Admin SUMUT', 'a_sumut', '61d7b9e39a01793ce9b32ac5bd398c8b', '0218371279', 'sumut@email.com', 'Provinsi Sumatera Utara');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `data_cart`
+--
+
+CREATE TABLE `data_cart` (
+  `user_id` int(20) NOT NULL,
+  `office_id` int(15) NOT NULL,
+  `product_id` int(20) NOT NULL,
+  `category_id` int(11) NOT NULL,
+  `quantity` int(20) NOT NULL,
+  `created` datetime DEFAULT NULL,
+  `modified` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `data_cart`
+--
+
+INSERT INTO `data_cart` (`user_id`, `office_id`, `product_id`, `category_id`, `quantity`, `created`, `modified`) VALUES
+(20, 11, 2, 1, 1, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -177,7 +199,6 @@ INSERT INTO `data_product` (`product_id`, `category_id`, `office_id`, `product_n
 CREATE TABLE `data_superadmin` (
   `super_admin_id` int(11) NOT NULL,
   `office_id` int(15) NOT NULL,
-  `super_location` varchar(50) NOT NULL,
   `super_name` varchar(50) NOT NULL,
   `super_username` varchar(50) NOT NULL,
   `super_password` varchar(100) NOT NULL,
@@ -190,8 +211,9 @@ CREATE TABLE `data_superadmin` (
 -- Dumping data for table `data_superadmin`
 --
 
-INSERT INTO `data_superadmin` (`super_admin_id`, `office_id`, `super_location`, `super_name`, `super_username`, `super_password`, `super_telp`, `super_email`, `super_address`) VALUES
-(1, 11, 'Jakarta', 'Ombudsman', 'ombudsman', '36ca45f981dc4643324744c3a0ea8ca8', '909092', 'ombudsman@email.com', 'Kantor Utama Ombudsman RI');
+INSERT INTO `data_superadmin` (`super_admin_id`, `office_id`, `super_name`, `super_username`, `super_password`, `super_telp`, `super_email`, `super_address`) VALUES
+(1, 11, 'Ombudsman', 'ombudsman', '36ca45f981dc4643324744c3a0ea8ca8', '909092', 'ombudsman@email.com', 'Kantor Utama Ombudsman RI'),
+(100, 11, 'Super Admin', 'super', 'super', '0812345678', 'super@email.com', 'DKI Jakarta');
 
 -- --------------------------------------------------------
 
@@ -200,15 +222,32 @@ INSERT INTO `data_superadmin` (`super_admin_id`, `office_id`, `super_location`, 
 --
 
 CREATE TABLE `data_transaction` (
-  `product_id` int(11) NOT NULL,
-  `category_id` int(11) NOT NULL,
-  `product_name` varchar(50) NOT NULL,
-  `product_quantity` int(15) NOT NULL,
-  `product_location` varchar(50) NOT NULL,
-  `product_buyer` varchar(50) NOT NULL,
-  `product_sender` varchar(50) NOT NULL,
-  `transaction_date` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+  `order_id` int(255) NOT NULL,
+  `user_id` int(20) NOT NULL,
+  `user_name` varchar(50) NOT NULL,
+  `user_email` varchar(50) NOT NULL,
+  `user_telp` varchar(20) NOT NULL,
+  `office_id` int(20) NOT NULL,
+  `office_name` varchar(50) NOT NULL,
+  `product_id` int(20) NOT NULL,
+  `product_name` varchar(100) NOT NULL,
+  `category_id` int(20) NOT NULL,
+  `category_name` varchar(50) NOT NULL,
+  `quantity` int(20) NOT NULL,
+  `created` datetime DEFAULT NULL,
+  `status` tinyint(1) NOT NULL,
+  `notes` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `data_transaction`
+--
+
+INSERT INTO `data_transaction` (`order_id`, `user_id`, `user_name`, `user_email`, `user_telp`, `office_id`, `office_name`, `product_id`, `product_name`, `category_id`, `category_name`, `quantity`, `created`, `status`, `notes`) VALUES
+(770725727, 150, 'Jakarta', 'jakarta@email.com', '02112345678', 11, 'Perwakilan Jakarta Raya', 4, 'Iphone ', 6, 'Smartphone', 5, '2022-10-10 06:14:35', 2, 'Stock tidak ada'),
+(774496623, 150, 'Jakarta', 'jakarta@email.com', '02112345678', 11, 'Perwakilan Jakarta Raya', 2, 'Headphone ROG', 3, 'Headphone', 1, '2022-10-10 06:14:35', 1, 'Langsung ambil'),
+(1513518791, 14, 'Sumut', 'sumut@email.com', '0218371279', 2, 'Perwakilan Sumatera Utara', 5, 'Kemeja Pria', 4, 'Pakaian Pria', 1, '2022-10-09 22:41:44', 0, ''),
+(1791860284, 150, 'Jakarta', 'jakarta@email.com', '02112345678', 11, 'Perwakilan Jakarta Raya', 1, 'Acer Predator', 1, 'Laptop', 2, '2022-10-10 06:14:35', 0, NULL);
 
 -- --------------------------------------------------------
 
@@ -233,10 +272,12 @@ CREATE TABLE `data_user` (
 --
 
 INSERT INTO `data_user` (`user_id`, `office_id`, `user_location`, `user_name`, `user_username`, `user_password`, `user_telp`, `user_email`, `user_address`) VALUES
-(102, 0, '', 'Budi', 'budi', '23beaa0579312f0e0f7082becbe747c6', '0218371279', 'budi@email.com', 'Jalan Sudirman'),
-(103, 11, 'Jakarta', 'Andi', 'adni', 'ce0e5bf55e4f71749eade7a8b95c4e46', '2148024', 'asdhkajssadad', 'dsadas'),
-(105, 11, 'Jakarta', 'Joko', 'joko', 'joko', '021123456', 'joko@email.com', 'Jalan rumah joko'),
-(222, 11, 'Jakarta', 'Gojo', 'gojo', '585af228c017f77987b473f2e1c2db44', '123456567', 'gojo@mail.com', 'jalan jujutsu'),
+(14, 2, 'Indonesia', 'Sumut', 'sumut', '6f5f5e65f6f815070cea49441ca15c9c', '0218371279', 'sumut@email.com', 'Provinsi Sumatera Utara'),
+(23, 3, 'Jakarta', 'Riau', 'riau', 'bba51a5b9935b92f046ca2048c2f7fe8', '14414121', 'riau@email,com', 'Provinsi Riau'),
+(24, 4, 'Jakarta', 'Sumbar', 'sumbar', 'e88a6e1036af5bdb28c7e6ecbd6afc00', '1328478719', 'sumbar@email.com', 'Provinsi Sumatera Barat'),
+(25, 5, 'Jakarta', 'Jambi', 'jambi', 'de9e80cc2a1e2f163d7fcc65dcedf180', '02918307213', 'jambi@email.com', 'Provinsi Jambi'),
+(123, 1, 'Jakarta', 'Aceh', 'aceh', '6cf48ee2e9efb24ab194ec39777699b1', '0212839213', 'aceh@email.com', 'Provinsi Aceh'),
+(150, 11, 'Jakarta', 'Jakarta', 'jakarta', '629ab14fab772d78a58eea752bdfc0dc', '02112345678', 'jakarta@email.com', 'DKI Jakarta'),
 (234, 11, 'Jakarta', 'User', 'user', 'ee11cbb19052e40b07aac0ca060c23ee', '02107381979', 'user@email.com', 'Jalan Setiabudi');
 
 --
@@ -249,6 +290,15 @@ INSERT INTO `data_user` (`user_id`, `office_id`, `user_location`, `user_name`, `
 ALTER TABLE `data_admin`
   ADD PRIMARY KEY (`admin_id`),
   ADD KEY `office_id` (`office_id`);
+
+--
+-- Indexes for table `data_cart`
+--
+ALTER TABLE `data_cart`
+  ADD KEY `user_id` (`user_id`),
+  ADD KEY `office_id` (`office_id`),
+  ADD KEY `category_id` (`category_id`),
+  ADD KEY `product_id` (`product_id`);
 
 --
 -- Indexes for table `data_category`
@@ -281,7 +331,11 @@ ALTER TABLE `data_superadmin`
 -- Indexes for table `data_transaction`
 --
 ALTER TABLE `data_transaction`
-  ADD PRIMARY KEY (`product_id`);
+  ADD PRIMARY KEY (`order_id`),
+  ADD KEY `user_id` (`user_id`),
+  ADD KEY `office_id` (`office_id`),
+  ADD KEY `product_id` (`product_id`),
+  ADD KEY `category_id` (`category_id`);
 
 --
 -- Indexes for table `data_user`
@@ -298,13 +352,13 @@ ALTER TABLE `data_user`
 -- AUTO_INCREMENT for table `data_admin`
 --
 ALTER TABLE `data_admin`
-  MODIFY `admin_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=101;
+  MODIFY `admin_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=246;
 
 --
 -- AUTO_INCREMENT for table `data_user`
 --
 ALTER TABLE `data_user`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=235;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=556;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
