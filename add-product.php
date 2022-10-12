@@ -22,7 +22,29 @@ if ($_SESSION['role_login'] == 'user') {
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Quicksand&display=swap" rel="stylesheet">
     <script src="https://cdn.ckeditor.com/4.19.1/standard/ckeditor.js"></script>
+    <style>
+        .box1 {
+            margin: 10px 0 -10px 0;
+            display: flex;
+        }
 
+        .section .container .box1 button {
+            background-color: #fff;
+            color: black;
+            display: inline-block;
+            font-size: 20px;
+            margin: 4px 2px;
+            cursor: pointer;
+            border-radius: 8px;
+            padding: 5px;
+            transition-duration: 0.4s;
+        }
+
+        .section .container .box1 button:hover {
+            background-color: black;
+            color: white;
+        }
+    </style>
 </head>
 
 <body>
@@ -44,7 +66,10 @@ if ($_SESSION['role_login'] == 'user') {
     <!-- Content -->
     <div class="section">
         <div class="container">
-            <h3>Tambah Data Produk</h3>
+            <h2>Tambah Data Produk</h2>
+            <div class="box1">
+                <button><a href="product-data.php" style="text-decoration: none ;">Kembali</a></button><br><br>
+            </div>
             <div class="box">
                 <form action="" method="POST" enctype="multipart/form-data">
                     <h4>Pilih Kategori</h4>
@@ -78,6 +103,7 @@ if ($_SESSION['role_login'] == 'user') {
                         <option value="0">Tidak Aktif</option>
                     </select>
                     <input type="submit" name="submit" value="Submit" class="btn">
+
                 </form>
                 <?php
                 if (isset($_POST['submit'])) {

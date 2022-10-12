@@ -70,25 +70,23 @@ $idkantoradmin = $_SESSION['a_global']->office_id;
         <!-- Content -->
         <div class="section">
             <div class="container">
-                <h3>Data Produk</h3>
-                <div class="box1">
+                <h2>Stocking Barang</h2>
+                <!-- <div class="box1">
                     <button><a href="add-product.php" style="text-decoration: none ;">Tambah Data Produk</a></button><br><br>
                     <button><a href="stocking-product.php" style="text-decoration: none ;">Stocking Barang</a></button>
                     <button><a href="stocking-history.php" style="text-decoration: none ;">Riwayat Stocking</a></button>
-                </div>
-                <br>
+                </div> -->
                 <div class="box">
 
                     <table border="1" cellspacing="0" class="table">
                         <thead>
                             <tr>
-                                <th width="60px">No</th>
-                                <th>Perwakilan</th>
-                                <th>ID Kategori</th>
+                                <th>No</th>
+                                <!-- <th>Perwakilan</th> -->
                                 <th>Kategori</th>
-                                <th>ID Produk</th>
+                                <!-- <th>ID Produk</th> -->
                                 <th>Nama Produk</th>
-                                <th>Harga</th>
+                                <!-- <th>Harga</th> -->
                                 <!-- <th>Deskripsi</th> -->
                                 <th>Gambar</th>
                                 <th>Status</th>
@@ -108,18 +106,29 @@ $idkantoradmin = $_SESSION['a_global']->office_id;
                             ?>
                                     <tr>
                                         <td><?php echo $no++ ?></td>
-                                        <td><?php echo $row_np['office_name'] ?></td>
-                                        <td><?php echo $row['category_id'] ?></td>
+                                        <!-- <td><?php echo $row_np['office_name'] ?></td> -->
                                         <td><?php echo $row['category_name'] ?></td>
-                                        <td><?php echo $row['product_id'] ?></td>
+                                        <!-- <td><?php echo $row['product_id'] ?></td> -->
                                         <td><?php echo $row['product_name'] ?></td>
-                                        <td>Rp. <?php echo number_format($row['product_price']) ?></td>
+                                        <!-- <td>Rp. <?php echo number_format($row['product_price']) ?></td> -->
                                         <!-- <td><?php echo $row['product_description'] ?></td> -->
                                         <td><a href="produk/<?php echo $row['product_image'] ?>"> <img src="produk/<?php echo $row['product_image'] ?>" width="50px"></a></td>
                                         <td><?php echo ($row['product_status'] == 0) ? 'Tidak AKtif' : 'Aktif' ?></td>
                                         <td><?php echo ($row['stock']) ?></td>
                                         <td>
-                                            <a href="edit-product.php?id=<?php echo $row['product_id'] ?>">Edit</a> || <a href="delete-data.php?idp=<?php echo $row['product_id'] ?>" onclick="return confirm('R U Sure about dat ?') ">Hapus</a>
+                                            <style>
+                                                #stocking {
+                                                    text-decoration: none;
+                                                }
+
+                                                #stocking:hover {
+                                                    background-color: black;
+                                                    color: white;
+                                                    margin: 4px 2px;
+                                                    border-radius: 5px;
+                                                }
+                                            </style>
+                                            <a id="stocking" href="edit-stocking-product.php?id=<?php echo $row['product_id'] ?>">Stock Produk</a>
                                         </td>
                                     </tr>
                                 <?php }

@@ -75,7 +75,7 @@ $p = mysqli_fetch_object($produk);
 
                     <h4>Gambar Barang</h4>
                     <img src="produk/<?php echo $p->product_image ?>" width="100px">
-                    <input type="hidden" name="foto" value="<?php echo $p->product_image ?>">
+                    <input type="hidden" name="gambar" value="<?php echo $p->product_image ?>">
 
                     <input type="file" name="gambar" class="input-control">
                     <h4>Deskripsi Barang</h4>
@@ -94,20 +94,47 @@ $p = mysqli_fetch_object($produk);
                 </form>
                 <?php
                 if (isset($_POST['submit'])) {
-                    //query update data produk
-                    $update = mysqli_query($conn, "UPDATE data_product SET 
+                    $idbarang = $_POST['idbarang'];
+                    $kategori = $_POST['kategori'];
+                    $nama = $_POST['nama'];
+                    $harga = $_POST['harga'];
+                    $deskripsi = $_POST['deskripsi'];
+                    $status = $_POST['status'];
+                    $stok = $_POST['stok'];
+                    $idkantor = $_POST['idkantor'];
+
+                    //menampung data file yang diupload
+                    $filename = $_FILES['gambar']['name'];
+                    $tmp_name = $_FILES['gambar']['tmp_name'];
+
+                    $type1 = explode('.', $filename);
+                    $type2 = $type1[1];
+
+                    $newname = 'produk' . time() . '.' . $type2;
+
+                    //menampung data format file yang diizinkan
+                    $tipe_diizinkan = array('jpg', 'jpeg', 'png', 'gif');
+
+                    //validasi format file
+                    if (!in_array($type2, $tipe_diizinkan)) {
+                        echo '<script>alert("Format file tidak diizinkan")</script>';
+                    } else {
+                        move_uploaded_file($tmp_name, './produk/' . $newname);
+                        // echo '<script>alert("Berhasil Upload")</script>';
+
+                        $update = mysqli_query($conn, "UPDATE data_product SET 
                             category_id = '" . $kategori . "',
                             product_name= '" . $nama . "',
                             product_price = '" . $harga . "',
                             product_description = '" . $deskripsi . "',
-                            product_image = '" . $namagambar . "',
+                            product_image = '" . $newname . "',
                             product_status = '" . $status . "',
                             stock = '" . $stok . "'
                             WHERE product_id = '" . $p->product_id . "'
                     ");
 
-                    if ($update) {
-                        echo '<script>Swal.fire({
+                        if ($update) {
+                            echo '<script>Swal.fire({
                             title: "Berhasil Edit Produk !",
                             text: "Klik OK Untuk Lanjut.",
                             icon: "success"
@@ -116,9 +143,13 @@ $p = mysqli_fetch_object($produk);
                             window.location="product-data.php"
                           });
                         </script>';
-                    } else {
-                        echo 'gagal' . mysqli_error($conn);
+                        } else {
+                            echo 'gagal' . mysqli_error($conn);
+                        }
                     }
+
+                    //query update data produk
+
                 }
                 ?>
             </div>

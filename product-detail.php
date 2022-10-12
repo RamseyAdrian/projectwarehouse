@@ -56,17 +56,18 @@ $fo = mysqli_fetch_object($qd);
                     <img src="produk/<?php echo $p->product_image ?>" width="100%">
                 </div>
                 <div class="col-2">
-                    <?php
-
-                    ?>
-                    <h3><?php echo $p->product_name ?></h3>
-                    <h4>RP. <?php echo number_format($p->product_price)  ?></h4>
-                    <h4>Stok Barang : <?php echo $p->stock ?> </h4>
-                    <p>Deskripsi : <br>
-                        <?php echo $p->product_description ?>
-                    </p>
-                    <input type="submit" name="pesan" value="Masukkan Keranjang" class="order-button">
-                    <h4><a href="">Masukkan Keranjang</a></h4>
+                    <form action="" method="POST">
+                        <h3><?php echo $p->product_name ?></h3>
+                        <h4>RP. <?php echo number_format($p->product_price)  ?></h4>
+                        <?php $qty = $p->stock; ?>
+                        <h4>Stok Barang : <?php echo $qty ?> </h4>
+                        <p>Deskripsi : <br>
+                            <?php echo $p->product_description ?>
+                        </p>
+                        <h4>Jumlah</h4>
+                        <input type="number" name="qty" class="input-control" min="1" max="<?php echo $qty ?>" value="1" required>
+                        <input type="submit" name="submit" value="Masukkan Keranjang" class="btn">
+                    </form>
                 </div>
             </div>
         </div>
