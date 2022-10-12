@@ -52,6 +52,7 @@ $row_np = mysqli_fetch_array($namaperwakilan);
                             $no = 1;
 
                             $keranjang = mysqli_query($conn, "SELECT * FROM data_cart LEFT JOIN data_category USING (category_id) LEFT JOIN data_product USING (product_id) WHERE data_cart.user_id = '" . $iduser . "' AND data_cart.office_id = '" . $kantoruser . "' ");
+                            $cart_id = rand();
                             if (mysqli_num_rows($keranjang) > 0) {
                                 while ($fo_keranjang = mysqli_fetch_array($keranjang)) {
                                     echo '<br>';
@@ -71,10 +72,10 @@ $row_np = mysqli_fetch_array($namaperwakilan);
                     </div>
                     <form action="" method="post" id="placeOrder">
 
-                        <!-- <div class="form-group">
-                            <h4>Order ID</h4>
-                            <input type="text" name="name" class="form-control" value="<?php echo $orderid ?>" readonly>
-                        </div> -->
+                        <div class="form-group">
+                            <h4>Cart ID</h4>
+                            <input type="text" name="cart" class="form-control" value="<?php echo $cart_id ?>" readonly>
+                        </div>
                         <div class="form-group">
                             <h4>ID User</h4>
                             <input type="text" name="id" class="form-control" value="<?php echo $_SESSION['a_global']->user_id ?>" readonly>
@@ -105,6 +106,7 @@ $row_np = mysqli_fetch_array($namaperwakilan);
                         if (mysqli_num_rows($keranjang1) > 0) {
                             while ($fo_keranjang1 = mysqli_fetch_array($keranjang1)) {
                                 $orderid = rand();
+                                $keranjang = $_POST['cart'];
                                 $iduser = $_POST['id'];
                                 $namauser = $_POST['name'];
                                 $emailuser = $_POST['email'];
@@ -122,6 +124,7 @@ $row_np = mysqli_fetch_array($namaperwakilan);
                                 if ($insert) {
                                     $insert = mysqli_query($conn, "INSERT INTO data_transaction VALUES (
                                         '" . $orderid . "',
+                                        '" . $keranjang . "',
                                         '" . $iduser . "',
                                         '" . $namauser . "',
                                         '" . $emailuser . "',
@@ -144,6 +147,14 @@ $row_np = mysqli_fetch_array($namaperwakilan);
                                 }
                             }
                         }
+                        $masuk = mysqli_query($conn, "INSERT INTO data_order VALUES (
+                            '" . $keranjang . "',
+                            '" . $iduser . "',
+                            '" . $idkantor . "',
+                            NOW(),
+                            '0'
+                            
+                        )");
                         echo '<script>alert("Berhasil Order")</script>';
                         echo '<script>window.location="user-home.php"</script>';
                     }

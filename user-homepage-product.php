@@ -104,18 +104,17 @@ $user_office = $_SESSION['a_global']->office_id;
 
     <div class="section">
         <div class="container">
-
-            <?php
-            if ($_GET['search'] != '' || $_GET['kat'] != '') {
-                $where = "AND product_name LIKE '%" . $_GET['search'] . "%' AND category_id LIKE '%" . $_GET['kat'] . "%' ";
-            }
-            $produk = mysqli_query($conn, "SELECT * FROM data_product LEFT JOIN data_office USING (office_id) LEFT JOIN data_category USING (category_id) WHERE product_status=1 AND office_id = '" . $user_office . "' $where
+            <h3>Produk</h3>
+            <div class="box">
+                <?php
+                if ($_GET['search'] != '' || $_GET['kat'] != '') {
+                    $where = "AND product_name LIKE '%" . $_GET['search'] . "%' AND category_id LIKE '%" . $_GET['kat'] . "%' ";
+                }
+                $produk = mysqli_query($conn, "SELECT * FROM data_product LEFT JOIN data_office USING (office_id) WHERE product_status=1 AND office_id = '" . $user_office . "' $where
                 ORDER BY product_id LIMIT $start_from, $per_page_record ");
-            if (mysqli_num_rows($produk) > 0) {
-                while ($p = mysqli_fetch_array($produk)) {
-            ?>
-                    <h3><?php echo $p['category_name'] ?></h3>
-                    <div class="box">
+                if (mysqli_num_rows($produk) > 0) {
+                    while ($p = mysqli_fetch_array($produk)) {
+                ?>
                         <a href="user-product-detail.php?id=<?php echo $p['product_id'] ?>">
                             <div class="col-4">
                                 <img src="produk/<?php echo $p['product_image'] ?>" alt="">
@@ -124,10 +123,10 @@ $user_office = $_SESSION['a_global']->office_id;
                             </div>
                         </a>
                     <?php }
-            } else { ?>
-                    </div>
+                } else { ?>
                     <p>Tidak Ada Produk</p>
                 <?php } ?>
+            </div>
         </div>
     </div>
 
