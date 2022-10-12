@@ -77,7 +77,7 @@ $p = mysqli_fetch_object($produk);
                     <img src="produk/<?php echo $p->product_image ?>" width="100px">
                     <input type="hidden" name="gambar" value="<?php echo $p->product_image ?>">
 
-                    <input type="file" name="gambar" class="input-control">
+                    <input type="file" name="gambar" class="input-control" value="<?php echo $p->product_image ?>">
                     <h4>Deskripsi Barang</h4>
                     <textarea name="deskripsi" class="input-control" placeholder="Deskripsi"><?php echo $p->product_description ?></textarea><br>
                     <h4>ID Kantor</h4>
