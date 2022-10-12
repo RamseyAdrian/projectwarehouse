@@ -76,7 +76,7 @@ $kantoradmin = $_SESSION['a_global']->office_id;
             <div class="container">
                 <h2>Pesanan User</h2>
                 <div class="box1">
-                    <button><a href="order-table.php" style="text-decoration: none ;">Kembali</a></button><br><br>
+                    <button><a href="order-history.php" style="text-decoration: none ;">Riwayat Pesanan</a></button><br><br>
                 </div><br>
                 <div class="box">
                     <table border="1" cellspacing="0" class="table">
@@ -84,40 +84,26 @@ $kantoradmin = $_SESSION['a_global']->office_id;
                             <tr>
                                 <th>No</th>
                                 <th>ID Pesanan</th>
-                                <th>ID User</th>
-                                <th>Nama</th>
-                                <th>Barang</th>
                                 <th>Waktu</th>
-                                <th>Status</th>
                                 <th>Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
                             <?php
                             $no = 1;
-                            $trans = mysqli_query($conn, "SELECT * FROM data_transaction LEFT JOIN data_product USING (product_id) WHERE data_transaction.office_id = '" . $kantoradmin . "' AND data_transaction.status = 1 OR data_transaction.status = 2 ");
+                            $trans = mysqli_query($conn, "SELECT * FROM data_order WHERE data_order.office_id = '" . $kantoradmin . "' AND data_order.status = 1 ");
                             if (mysqli_num_rows($trans) > 0) {
 
                                 while ($fo_trans = mysqli_fetch_array($trans)) {
                             ?>
                                     <tr>
                                         <td><?php echo $no++ ?></td>
-                                        <td><?php echo $fo_trans['order_id'] ?></td>
-                                        <td><?php echo $fo_trans['user_id'] ?></td>
-                                        <td><?php echo $fo_trans['user_name'] ?></td>
-                                        <td><?php echo $fo_trans['product_name'] ?></td>
+                                        <td><?php echo $fo_trans['cart_id'] ?></td>
                                         <td><?php echo $fo_trans['created'] ?></td>
-                                        <td><?php
-                                            if ($fo_trans['status'] == 0) {
-                                                echo "Belum disetujui";
-                                            } else if ($fo_trans['status'] == 1) {
-                                                echo "Disetujui";
-                                            } else if ($fo_trans['status'] == 2) {
-                                                echo "Tidak Disetujui";
-                                            }
-                                            ?></td>
                                         <td>
-                                            <a href="edit-order.php?id=<?php echo $fo_trans['order_id'] ?>">Detail</a>
+                                            <center>
+                                                <button id="buttdetail"><a href="edit-order.php?id=<?php echo $fo_trans['cart_id'] ?>">Lihat Detail Pesanan</a></button>
+                                            </center>
                                         </td>
                                     </tr>
                                 <?php

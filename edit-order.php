@@ -8,12 +8,11 @@ if ($_SESSION['role_login'] == 'user') {
     echo '<script>window.location="login.php"</script>';
 }
 
-$trans = mysqli_query($conn, "SELECT * FROM data_transaction LEFT JOIN data_product USING (product_id) WHERE order_id = '" . $_GET['id'] . "' ");
+$trans = mysqli_query($conn, "SELECT * FROM data_transaction LEFT JOIN data_product USING (product_id) WHERE cart_id = '" . $_GET['id'] . "' ");
 if (mysqli_num_rows($trans) == 0) {
-    echo '<script>window.location="user-order.php"</script>';
+    echo '<script>window.location="order-table.php"</script>';
 }
-$fo_trans = mysqli_fetch_object($trans);
-
+$idcart = $_GET['id'];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -53,48 +52,70 @@ $fo_trans = mysqli_fetch_object($trans);
     <div class="section">
         <div class="container">
             <h3>Detail Pesanan</h3>
+            <style>
+                #h2produk {
+                    color: red;
+                    font-weight: bold;
+                }
+            </style>
             <div class="box">
                 <form action="" method="POST" enctype="multipart/form-data">
-                    <h4>Order ID</h4>
-                    <input type="text" name="idorder" class="input-control" value="<?php echo $fo_trans->order_id ?>" readonly>
-                    <h4>User ID</h4>
-                    <input type="text" name="iduser" class="input-control" value="<?php echo $fo_trans->user_id ?>" readonly>
-                    <h4>Nama Pemesan</h4>
-                    <input type="text" name="namauser" class="input-control" value="<?php echo $fo_trans->user_name ?>" readonly>
-                    <h4>Perwakilan</h4>
-                    <input type="text" name="perwakilan" class="input-control" value="<?php echo $fo_trans->office_name ?>" readonly>
-                    <h4>Produk</h4>
-                    <input type="text" name="produk" class="input-control" value="<?php echo $fo_trans->product_name ?>" readonly>
-                    <h4>Gambar Barang</h4>
-                    <img src="produk/<?php echo $fo_trans->product_image ?>" width="100px">
-                    <h4>Deskripsi Barang</h4>
-                    <textarea name="deskripsi" class="input-control" readonly><?php echo $fo_trans->product_description ?></textarea><br>
-                    <h4>Jumlah Pesanan</h4>
-                    <input type="text" name="quantity" class="input-control" value="<?php echo $fo_trans->quantity ?>" readonly>
-                    <h4>Waktu Pesanan Dibuat</h4>
-                    <input type="text" name="waktu" class="input-control" value="<?php echo $fo_trans->created ?>" readonly>
-                    <h4>Catatan Untuk User</h4>
-                    <textarea name="notes" class="input-control"><?php echo $fo_trans->notes ?></textarea><br>
-                    <h4>Status Barang</h4>
-                    <select name="status" class="input-control">
-                        <option value="">--Pilih--</option>
-                        <option value="1" <?php echo ($fo_trans->status == 1) ? 'selected' : ''; ?>>Disetujui</option>
-                        <option value="0" <?php echo ($fo_trans->status == 0) ? 'selected' : ''; ?>>Belum Disetujui</option>
-                        <option value="2" <?php echo ($fo_trans->status == 2) ? 'selected' : ''; ?>>Tidak Disetujui</option>
+                    <?php
+                    $no = 1;
+                    if (mysqli_num_rows($trans) > 0) {
+                        while ($fo_trans = mysqli_fetch_object($trans)) {
+                    ?>
+
+                            <h1>Produk ke <?php echo $no ?></h1><br>
+                            <h2 id="h2produk"><?php echo $fo_trans->product_name ?></h2><br><br>
+                            <img src="produk/<?php echo $fo_trans->product_image ?>" width="100px">
+                            <br><br>
+                            <h4>Jumlah Pesanan</h4>
+                            <input type="text" name="quantity" class="input-control" value="<?php echo $fo_trans->quantity ?>" readonly>
+                            <h4>Waktu Pesanan Dibuat</h4>
+                            <input type="text" name="waktu" class="input-control" value="<?php echo $fo_trans->created ?>" readonly>
+                            <h3>Ketersediaan Barang</h3>
+                            <h4>Stock : <?php echo $fo_trans->stock ?></h4>
+                            <?php
+                            if ($fo_trans->stock >= $fo_trans->quantity) {
+                            ?>
+                                <h4 style="color: green ;">Stock Ready</h4>
+                            <?php
+                            } else if ($fo_trans->stock < $fo_trans->quantity) {
+                            ?>
+                                <h4 style="color: red ;">Stock tidak mencukupi</h4>
+                            <?php
+                            }
+                            ?>
+                            <br>
+                            <h4>Catatan Dari Admin</h4>
+                            <textarea name="notes" class="input-control"><?php echo $fo_trans->notes ?></textarea><br>
+
+                    <?php
+                            $no++;
+                        }
+                    }
+                    ?>
+                    <br><br>
+                    <h2>Status Pemesanan Barang</h2>
+                    <select name="status" class="input-control" required>
+                        <option value="" style="font-weight: bold ;">--Pilih--</option>
+                        <option value="0" style="font-weight: bold ;">Hold</option>
+                        <option value="1" style="font-weight: bold ;">Approved</option>
+                        <option value="2" style="font-weight: bold ;">Disapproved</option>
                     </select>
-                    <input type="submit" name="submit" value="Submit" class="btn">
+                    <br><br>
+                    <center>
+                        <input type="submit" name="submit" class="btn" value="Submit">
+                    </center>
                 </form>
                 <?php
                 if (isset($_POST['submit'])) {
-                    $statusbarang = $_POST['status'];
-                    $notes = $_POST['notes'];
-                    $idorder = $_POST['idorder'];
 
                     //query update data transaksi
-                    $update = mysqli_query($conn, "UPDATE data_transaction SET 
-                            status = '" . $statusbarang . "',
-                            notes = '" . $notes . "'
-                            WHERE data_transaction.order_id = '" . $idorder . "'
+                    $update = mysqli_query($conn, "UPDATE data_order SET 
+                            status = '1'
+                            WHERE cart_id = '" . $idcart . "'
 
                     ");
 

@@ -29,6 +29,26 @@ $kantoruser = $_SESSION['a_global']->office_id;
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert-dev.js"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <style>
+        #buttdetail {
+            font-size: 17px;
+            background-color: white;
+            color: black;
+            border-radius: 5px;
+            padding: 2px;
+        }
+
+        #buttdetail a {
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        #buttdetail:hover {
+            background-color: black;
+            color: white;
+            transition-duration: 0.3s;
+        }
+    </style>
 </head>
 
 <body>
@@ -57,7 +77,6 @@ $kantoruser = $_SESSION['a_global']->office_id;
                         <tr>
                             <th>No</th>
                             <th>ID Pesanan</th>
-                            <th>Barang</th>
                             <th>Status</th>
                             <th>Aksi</th>
                         </tr>
@@ -65,15 +84,15 @@ $kantoruser = $_SESSION['a_global']->office_id;
                     <tbody>
                         <?php
                         $no = 1;
-                        $trans = mysqli_query($conn, "SELECT * FROM data_transaction LEFT JOIN data_product USING (product_id) WHERE data_transaction.user_id = '" . $iduser . "' AND data_transaction.office_id = '" . $kantoruser . "' ");
+                        $trans = mysqli_query($conn, "SELECT * FROM data_order WHERE data_order.office_id = '" . $kantoruser . "' AND data_order.user_id = '" . $iduser . "' ");
                         if (mysqli_num_rows($trans) > 0) {
 
                             while ($fo_trans = mysqli_fetch_array($trans)) {
                         ?>
                                 <tr>
                                     <td><?php echo $no++ ?></td>
-                                    <td><?php echo $fo_trans['order_id'] ?></td>
-                                    <td><?php echo $fo_trans['product_name'] ?></td>
+                                    <td><?php echo $fo_trans['cart_id'] ?></td>
+
                                     <td><?php
                                         if ($fo_trans['status'] == 0) {
                                             echo "Belum disetujui";
@@ -84,7 +103,9 @@ $kantoruser = $_SESSION['a_global']->office_id;
                                         }
                                         ?></td>
                                     <td>
-                                        <a href="view-order.php?id=<?php echo $fo_trans['order_id'] ?>">Detail</a>
+                                        <center>
+                                            <button id="buttdetail"><a href="view-order.php?id=<?php echo $fo_trans['cart_id'] ?>">Lihat Detail Pesanan</a></button>
+                                        </center>
                                     </td>
                                 </tr>
                             <?php
@@ -105,12 +126,6 @@ $kantoruser = $_SESSION['a_global']->office_id;
                     </tbody>
                 </table>
             </div>
-        </div>
-    </div>
-
-    <div class="section">
-        <div class="container">
-            <a href="checkout.php" class="btn">Checkout</a>
         </div>
     </div>
 

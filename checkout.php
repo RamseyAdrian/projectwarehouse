@@ -152,7 +152,7 @@ $row_np = mysqli_fetch_array($namaperwakilan);
                             '" . $iduser . "',
                             '" . $idkantor . "',
                             NOW(),
-                            '0'
+                            'Hold'
                             
                         )");
                         echo '<script>alert("Berhasil Order")</script>';
