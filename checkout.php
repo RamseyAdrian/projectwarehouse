@@ -137,7 +137,7 @@ $row_np = mysqli_fetch_array($namaperwakilan);
                                         '" . $namakategori . "',
                                         '" . $kuantitas . "',
                                         NOW(),
-                                        '0',
+                                        'Diproses Admin',
                                         null
                                     )");
 
