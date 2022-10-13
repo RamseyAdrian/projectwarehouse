@@ -152,7 +152,9 @@ $row_np = mysqli_fetch_array($namaperwakilan);
                             '" . $iduser . "',
                             '" . $idkantor . "',
                             NOW(),
-                            'Hold'
+                            'Diproses Admin',
+                            null,
+                            null
                             
                         )");
                         echo '<script>alert("Berhasil Order")</script>';

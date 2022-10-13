@@ -8,7 +8,7 @@ if ($_SESSION['role_login'] != 'user') {
     echo '<script>window.location="login.php"</script>';
 }
 
-$trans = mysqli_query($conn, "SELECT * FROM data_transaction LEFT JOIN data_product USING (product_id) WHERE cart_id = '" . $_GET['id'] . "' ");
+$trans = mysqli_query($conn, "SELECT * FROM transaction_history LEFT JOIN data_product USING (product_id) WHERE cart_id = '" . $_GET['id'] . "' ");
 if (mysqli_num_rows($trans) == 0) {
     echo '<script>window.location="user-order.php"</script>';
 }
@@ -74,16 +74,51 @@ if (mysqli_num_rows($trans) == 0) {
                             <input type="text" name="quantity" class="input-control" value="<?php echo $fo_trans->quantity ?>" readonly>
                             <h4>Waktu Pesanan Dibuat</h4>
                             <input type="text" name="waktu" class="input-control" value="<?php echo $fo_trans->created ?>" readonly>
+                            <h4>Catatan Dari Admin</h4>
+                            <textarea name="notes" class="input-control" readonly><?php echo $fo_trans->notes ?></textarea><br>
+                            <h4>Status Barang</h4>
+                            <input type="text" class="input-control" readonly value="<?php echo $fo_trans->status ?>">
 
-
-                            <br><br><br><br>
+                            <br><br>
                     <?php
                             $no++;
                         }
                     }
                     ?>
+                    <input type="submit" name="print" class="btn" value="Print Surat Pengambilan Barang">
                 </form>
+                <?php
+                if (isset($_POST['submit'])) {
 
+                    //query update data produk
+                    $update = mysqli_query($conn, "UPDATE data_product SET 
+                            category_id = '" . $kategori . "',
+                            product_name= '" . $nama . "',
+                            product_price = '" . $harga . "',
+                            product_description = '" . $deskripsi . "',
+                            product_image = '" . $namagambar . "',
+                            product_status = '" . $status . "',
+                            stock = '" . $stok . "'
+                            WHERE product_id = '" . $p->product_id . "'
+                    ");
+
+                    if ($update) {
+                        echo '<script>Swal.fire({
+                            title: "Anda telah mengambil Pesanan !",
+                            text: "Klik OK Untuk Lanjut.",
+                            icon: "success"
+                          },
+                          function(){
+                            window.location="user-home.php"
+                          });
+                        </script>';
+                    } else {
+                        echo 'gagal' . mysqli_error($conn);
+                    }
+                } else if (isset($_POST['wait'])) {
+                    echo '<script>window.location="user-order.php"</script>';
+                }
+                ?>
             </div>
         </div>
     </div>
@@ -94,9 +129,6 @@ if (mysqli_num_rows($trans) == 0) {
             <small>Copyright &copy; 2022 - Ramsey Adrian</small>
         </div>
     </footer>
-    <script>
-        CKEDITOR.replace('deskripsi');
-    </script>
 
 </body>
 

@@ -30,6 +30,32 @@ $kantoruser = $_SESSION['a_global']->office_id;
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert-dev.js"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <style>
+        .box1 {
+            margin: 10px 0 -10px 0;
+            display: flex;
+        }
+
+        .section .container .box1 button {
+            background-color: #fff;
+            color: black;
+            display: inline-block;
+            font-size: 20px;
+            margin: 4px 2px;
+            cursor: pointer;
+            border-radius: 8px;
+            padding: 5px;
+            transition-duration: 0.4s;
+        }
+
+        .section .container .box1 button a {
+            font-weight: bold;
+        }
+
+        .section .container .box1 button:hover {
+            background-color: black;
+            color: white;
+        }
+
         #buttdetail {
             font-size: 17px;
             background-color: white;
@@ -71,6 +97,9 @@ $kantoruser = $_SESSION['a_global']->office_id;
     <div class="section">
         <div class="container">
             <h3>Pesanan Saya</h3>
+            <div class="box1">
+                <button><a href="user-order-history.php" style="text-decoration: none ;">Riwayat Pesanan</a></button><br><br>
+            </div>
             <div class="box">
                 <table border="1" cellspacing="0" class="table">
                     <thead>
@@ -94,18 +123,25 @@ $kantoruser = $_SESSION['a_global']->office_id;
                                     <td><?php echo $fo_trans['cart_id'] ?></td>
 
                                     <td><?php
-                                        if ($fo_trans['status'] == 0) {
-                                            echo "Belum disetujui";
-                                        } else if ($fo_trans['status'] == 1) {
-                                            echo "Disetujui";
-                                        } else if ($fo_trans['status'] == 2) {
-                                            echo "Tidak Disetujui";
-                                        }
+                                        echo $fo_trans['status']
                                         ?></td>
                                     <td>
-                                        <center>
-                                            <button id="buttdetail"><a href="view-order.php?id=<?php echo $fo_trans['cart_id'] ?>">Lihat Detail Pesanan</a></button>
-                                        </center>
+                                        <?php
+                                        if ($fo_trans['status'] == 'Diproses Admin') {
+                                        ?>
+                                            <center>
+                                                <button id="buttdetail"><a href="view-order.php?id=<?php echo $fo_trans['cart_id'] ?>">Lihat Detail Pesanan</a></button>
+                                            </center>
+                                        <?php
+                                        } else if ($fo_trans['status'] == "Berhasil") {
+                                        ?>
+
+                                            <center>
+                                                <button id="buttdetail"><a href="view-order-history.php?id=<?php echo $fo_trans['cart_id'] ?>">Riwayat Pesanan</a></button>
+                                            </center>
+                                        <?php
+                                        }
+                                        ?>
                                     </td>
                                 </tr>
                             <?php

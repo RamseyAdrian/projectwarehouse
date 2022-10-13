@@ -76,7 +76,7 @@ $kantoradmin = $_SESSION['a_global']->office_id;
             <div class="container">
                 <h2>Pesanan User</h2>
                 <div class="box1">
-                    <button><a href="order-history.php" style="text-decoration: none ;">Riwayat Pesanan</a></button><br><br>
+                    <button><a href="order-table.php" style="text-decoration: none ;">Data Pesanan</a></button><br><br>
                 </div><br>
                 <div class="box">
                     <table border="1" cellspacing="0" class="table">
@@ -91,7 +91,7 @@ $kantoradmin = $_SESSION['a_global']->office_id;
                         <tbody>
                             <?php
                             $no = 1;
-                            $trans = mysqli_query($conn, "SELECT * FROM data_order WHERE data_order.office_id = '" . $kantoradmin . "'  ");
+                            $trans = mysqli_query($conn, "SELECT * FROM data_order WHERE data_order.office_id = '" . $kantoradmin . "' AND data_order.status = 'Berhasil' ");
                             if (mysqli_num_rows($trans) > 0) {
 
                                 while ($fo_trans = mysqli_fetch_array($trans)) {
@@ -102,7 +102,7 @@ $kantoradmin = $_SESSION['a_global']->office_id;
                                         <td><?php echo $fo_trans['created'] ?></td>
                                         <td>
                                             <center>
-                                                <button id="buttdetail"><a href="edit-order.php?id=<?php echo $fo_trans['cart_id'] ?>">Lihat Detail Pesanan</a></button>
+                                                <button id="buttdetail"><a href="admin-order-history.php?id=<?php echo $fo_trans['cart_id'] ?>">Lihat Detail Pesanan</a></button>
                                             </center>
                                         </td>
                                     </tr>

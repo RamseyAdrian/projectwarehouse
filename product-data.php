@@ -232,7 +232,7 @@ $idkantoradmin = $_SESSION['a_global']->office_id;
         <!-- Footer -->
         <footer>
             <div class="container">
-                <small>Copyright &copy; 2022 - Ramsey Adrian</small>
+                <small>Copyright &copy; 2022 - Universitas Pertamina</small>
             </div>
         </footer>
     <?php

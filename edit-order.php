@@ -152,9 +152,6 @@ $idcart = $_GET['id'];
                                         WHERE product_id = '" . $idproduk . "'
                                  ");
 
-                                $delete_data_order = mysqli_query($conn, "DELETE FROM data_order WHERE data_order.cart_id = '" . $idcart . "' ");
-
-
                                 $insert_transaction_history = mysqli_query($conn, "INSERT INTO transaction_history VALUES (
                                     '" . $orderid . "',
                                     '" . $keranjang . "',
@@ -175,6 +172,9 @@ $idcart = $_GET['id'];
 
                                 )");
                                 $delete_data_transaction = mysqli_query($conn, "DELETE FROM data_transaction WHERE data_transaction.order_id = '" . $orderid . "' ");
+
+                                echo "Pesanan user berhasil diproses";
+                                echo '<script>window.location="order-table.php"</script>';
                             }
                         }
                     } else if ($_POST['status'] == "Diproses" && $stock_ready == mysqli_num_rows($trans)) {
