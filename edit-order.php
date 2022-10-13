@@ -152,6 +152,8 @@ $idcart = $_GET['id'];
                                         WHERE product_id = '" . $idproduk . "'
                                  ");
 
+                                $delete_data_order = mysqli_query($conn, "DELETE FROM data_order WHERE data_order.cart_id = '" . $idcart . "' ");
+
 
                                 $insert_transaction_history = mysqli_query($conn, "INSERT INTO transaction_history VALUES (
                                     '" . $orderid . "',
@@ -175,21 +177,24 @@ $idcart = $_GET['id'];
                                 $delete_data_transaction = mysqli_query($conn, "DELETE FROM data_transaction WHERE data_transaction.order_id = '" . $orderid . "' ");
                             }
                         }
+                    } else if ($_POST['status'] == "Diproses" && $stock_ready == mysqli_num_rows($trans)) {
+                        echo '<script>window.location="order-table.php"</script>';
+                    } else if ($_POST['status'] == "Gagal" && $stock_ready == mysqli_num_rows($trans)) {
                     }
 
-                    if ($update) {
-                        echo '<script>Swal.fire({
-                            title: "Update Pesanan Berhasil",
-                            text: "Klik OK Untuk Lanjut.",
-                            icon: "success"
-                          },
-                          function(){
-                            window.location="order-table.php"
-                          });
-                        </script>';
-                    } else {
-                        echo 'gagal' . mysqli_error($conn);
-                    }
+                    // if ($update) {
+                    //     echo '<script>Swal.fire({
+                    //     title: "Update Pesanan Berhasil",
+                    //     text: "Klik OK Untuk Lanjut.",
+                    //     icon: "success"
+                    //   },
+                    //   function(){
+                    //     window.location="order-table.php"
+                    //   });
+                    // </script>';
+                    // } else {
+                    //     echo 'gagal' . mysqli_error($conn);
+                    // }
                 }
                 ?>
             </div>

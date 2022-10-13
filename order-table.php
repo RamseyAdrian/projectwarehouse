@@ -114,7 +114,7 @@ $kantoradmin = $_SESSION['a_global']->office_id;
                         <tbody>
                             <?php
                             $no = 1;
-                            $trans = mysqli_query($conn, "SELECT * FROM data_order WHERE data_order.office_id = '" . $kantoradmin . "' AND data_order.status = 0  ");
+                            $trans = mysqli_query($conn, "SELECT * FROM data_order WHERE data_order.office_id = '" . $kantoradmin . "' AND data_order.status = 'Diproses Admin'  ");
                             if (mysqli_num_rows($trans) > 0) {
 
                                 while ($fo_trans = mysqli_fetch_array($trans)) {
