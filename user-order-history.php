@@ -100,6 +100,9 @@ $kantoruser = $_SESSION['a_global']->office_id;
             <div class="box1">
                 <button><a href="user-order.php" style="text-decoration: none ;">Data Pesanan</a></button><br><br>
             </div>
+            <center>
+                <h3>Pesanan Berhasil</h3>
+            </center>
             <div class="box">
                 <table border="1" cellspacing="0" class="table">
                     <thead>
@@ -141,6 +144,136 @@ $kantoruser = $_SESSION['a_global']->office_id;
                                     <td>
                                         <center>
                                             <button id="buttdetail" class="view"><a href="view-order-history.php?id=<?php echo $fo_trans['cart_id'] ?>">Detail & Cetak Surat</a></button>
+                                        </center>
+                                    </td>
+                                </tr>
+                            <?php
+                            }
+
+
+
+                            ?>
+
+
+                        <?php
+                        } else {
+                        ?>
+                            <td colspan="8">Tidak Ada Data</td>
+                        <?php
+                        }
+                        ?>
+                    </tbody>
+                </table>
+            </div>
+            <center>
+                <h3>Pesanan Berhasil Sebagian</h3>
+            </center>
+            <div class="box">
+                <table border="1" cellspacing="0" class="table">
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>ID Pesanan</th>
+                            <th>Produk</th>
+                            <th>Status</th>
+                            <th>Waktu Dipesan</th>
+                            <th>Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                        $no = 1;
+                        $trans = mysqli_query($conn, "SELECT * FROM data_order WHERE data_order.status = 'Berhasil Sebagian' AND data_order.user_id = '" . $iduser . "' ");
+                        if (mysqli_num_rows($trans) > 0) {
+
+                            while ($fo_trans = mysqli_fetch_array($trans)) {
+                        ?>
+                                <tr>
+                                    <td><?php echo $no++ ?></td>
+                                    <td><?php echo $fo_trans['cart_id'];
+                                        $idcart = $fo_trans['cart_id']; ?></td>
+                                    <td>
+                                        <?php
+                                        $fetch_trans = mysqli_query($conn, "SELECT * FROM transaction_history WHERE transaction_history.cart_id = '" . $idcart . "' ");
+                                        if (mysqli_num_rows($fetch_trans) > 0) {
+                                            while ($fa_fetch = mysqli_fetch_array($fetch_trans)) {
+                                                echo $fa_fetch['product_name'], "(", $fa_fetch['quantity'], ")";
+                                            }
+                                        }
+                                        ?>
+                                    </td>
+                                    <td><?php
+                                        echo $fo_trans['status']
+                                        ?></td>
+                                    <td><?php echo $fo_trans['created'] ?></td>
+                                    <td>
+                                        <center>
+                                            <button id="buttdetail" class="view"><a href="view-order-history.php?id=<?php echo $fo_trans['cart_id'] ?>">Detail & Cetak Surat</a></button>
+                                        </center>
+                                    </td>
+                                </tr>
+                            <?php
+                            }
+
+
+
+                            ?>
+
+
+                        <?php
+                        } else {
+                        ?>
+                            <td colspan="8">Tidak Ada Data</td>
+                        <?php
+                        }
+                        ?>
+                    </tbody>
+                </table>
+            </div>
+            <center>
+                <h3>Pesanan Gagal</h3>
+            </center>
+            <div class="box">
+                <table border="1" cellspacing="0" class="table">
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>ID Pesanan</th>
+                            <th>Produk</th>
+                            <th>Status</th>
+                            <th>Waktu Dipesan</th>
+                            <th>Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                        $no = 1;
+                        $trans = mysqli_query($conn, "SELECT * FROM data_order WHERE data_order.status = 'Gagal' AND data_order.user_id = '" . $iduser . "' ");
+                        if (mysqli_num_rows($trans) > 0) {
+
+                            while ($fo_trans = mysqli_fetch_array($trans)) {
+                        ?>
+                                <tr>
+                                    <td><?php echo $no++ ?></td>
+                                    <td><?php echo $fo_trans['cart_id'];
+                                        $idcart = $fo_trans['cart_id']; ?></td>
+                                    <td>
+                                        <?php
+                                        $fetch_trans = mysqli_query($conn, "SELECT * FROM transaction_history WHERE transaction_history.cart_id = '" . $idcart . "' ");
+                                        if (mysqli_num_rows($fetch_trans) > 0) {
+                                            while ($fa_fetch = mysqli_fetch_array($fetch_trans)) {
+                                                echo $fa_fetch['product_name'], "(", $fa_fetch['quantity'], ")";
+                                            }
+                                        }
+                                        ?>
+                                    </td>
+                                    <td><?php
+                                        echo $fo_trans['status']
+                                        ?></td>
+                                    <td><?php echo $fo_trans['created'] ?></td>
+                                    <td>
+                                        <center>
+                                            <button id="buttdetail" class="view"><a href="view-order-history.php?id=<?php echo $fo_trans['cart_id'] ?>">Detail</a></button>
                                         </center>
                                     </td>
                                 </tr>

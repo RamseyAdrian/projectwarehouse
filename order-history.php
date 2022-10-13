@@ -78,7 +78,11 @@ $kantoradmin = $_SESSION['a_global']->office_id;
                 <div class="box1">
                     <button><a href="order-table.php" style="text-decoration: none ;">Data Pesanan</a></button><br><br>
                 </div><br>
+                <center>
+                    <h3>Pesanan Berhasil</h3>
+                </center>
                 <div class="box">
+
                     <table border="1" cellspacing="0" class="table">
                         <thead>
                             <tr>
@@ -92,6 +96,106 @@ $kantoradmin = $_SESSION['a_global']->office_id;
                             <?php
                             $no = 1;
                             $trans = mysqli_query($conn, "SELECT * FROM data_order WHERE data_order.office_id = '" . $kantoradmin . "' AND data_order.status = 'Berhasil' ");
+                            if (mysqli_num_rows($trans) > 0) {
+
+                                while ($fo_trans = mysqli_fetch_array($trans)) {
+                            ?>
+                                    <tr>
+                                        <td><?php echo $no++ ?></td>
+                                        <td><?php echo $fo_trans['cart_id'] ?></td>
+                                        <td><?php echo $fo_trans['created'] ?></td>
+                                        <td>
+                                            <center>
+                                                <button id="buttdetail"><a href="admin-order-history.php?id=<?php echo $fo_trans['cart_id'] ?>">Lihat Detail Pesanan</a></button>
+                                            </center>
+                                        </td>
+                                    </tr>
+                                <?php
+                                }
+
+
+
+                                ?>
+
+
+                            <?php
+                            } else {
+                            ?>
+                                <td colspan="8">Tidak Ada Data</td>
+                            <?php
+                            }
+                            ?>
+                        </tbody>
+                    </table>
+                </div>
+                <center>
+                    <h3>Pesanan Berhasil Sebagian</h3>
+                </center>
+                <div class="box">
+
+                    <table border="1" cellspacing="0" class="table">
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>ID Pesanan</th>
+                                <th>Waktu</th>
+                                <th>Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                            $no = 1;
+                            $trans = mysqli_query($conn, "SELECT * FROM data_order WHERE data_order.office_id = '" . $kantoradmin . "' AND data_order.status = 'Berhasil Sebagian' ");
+                            if (mysqli_num_rows($trans) > 0) {
+
+                                while ($fo_trans = mysqli_fetch_array($trans)) {
+                            ?>
+                                    <tr>
+                                        <td><?php echo $no++ ?></td>
+                                        <td><?php echo $fo_trans['cart_id'] ?></td>
+                                        <td><?php echo $fo_trans['created'] ?></td>
+                                        <td>
+                                            <center>
+                                                <button id="buttdetail"><a href="admin-order-history.php?id=<?php echo $fo_trans['cart_id'] ?>">Lihat Detail Pesanan</a></button>
+                                            </center>
+                                        </td>
+                                    </tr>
+                                <?php
+                                }
+
+
+
+                                ?>
+
+
+                            <?php
+                            } else {
+                            ?>
+                                <td colspan="8">Tidak Ada Data</td>
+                            <?php
+                            }
+                            ?>
+                        </tbody>
+                    </table>
+                </div>
+                <center>
+                    <h3>Pesanan Gagal</h3>
+                </center>
+                <div class="box">
+
+                    <table border="1" cellspacing="0" class="table">
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>ID Pesanan</th>
+                                <th>Waktu</th>
+                                <th>Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                            $no = 1;
+                            $trans = mysqli_query($conn, "SELECT * FROM data_order WHERE data_order.office_id = '" . $kantoradmin . "' AND data_order.status = 'Gagal' ");
                             if (mysqli_num_rows($trans) > 0) {
 
                                 while ($fo_trans = mysqli_fetch_array($trans)) {
