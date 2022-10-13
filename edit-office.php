@@ -79,10 +79,20 @@ $k = mysqli_fetch_object($kantor);
                 if (isset($_POST['submit'])) {
                     $nama = ucwords($_POST['nama']);
                     $id = $_POST['id'];
+                    $alamat = $_POST['alamat'];
+                    $telfon = $_POST['telfon'];
+                    $fax = $_POST['fax'];
+                    $email = $_POST['email'];
+                    $kepala = $_POST['kepala'];
 
                     $update = mysqli_query($conn, "UPDATE data_office SET  
                                            office_id = '" . $id . "', 
-                                           office_name = '" . $nama . "' 
+                                           office_name = '" . $nama . "',
+                                           office_address = '" . $alamat . "',
+                                           office_telp = '" . $telfon . "',
+                                           office_fax = '" . $fax . "',
+                                           office_email = '" . $email . "',
+                                           office_head = '" . $kepala . "'
                                            WHERE office_id = '" . $k->office_id . "'
                                            ");
                     if ($update) {

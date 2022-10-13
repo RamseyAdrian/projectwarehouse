@@ -58,7 +58,7 @@ $kantoruser = $_SESSION['a_global']->office_id;
 
         #buttdetail {
             font-size: 17px;
-            background-color: white;
+            background-color: lime;
             color: black;
             border-radius: 5px;
             padding: 2px;
@@ -106,42 +106,42 @@ $kantoruser = $_SESSION['a_global']->office_id;
                         <tr>
                             <th>No</th>
                             <th>ID Pesanan</th>
+                            <th>Produk</th>
                             <th>Status</th>
+                            <th>Waktu Dipesan</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
                         <?php
                         $no = 1;
-                        $trans = mysqli_query($conn, "SELECT * FROM data_order WHERE data_order.status= 'Berhasil' AND data_order.user_id = '" . $iduser . "' ");
+                        $trans = mysqli_query($conn, "SELECT * FROM data_order WHERE data_order.status = 'Berhasil' AND data_order.user_id = '" . $iduser . "' ");
                         if (mysqli_num_rows($trans) > 0) {
 
                             while ($fo_trans = mysqli_fetch_array($trans)) {
                         ?>
                                 <tr>
                                     <td><?php echo $no++ ?></td>
-                                    <td><?php echo $fo_trans['cart_id'] ?></td>
-
+                                    <td><?php echo $fo_trans['cart_id'];
+                                        $idcart = $fo_trans['cart_id']; ?></td>
+                                    <td>
+                                        <?php
+                                        $fetch_trans = mysqli_query($conn, "SELECT * FROM transaction_history WHERE transaction_history.cart_id = '" . $idcart . "' ");
+                                        if (mysqli_num_rows($fetch_trans) > 0) {
+                                            while ($fa_fetch = mysqli_fetch_array($fetch_trans)) {
+                                                echo $fa_fetch['product_name'], "(", $fa_fetch['quantity'], ")";
+                                            }
+                                        }
+                                        ?>
+                                    </td>
                                     <td><?php
                                         echo $fo_trans['status']
                                         ?></td>
+                                    <td><?php echo $fo_trans['created'] ?></td>
                                     <td>
-                                        <?php
-                                        if ($fo_trans['status'] == 'Diproses Admin') {
-                                        ?>
-                                            <center>
-                                                <button id="buttdetail"><a href="view-order.php?id=<?php echo $fo_trans['cart_id'] ?>">Lihat Detail Pesanan</a></button>
-                                            </center>
-                                        <?php
-                                        } else if ($fo_trans['status'] == "Berhasil") {
-                                        ?>
-
-                                            <center>
-                                                <button id="buttdetail"><a href="view-order-history.php?id=<?php echo $fo_trans['cart_id'] ?>">Riwayat Pesanan</a></button>
-                                            </center>
-                                        <?php
-                                        }
-                                        ?>
+                                        <center>
+                                            <button id="buttdetail" class="view"><a href="view-order-history.php?id=<?php echo $fo_trans['cart_id'] ?>">Detail & Cetak Surat</a></button>
+                                        </center>
                                     </td>
                                 </tr>
                             <?php
