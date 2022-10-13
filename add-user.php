@@ -54,7 +54,8 @@ if ($_SESSION['role_login'] == 'user') {
             <div class="box">
                 <form action="" method="POST">
                     <h4>ID User</h4>
-                    <input type="text" name="id" class="input-control" required>
+                    <?php $id = rand() ?>
+                    <input type="text" name="id" class="input-control" value="<?php echo $id ?>" required>
                     <h4>Perwakilan</h4>
                     <select name="perwakilan" class="input-control" required>
                         <option value="">--Pilih Perwakilan</option>

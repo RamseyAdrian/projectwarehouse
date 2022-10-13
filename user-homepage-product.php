@@ -5,6 +5,12 @@ include 'db.php';
 $kontak = mysqli_query($conn, "SELECT admin_telp, admin_email, admin_address FROM data_admin WHERE admin_id = 1");
 $a = mysqli_fetch_object($kontak);
 
+if ($_SESSION['role_login'] != 'user') {
+    echo '<script>window.location="logout.php"</script>';
+} else if ($_SESSION['status_login'] != true) {
+    echo '<script>window.location="login.php"</script>';
+}
+
 $qd = mysqli_query($conn, "SELECT * FROM data_office WHERE office_id = 11");
 $fo = mysqli_fetch_object($qd);
 
@@ -119,6 +125,8 @@ $user_office = $_SESSION['a_global']->office_id;
                             <div class="col-4">
                                 <img src="produk/<?php echo $p['product_image'] ?>" alt="">
                                 <p class="nama"><?php echo substr($p['product_name'], 0, 30) ?></p>
+                                <p class="nama"><?php echo ($p['office_name']) ?></p>
+                                <p class="nama">Sisa Stock : <?php echo ($p['stock']) ?></p>
                                 <p class="harga">Rp<?php echo $p['product_price'] ?></p>
                             </div>
                         </a>

@@ -25,3 +25,8 @@ if (isset($_GET['ido'])) {
     $delete = mysqli_query($conn, "DELETE FROM data_office WHERE office_id = '" . $_GET['ido'] . "' ");
     echo '<script>window.location="office-data.php"</script>';
 }
+
+if (isset($_GET['idc'])) {
+    $delete = mysqli_query($conn, "DELETE FROM data_cart WHERE product_id = '" . $_GET['idc'] . "' ");
+    echo '<script>window.location="user-cart.php"</script>';
+}

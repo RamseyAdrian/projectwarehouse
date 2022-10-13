@@ -79,7 +79,7 @@ $kantoruser = $_SESSION['a_global']->office_id;
                                     <td><?php echo $fo_keranjang['product_name'] ?></td>
                                     <td><?php echo $fo_keranjang['quantity'] ?></td>
                                     <td>
-                                        <a href="edit-product.php?id=<?php echo $row['product_id'] ?>">Edit</a> || <a href="delete-data.php?idp=<?php echo $row['product_id'] ?>" onclick="return confirm('R U Sure about dat ?') ">Hapus</a>
+                                        <a href="edit-product.php?idc=<?php echo $fo_keranjang['product_id'] ?>">Edit</a> || <a href="delete-data.php?idc=<?php echo $fo_keranjang['product_id'] ?>" onclick="return confirm('R U Sure about dat ?') ">Hapus</a>
                                     </td>
                                 </tr>
                             <?php
