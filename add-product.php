@@ -87,9 +87,12 @@ if ($_SESSION['role_login'] == 'user') {
                             <?php } ?>
                         </select>
                         <h4>ID Barang</h4>
+                        <?php $barang_id = rand() ?>
                         <input type="text" name="idbarang" class="input-control" placeholder="ID Produk" required>
                         <h4>Nama Barang</h4>
                         <input type="text" name="nama" class="input-control" placeholder="Nama Produk" required>
+                        <h4>Satuan</h4>
+
                         <h4>Harga Barang</h4>
                         <input type="text" name="harga" class="input-control" placeholder="Harga">
                         <h4>Gambar Barang</h4>
@@ -223,8 +226,9 @@ if ($_SESSION['role_login'] == 'user') {
                             <?php } ?>
                         </select>
                         <h4>ID Barang</h4>
+                        <!--Jika Ingin me-Random ID Barang -->
                         <?php $barang_id = rand() ?>
-                        <input type="text" name="idbarang" class="input-control" value="<?php echo $barang_id ?>" placeholder="ID Produk" required>
+                        <input type="text" name="idbarang" class="input-control" placeholder="ID Produk" required>
                         <h4>Nama Barang</h4>
                         <input type="text" name="nama" class="input-control" placeholder="Nama Produk" required>
                         <h4>Harga Barang</h4>

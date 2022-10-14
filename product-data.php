@@ -32,7 +32,7 @@ $idkantoradmin = $_SESSION['a_global']->office_id;
             color: black;
             display: inline-block;
             font-size: 20px;
-            margin: 4px 2px;
+            margin: 4px 20px 4px 0;
             cursor: pointer;
             border-radius: 8px;
             padding: 5px;
@@ -70,11 +70,12 @@ $idkantoradmin = $_SESSION['a_global']->office_id;
         <!-- Content -->
         <div class="section">
             <div class="container">
-                <h3>Data Produk</h3>
+                <h2>Data Barang</h2>
                 <div class="box1">
-                    <button><a href="add-product.php" style="text-decoration: none ;">Tambah Data Produk</a></button><br><br>
-                    <button><a href="stocking-product.php" style="text-decoration: none ;">Stocking Barang</a></button>
-                    <button><a href="stocking-history.php" style="text-decoration: none ;">Riwayat Stocking</a></button>
+                    <button><a href="add-product.php" style="text-decoration: none ; font-weight:bold;">Tambah Data Produk</a></button><br><br>
+                    <button><a href="stocking-product.php" style="text-decoration: none ; font-weight:bold;">Stocking Barang</a></button>
+                    <button><a href="min-stocking-product.php" style="text-decoration: none ; font-weight:bold;">Barang Keluar</a></button>
+                    <button><a href="stocking-history.php" style="text-decoration: none ; font-weight:bold;">Riwayat Stocking</a></button>
                 </div>
                 <br>
                 <div class="box">
@@ -83,11 +84,11 @@ $idkantoradmin = $_SESSION['a_global']->office_id;
                         <thead>
                             <tr>
                                 <th width="60px">No</th>
-                                <th>Perwakilan</th>
-                                <th>ID Kategori</th>
+                                <!-- <th>Perwakilan</th>
+                                <th>ID Kategori</th> -->
                                 <th>Kategori</th>
-                                <th>ID Produk</th>
-                                <th>Nama Produk</th>
+                                <th>ID Barang</th>
+                                <th>Nama Barang</th>
                                 <th>Harga</th>
                                 <!-- <th>Deskripsi</th> -->
                                 <th>Gambar</th>
@@ -108,8 +109,8 @@ $idkantoradmin = $_SESSION['a_global']->office_id;
                             ?>
                                     <tr>
                                         <td><?php echo $no++ ?></td>
-                                        <td><?php echo $row_np['office_name'] ?></td>
-                                        <td><?php echo $row['category_id'] ?></td>
+                                        <!-- <td><?php echo $row_np['office_name'] ?></td>
+                                        <td><?php echo $row['category_id'] ?></td> -->
                                         <td><?php echo $row['category_name'] ?></td>
                                         <td><?php echo $row['product_id'] ?></td>
                                         <td><?php echo $row['product_name'] ?></td>

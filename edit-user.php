@@ -66,18 +66,12 @@ $u = mysqli_fetch_object($user);
                     <form action="" method="POST">
                         <h4>ID User</h4>
                         <input type="text" name="id" class="input-control" value="<?php echo $u->user_id ?>" required>
+                        <?php
+                        $kantor = mysqli_query($conn, "SELECT * FROM data_office WHERE office_id = '" . $u->office_id . "' ");
+                        $fetch_array_kantor = mysqli_fetch_array($kantor);
+                        ?>
                         <h4>Perwakilan</h4>
-                        <select name="perwakilan" class="input-control" required>
-                            <option value="">--Pilih Perwakilan</option>
-                            <?php
-                            $perwakilan = mysqli_query($conn, "SELECT * FROM data_office ORDER BY office_id");
-                            while ($fa_perwakilan = mysqli_fetch_array($perwakilan)) {
-                            ?>
-                                <option value="<?php echo $fa_perwakilan['office_id'] ?>" <?php echo ($fa_perwakilan['office_id'] == $u->office_id) ? 'selected' : ''; ?>><?php echo $fa_perwakilan['office_name'] ?></option>
-                            <?php
-                            }
-                            ?>
-                        </select>
+                        <input type="text" name="perwakilan" class="input-control" value="<?php echo $fetch_array_kantor['office_name'] ?>" readonly>
                         <h4>Nama User</h4>
                         <input type="text" name="nama" class="input-control" value="<?php echo $u->user_name ?>" required>
                         <h4>Username Akun</h4>
@@ -111,7 +105,7 @@ $u = mysqli_fetch_object($user);
                                             user_id = '" . $id . "',
                                             user_name = '" . $nama . "',
                                             user_username = '" . $username . "',
-                                            user_password = '" . MD5($pass) . "',
+                                            
                                             user_telp = '" . $telp . "',
                                             user_email = '" . $email . "',
                                             user_address = '" . $address . "'
