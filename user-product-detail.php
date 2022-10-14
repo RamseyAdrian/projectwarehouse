@@ -7,7 +7,8 @@ if ($_SESSION['role_login'] != 'user') {
 } else if ($_SESSION['status_login'] != true) {
     echo '<script>window.location="login.php"</script>';
 }
-
+$iduser = $_SESSION['a_global']->user_id;
+$idkantor = $_SESSION['a_global']->office_id;
 
 $kontak = mysqli_query($conn, "SELECT admin_telp, admin_email, admin_address FROM data_admin WHERE admin_id = 1");
 $a = mysqli_fetch_object($kontak);
@@ -95,8 +96,18 @@ $fo = mysqli_fetch_object($qd);
                         $jumlah = $_POST['qty'];
                         $insert = true;
 
+                        $keranjang = mysqli_query($conn, "SELECT * FROM data_cart WHERE user_id = '" . $iduser . "' AND office_id = '" . $idkantor . "' ");
+                        $produk_yang_sama = 0;
+                        if (mysqli_num_rows($keranjang) > 0) {
+                            while ($fetch_array_keranjang = mysqli_fetch_array($keranjang)) {
+                                if ($fetch_array_keranjang['product_id'] == $idbarang) {
+                                    $produk_yang_sama++;
+                                }
+                            }
+                        }
 
-                        if ($insert) {
+
+                        if ($produk_yang_sama == 0) {
                             $insert = mysqli_query($conn, "INSERT INTO data_cart VALUES (
                                 '" . $iduser . "',
                                 '" . $idkantor . "',
@@ -107,6 +118,9 @@ $fo = mysqli_fetch_object($qd);
                                 NOW()
                             )");
                             echo '<script>alert("Berhasil masuk ke keranjang")</script>';
+                            echo '<script>window.location="user-home.php"</script>';
+                        } else if ($produk_yang_sama > 0) {
+                            echo '<script>alert("Produk Sudah ada di Keranjang")</script>';
                             echo '<script>window.location="user-home.php"</script>';
                         } else {
                             echo 'gagal' . mysqli_error($conn);

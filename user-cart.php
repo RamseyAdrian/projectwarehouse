@@ -51,6 +51,22 @@ $kantoruser = $_SESSION['a_global']->office_id;
     <div class="section">
         <div class="container">
             <h3>Keranjang</h3>
+            <style>
+                .box table tbody tr td .abutt {
+                    margin-right: 10px;
+                    padding: 2px;
+                    border: 1px solid;
+                    background-color: white;
+                    border-radius: 5px;
+                    text-decoration: none;
+                    font-weight: bold;
+                }
+
+                .box table tbody tr td .abutt:hover {
+                    color: white;
+                    background-color: black;
+                }
+            </style>
             <div class="box">
                 <table border="1" cellspacing="0" class="table">
                     <thead>
@@ -60,7 +76,7 @@ $kantoruser = $_SESSION['a_global']->office_id;
                             <th>ID Barang</th>
                             <th>Kategori</th>
                             <th>Produk</th>
-                            <th>Kuantitas</th>
+                            <th>Jumlah</th>
                             <th>Edit/Hapus</th>
                         </tr>
                     </thead>
@@ -77,9 +93,9 @@ $kantoruser = $_SESSION['a_global']->office_id;
                                     <td><?php echo $fo_keranjang['product_id'] ?></td>
                                     <td><?php echo $fo_keranjang['category_name'] ?></td>
                                     <td><?php echo $fo_keranjang['product_name'] ?></td>
-                                    <td><?php echo $fo_keranjang['quantity'] ?></td>
-                                    <td>
-                                        <a href="edit-product.php?idc=<?php echo $fo_keranjang['product_id'] ?>">Edit</a> || <a href="delete-data.php?idc=<?php echo $fo_keranjang['product_id'] ?>" onclick="return confirm('R U Sure about dat ?') ">Hapus</a>
+                                    <td style="text-align:center ;"><?php echo $fo_keranjang['quantity'] ?></td>
+                                    <td style="text-align:center ;">
+                                        <a class="abutt" href="edit-user-cart.php?id=<?php echo $fo_keranjang['product_id'] ?>">Edit Jumlah</a> <a class="abutt" href="delete-data.php?idc=<?php echo $fo_keranjang['product_id'] ?>" onclick="return confirm('R U Sure about dat ?') ">Hapus</a>
                                     </td>
                                 </tr>
                             <?php
@@ -90,7 +106,10 @@ $kantoruser = $_SESSION['a_global']->office_id;
                         <?php
                         } else {
                         ?>
+
                             <td colspan="8">Tidak Ada Data</td>
+
+
                         <?php
                         }
                         ?>
