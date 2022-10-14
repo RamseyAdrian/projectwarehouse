@@ -66,7 +66,6 @@ $u = mysqli_fetch_object($user);
                     <form action="" method="POST">
                         <h4>ID User</h4>
                         <input type="text" name="id" class="input-control" value="<?php echo $u->user_id ?>" required>
-                        <h4>Nama User</h4>
                         <h4>Perwakilan</h4>
                         <select name="perwakilan" class="input-control" required>
                             <option value="">--Pilih Perwakilan</option>
@@ -79,6 +78,7 @@ $u = mysqli_fetch_object($user);
                             }
                             ?>
                         </select>
+                        <h4>Nama User</h4>
                         <input type="text" name="nama" class="input-control" value="<?php echo $u->user_name ?>" required>
                         <h4>Username Akun</h4>
                         <input type="text" name="username" class="input-control" value="<?php echo $u->user_username ?>" required>

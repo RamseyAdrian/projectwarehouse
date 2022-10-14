@@ -62,8 +62,8 @@ $s = mysqli_fetch_object($query_super);
             <div class="box">
                 <form action="" method="POST" enctype="multipart/form-data">
 
-                    <h4>Jumlah Stok</h4>
-                    <input type="number" name="stock" class="input-control" value="<?php echo $p->stock ?>" min="<?php echo $p->stock ?>">
+                    <h4>Jumlah Stok Tambahan</h4>
+                    <input type="number" name="stock" class="input-control" value="1" min="1" max="1000">
                     <input type="submit" name="submit" value="Submit" class="btn">
                     <style>
                         #kembali {
@@ -79,20 +79,24 @@ $s = mysqli_fetch_object($query_super);
                 </form>
                 <?php
                 if (isset($_POST['submit'])) {
-                    $stok = $_POST['stock'];
+                    $stok_added = $_POST['stock'];
                     $stocking_id = rand();
                     $produk_id = $p->product_id;
                     $produk_nama = $p->product_name;
                     $kategori_id = $p->category_id;
                     $kategori_nama = $p->category_name;
                     $stoking_sebelum = $p->stock;
-                    $stoking_setelah = $_POST['stock'];
+
+                    $stok = $stok_added + $p->stock;
+
+                    $stoking_setelah = $stok_added + $p->stock;
                     $admin_id = $d->admin_id;
                     $admin_name = $d->admin_name;
                     $office_id = $p->office_id;
                     $office_name = $p->office_name;
                     //modified pake fungsi NOW() di mysqli
-                    $qty = $stoking_setelah - $stoking_sebelum;
+                    $qty = $_POST['stock'];
+
 
 
                     //query update data produk

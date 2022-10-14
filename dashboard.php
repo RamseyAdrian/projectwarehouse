@@ -78,38 +78,41 @@ $piequeryrecords = mysqli_query($conn, $piequery);
                     <h4><?php echo $_SESSION['a_global']->admin_name ?></h4>
                     <h4>Admin ID : <?php echo $_SESSION['a_global']->admin_id ?></h4>
                 </div>
-                <!-- <h2>Table & Chart</h2>
+                <h2>Table & Chart</h2>
                 <div class="box">
-                    <div class="pie-chart" id="chartDiv"></div>
-                    <div class="text-center"></div>
-                    <script type="text/javascript">
-                        window.onload = function() {
-                            google.load("visualization", "1.1", {
-                                packages: ["corechart"],
-                                callback: 'drawChart'
-                            });
-                        };
-
-                        function drawChart() {
-                            var data = google.visualization.arrayToDataTable([
-                                ['Country', 'Popularity'],
-                                <?php
-                                while ($row = mysqli_fetch_assoc($piequeryrecords)) {
-                                    echo "['" . $row['product_name'] . "', " . $row['stock'] . "],";
-                                }
-                                ?>
-                            ]);
-
-                            var options = {
-                                pieHole: 0.4,
-                                title: 'Pie Chart Data Produk',
+                    <div class="chart">
+                        <!-- <div class="pie-chart" id="chartDiv"></div>
+                        <div class="text-center"></div>
+                        <script type="text/javascript">
+                            window.onload = function() {
+                                google.load("visualization", "1.1", {
+                                    packages: ["corechart"],
+                                    callback: 'drawChart'
+                                });
                             };
 
-                            var chart = new google.visualization.PieChart(document.getElementById('chartDiv'));
-                            chart.draw(data, options);
-                        }
-                    </script>
-                </div> -->
+                            function drawChart() {
+                                var data = google.visualization.arrayToDataTable([
+                                    ['Country', 'Popularity'],
+                                    <?php
+                                    while ($row = mysqli_fetch_assoc($piequeryrecords)) {
+                                        echo "['" . $row['product_name'] . "', " . $row['stock'] . "],";
+                                    }
+                                    ?>
+                                ]);
+
+                                var options = {
+                                    pieHole: 0.4,
+                                    title: 'Pie Chart Data Produk',
+                                };
+
+                                var chart = new google.visualization.PieChart(document.getElementById('chartDiv'));
+                                chart.draw(data, options);
+                            }
+                        </script> -->
+                    </div>
+
+                </div>
             </div>
         </div>
 

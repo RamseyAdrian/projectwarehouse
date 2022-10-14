@@ -1,13 +1,19 @@
 <?php
+//Memulai Sesi
 session_start();
+
+//Connect Database
 include 'db.php';
+
+//Kondisi Jika User Mencoba Masuk Page ini
 if ($_SESSION['role_login'] == 'user') {
 
     echo '<script>window.location="logout.php"</script>';
-} else if ($_SESSION['status_login'] != true) {
+} else if ($_SESSION['status_login'] != true) { //Kondisi Jika Non-user Mencoba Akses Page Ini
     echo '<script>window.location="login.php"</script>';
 }
 
+//Mengambil Data Riwayat Transaksi 
 $trans = mysqli_query($conn, "SELECT * FROM transaction_history LEFT JOIN data_product USING (product_id) WHERE cart_id = '" . $_GET['id'] . "' ");
 if (mysqli_num_rows($trans) == 0) {
     echo '<script>window.location="order-table.php"</script>';
@@ -23,7 +29,9 @@ $fa_data = mysqli_fetch_array($data);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>KP Ombudsman</title>
+    <!--------------------------- STYLE CSS ------------------------------>
     <link rel="stylesheet" type="text/css" href="css/style.css">
+    <!--------------------------- Library yang digunakan ------------------------------>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Quicksand&display=swap" rel="stylesheet">
@@ -75,18 +83,27 @@ $fa_data = mysqli_fetch_array($data);
                             <br><br>
                             <h4>Jumlah Pesanan</h4>
                             <input type="text" name="quantity" class="input-control" value="<?php echo $fo_trans->quantity ?>" readonly>
-                            <h4>Waktu Pesanan Dibuat</h4>
-                            <input type="text" name="waktu" class="input-control" value="<?php echo $fo_trans->created ?>" readonly>
-                            <br>
-                            <h4>Catatan Dari Admin</h4>
-                            <textarea name="notes" readonly class="input-control"><?php echo $fo_trans->notes ?></textarea><br>
 
-                    <?php
+                            <br>
+
+                        <?php
                             $no++;
                         }
+                        $trans2 = mysqli_query($conn, "SELECT * FROM transaction_history LEFT JOIN data_product USING (product_id) WHERE cart_id = '" . $_GET['id'] . "' ");
+                        $fo_trans2 = mysqli_fetch_object($trans2);
+                        ?>
+                        <br>
+                        <h2>Waktu Pesanan Diproses</h2>
+                        <input type="text" name="waktu" class="input-control" value="<?php echo $fo_trans2->created ?>" readonly>
+                        <br>
+                        <h2>Catatan Dari Admin</h2>
+
+                        <input type="text" name="notes" class="input-control" value="<?php echo $fo_trans2->notes ?>" readonly>
+                    <?php
                     }
                     ?>
-                    <br><br>
+
+                    <br>
                     <h2>Status Pemesanan Barang</h2>
                     <input type="text" class="input-control" name="status" value="<?php echo $fa_data['status'] ?>" readonly>
                     <br><br>
@@ -107,7 +124,7 @@ $fa_data = mysqli_fetch_array($data);
     <!-- Footer -->
     <footer>
         <div class="container">
-            <small>Copyright &copy; 2022 - Ramsey Adrian</small>
+            <small>Copyright &copy; 2022 - Universitas Pertamina</small>
         </div>
     </footer>
     <script>

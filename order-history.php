@@ -109,7 +109,7 @@ $kantoradmin = $_SESSION['a_global']->office_id;
                                 <th>ID Pesanan</th>
                                 <th>Nama Pemesan</th>
                                 <th>Produk</th>
-                                <th>Waktu</th>
+                                <th>Waktu Pesanan</th>
                                 <th>Aksi</th>
                             </tr>
                         </thead>
@@ -178,7 +178,7 @@ $kantoradmin = $_SESSION['a_global']->office_id;
                                 <th>ID Pesanan</th>
                                 <th>Nama Pemesan</th>
                                 <th>Produk</th>
-                                <th>Waktu</th>
+                                <th>Waktu Pesanan</th>
                                 <th>Aksi</th>
                             </tr>
                         </thead>
@@ -247,7 +247,7 @@ $kantoradmin = $_SESSION['a_global']->office_id;
                                 <th>ID Pesanan</th>
                                 <th>Nama Pemesan</th>
                                 <th>Produk</th>
-                                <th>Waktu</th>
+                                <th>Waktu Pesanan</th>
                                 <th>Aksi</th>
                             </tr>
                         </thead>

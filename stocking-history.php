@@ -94,7 +94,7 @@ $idkantoradmin = $_SESSION['a_global']->office_id;
                         </thead>
                         <tbody>
                             <?php
-                            $history = mysqli_query($conn, "SELECT * FROM stocking_item WHERE office_id = '" . $idkantoradmin . "' ORDER BY modified ");
+                            $history = mysqli_query($conn, "SELECT * FROM stocking_item WHERE office_id = '" . $idkantoradmin . "' ORDER BY modified DESC ");
                             $no = 1;
                             $produk = mysqli_query($conn, "SELECT * FROM data_product LEFT JOIN data_category  USING (category_id) WHERE office_id = '" . $idkantoradmin . "' ORDER BY product_id DESC ");
                             if (mysqli_num_rows($history) > 0) {

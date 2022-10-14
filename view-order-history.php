@@ -72,17 +72,22 @@ if (mysqli_num_rows($trans) == 0) {
                             <br><br>
                             <h4>Jumlah Pesanan</h4>
                             <input type="text" name="quantity" class="input-control" value="<?php echo $fo_trans->quantity ?>" readonly>
-                            <h4>Waktu Pesanan Dibuat</h4>
-                            <input type="text" name="waktu" class="input-control" value="<?php echo $fo_trans->created ?>" readonly>
-                            <h4>Catatan Dari Admin</h4>
-                            <textarea name="notes" class="input-control" readonly><?php echo $fo_trans->notes ?></textarea><br>
-                            <h4>Status Barang</h4>
-                            <input type="text" class="input-control" readonly value="<?php echo $fo_trans->status ?>">
 
-                            <br><br>
-                    <?php
+                            <br>
+                        <?php
                             $no++;
                         }
+                        $trans2 = mysqli_query($conn, "SELECT * FROM transaction_history LEFT JOIN data_product USING (product_id) WHERE cart_id = '" . $_GET['id'] . "' ");
+                        $fo_trans2 = mysqli_fetch_object($trans2);
+                        ?>
+                        <br>
+                        <h2>Waktu Pesanan Diproses</h2>
+                        <input type="text" name="waktu" class="input-control" value="<?php echo $fo_trans2->created ?>" readonly>
+                        <br>
+                        <h2>Catatan Dari Admin</h2>
+
+                        <input type="text" name="notes" class="input-control" value="<?php echo $fo_trans2->notes ?>" readonly>
+                    <?php
                     }
                     ?>
                     <input type="submit" name="print" class="btn" value="Print Surat Pengambilan Barang">
