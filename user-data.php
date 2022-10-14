@@ -7,6 +7,8 @@ if ($_SESSION['role_login'] == 'user') {
 } else if ($_SESSION['status_login'] != true) {
     echo '<script>window.location="login.php"</script>';
 }
+
+$admin_office = $_SESSION['a_global']->office_id;
 ?>
 
 <!DOCTYPE html>
@@ -70,7 +72,7 @@ if ($_SESSION['role_login'] == 'user') {
                         <tbody>
                             <?php
                             $no = 1;
-                            $user = mysqli_query($conn, "SELECT * FROM data_user ORDER BY user_id DESC ");
+                            $user = mysqli_query($conn, "SELECT * FROM data_user WHERE office_id = '" . $admin_office . "'  ORDER BY user_id DESC ");
                             if (mysqli_num_rows($user) > 0) {
                                 while ($row = mysqli_fetch_array($user)) {
                             ?>

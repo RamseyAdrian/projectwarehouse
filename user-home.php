@@ -137,7 +137,7 @@ $user_office = $_SESSION['a_global']->office_id;
     <!--New Product-->
     <div class="section">
         <div class="container">
-            <h3>Produk Terbaru</h3>
+            <h3>Produk </h3>
             <div class="box">
                 <?php
                 $produk = mysqli_query($conn, "SELECT * FROM data_product LEFT JOIN data_office USING (office_id) WHERE product_status=1 AND office_id = '" . $user_office . "' ORDER BY product_id LIMIT $start_from, $per_page_record ");
@@ -146,11 +146,25 @@ $user_office = $_SESSION['a_global']->office_id;
                 ?>
                         <a href="user-product-detail.php?id=<?php echo $p['product_id'] ?>">
                             <div class="col-4">
-                                <img src="produk/<?php echo $p['product_image'] ?>" alt="">
-                                <p class="nama"><?php echo substr($p['product_name'], 0, 30) ?></p>
-                                <p class="nama"><?php echo $p['office_name'] ?></p>
-                                <p class="nama">Sisa Stok : <?php echo $p['stock'] ?></p>
-                                <p class="harga">Rp<?php echo $p['product_price'] ?></p>
+                                <center>
+                                    <img src="produk/<?php echo $p['product_image'] ?>" alt="">
+                                    <h3 class="nama"><?php echo substr($p['product_name'], 0, 30) ?></h3>
+                                </center>
+                                <!-- <p class="nama"><?php echo $p['office_name'] ?></p> -->
+
+                                <?php
+                                if ($p['stock'] == 0) {
+                                ?>
+                                    <p style="color: red ;">Stock Habis, Hubungi Admin untuk Restock</p>
+                                <?php
+                                } else {
+                                ?>
+                                    <p class="nama">Sisa Stok : <?php echo $p['stock'] ?></p>
+                                <?php
+                                }
+                                ?>
+
+                                <!-- <p class="harga">Rp<?php echo $p['product_price'] ?></p> -->
                             </div>
                         </a>
                     <?php }

@@ -123,11 +123,24 @@ $user_office = $_SESSION['a_global']->office_id;
                 ?>
                         <a href="user-product-detail.php?id=<?php echo $p['product_id'] ?>">
                             <div class="col-4">
-                                <img src="produk/<?php echo $p['product_image'] ?>" alt="">
-                                <p class="nama"><?php echo substr($p['product_name'], 0, 30) ?></p>
-                                <p class="nama"><?php echo ($p['office_name']) ?></p>
-                                <p class="nama">Sisa Stock : <?php echo ($p['stock']) ?></p>
-                                <p class="harga">Rp<?php echo $p['product_price'] ?></p>
+                                <center>
+                                    <img src="produk/<?php echo $p['product_image'] ?>" alt="">
+                                    <h3 class="nama"><?php echo substr($p['product_name'], 0, 30) ?></h3>
+                                </center>
+                                <!-- <p class="nama"><?php echo $p['office_name'] ?></p> -->
+
+                                <?php
+                                if ($p['stock'] == 0) {
+                                ?>
+                                    <p style="color: red ;">Stock Habis, Hubungi Admin untuk Restock</p>
+                                <?php
+                                } else {
+                                ?>
+                                    <p class="nama">Sisa Stok : <?php echo $p['stock'] ?></p>
+                                <?php
+                                }
+                                ?>
+                                <!-- <p class="harga">Rp<?php echo $p['product_price'] ?></p> -->
                             </div>
                         </a>
                     <?php }

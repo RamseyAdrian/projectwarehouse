@@ -48,6 +48,25 @@ $kantoradmin = $_SESSION['a_global']->office_id;
             background-color: black;
             color: white;
         }
+
+        #buttdetail {
+            font-size: 17px;
+            background-color: white;
+            color: black;
+            border-radius: 5px;
+            padding: 2px;
+        }
+
+        #buttdetail a {
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        #buttdetail:hover {
+            background-color: black;
+            color: white;
+            transition-duration: 0.3s;
+        }
     </style>
 </head>
 
@@ -88,6 +107,8 @@ $kantoradmin = $_SESSION['a_global']->office_id;
                             <tr>
                                 <th>No</th>
                                 <th>ID Pesanan</th>
+                                <th>Nama Pemesan</th>
+                                <th>Produk</th>
                                 <th>Waktu</th>
                                 <th>Aksi</th>
                             </tr>
@@ -103,6 +124,23 @@ $kantoradmin = $_SESSION['a_global']->office_id;
                                     <tr>
                                         <td><?php echo $no++ ?></td>
                                         <td><?php echo $fo_trans['cart_id'] ?></td>
+                                        <?php
+                                        $fetch_trans1 = mysqli_query($conn, "SELECT * FROM transaction_history WHERE transaction_history.cart_id = '" . $fo_trans['cart_id'] . "' ");
+                                        $fa_fetch1 = mysqli_fetch_array($fetch_trans1)
+                                        ?>
+                                        <td><?php echo $fa_fetch1['user_name'] ?></td>
+                                        <?php
+                                        ?>
+                                        <td>
+                                            <?php
+                                            $fetch_trans = mysqli_query($conn, "SELECT * FROM transaction_history WHERE transaction_history.cart_id = '" . $fo_trans['cart_id'] . "' ");
+                                            if (mysqli_num_rows($fetch_trans) > 0) {
+                                                while ($fa_fetch = mysqli_fetch_array($fetch_trans)) {
+                                                    echo $fa_fetch['product_name'], "(", $fa_fetch['quantity'], ")";
+                                                }
+                                            }
+                                            ?>
+                                        </td>
                                         <td><?php echo $fo_trans['created'] ?></td>
                                         <td>
                                             <center>
@@ -138,6 +176,8 @@ $kantoradmin = $_SESSION['a_global']->office_id;
                             <tr>
                                 <th>No</th>
                                 <th>ID Pesanan</th>
+                                <th>Nama Pemesan</th>
+                                <th>Produk</th>
                                 <th>Waktu</th>
                                 <th>Aksi</th>
                             </tr>
@@ -153,6 +193,23 @@ $kantoradmin = $_SESSION['a_global']->office_id;
                                     <tr>
                                         <td><?php echo $no++ ?></td>
                                         <td><?php echo $fo_trans['cart_id'] ?></td>
+                                        <?php
+                                        $fetch_trans1 = mysqli_query($conn, "SELECT * FROM transaction_history WHERE transaction_history.cart_id = '" . $fo_trans['cart_id'] . "' ");
+                                        $fa_fetch1 = mysqli_fetch_array($fetch_trans1)
+                                        ?>
+                                        <td><?php echo $fa_fetch1['user_name'] ?></td>
+                                        <?php
+                                        ?>
+                                        <td>
+                                            <?php
+                                            $fetch_trans = mysqli_query($conn, "SELECT * FROM transaction_history WHERE transaction_history.cart_id = '" . $fo_trans['cart_id'] . "' ");
+                                            if (mysqli_num_rows($fetch_trans) > 0) {
+                                                while ($fa_fetch = mysqli_fetch_array($fetch_trans)) {
+                                                    echo $fa_fetch['product_name'], "(", $fa_fetch['quantity'], ")";
+                                                }
+                                            }
+                                            ?>
+                                        </td>
                                         <td><?php echo $fo_trans['created'] ?></td>
                                         <td>
                                             <center>
@@ -188,6 +245,8 @@ $kantoradmin = $_SESSION['a_global']->office_id;
                             <tr>
                                 <th>No</th>
                                 <th>ID Pesanan</th>
+                                <th>Nama Pemesan</th>
+                                <th>Produk</th>
                                 <th>Waktu</th>
                                 <th>Aksi</th>
                             </tr>
@@ -203,6 +262,23 @@ $kantoradmin = $_SESSION['a_global']->office_id;
                                     <tr>
                                         <td><?php echo $no++ ?></td>
                                         <td><?php echo $fo_trans['cart_id'] ?></td>
+                                        <?php
+                                        $fetch_trans1 = mysqli_query($conn, "SELECT * FROM transaction_history WHERE transaction_history.cart_id = '" . $fo_trans['cart_id'] . "' ");
+                                        $fa_fetch1 = mysqli_fetch_array($fetch_trans1)
+                                        ?>
+                                        <td><?php echo $fa_fetch1['user_name'] ?></td>
+                                        <?php
+                                        ?>
+                                        <td>
+                                            <?php
+                                            $fetch_trans = mysqli_query($conn, "SELECT * FROM transaction_history WHERE transaction_history.cart_id = '" . $fo_trans['cart_id'] . "' ");
+                                            if (mysqli_num_rows($fetch_trans) > 0) {
+                                                while ($fa_fetch = mysqli_fetch_array($fetch_trans)) {
+                                                    echo $fa_fetch['product_name'], "(", $fa_fetch['quantity'], ")";
+                                                }
+                                            }
+                                            ?>
+                                        </td>
                                         <td><?php echo $fo_trans['created'] ?></td>
                                         <td>
                                             <center>
