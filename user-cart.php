@@ -125,7 +125,7 @@ $kantoruser = $_SESSION['a_global']->office_id;
         .section .container #checkout {
             text-decoration: none;
             border-radius: 5px;
-            margin-right: 30px;
+            margin-left: 30px;
         }
 
         .section .container #kembali {
@@ -154,9 +154,16 @@ $kantoruser = $_SESSION['a_global']->office_id;
         }
     </style>
     <div class="section">
-        <div class="container">
-            <a id="checkout" href="checkout.php" class="btn">Checkout</a>
+        <div class="container" style=" margin-left : 1120px ;">
             <a id="kembali" href="user-home.php">Kembali Pesan</a>
+            <?php
+            $keranjang1 = mysqli_query($conn, "SELECT * FROM data_cart LEFT JOIN data_category USING (category_id) LEFT JOIN data_product USING (product_id) WHERE data_cart.user_id = '" . $iduser . "' AND data_cart.office_id = '" . $kantoruser . "' ");
+            if (mysqli_num_rows($keranjang1) > 0) {
+            ?>
+                <a id="checkout" href="checkout.php" class="btn">Checkout</a>
+            <?php
+            }
+            ?>
         </div>
     </div>
 

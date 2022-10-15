@@ -65,7 +65,6 @@ if (mysqli_num_rows($trans) == 0) {
                     if (mysqli_num_rows($trans) > 0) {
                         while ($fo_trans = mysqli_fetch_object($trans)) {
                     ?>
-
                             <h1>Produk ke <?php echo $no ?></h1><br>
                             <h2 id="h2produk"><?php echo $fo_trans->product_name ?></h2><br><br>
                             <img src="produk/<?php echo $fo_trans->product_image ?>" width="100px">

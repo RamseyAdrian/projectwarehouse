@@ -8,10 +8,13 @@ if ($_SESSION['role_login'] != 'user') {
     echo '<script>window.location="login.php"</script>';
 }
 
-
-
 $iduser = $_SESSION['a_global']->user_id;
 $kantoruser = $_SESSION['a_global']->office_id;
+
+$keranjang = mysqli_query($conn, "SELECT * FROM data_cart WHERE office_id = '" . $kantoruser . "' AND user_id = '" . $iduser . "' ");
+if (mysqli_num_rows($keranjang) == 0) {
+    echo '<script>window.location="logout.php"</script>';
+}
 
 $namaperwakilan = mysqli_query($conn, "SELECT * FROM data_office WHERE office_id = '" . $kantoruser . "' ");
 $row_np = mysqli_fetch_array($namaperwakilan);
@@ -45,60 +48,67 @@ $row_np = mysqli_fetch_array($namaperwakilan);
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-lg-6 px-4 pb-4" id="order">
-                    <h4 class="text-center text-info p-2" style="font-weight:bolder ;">Selesaikan Pesanan Anda</h4>
-                    <div class="jumbotron p-3 mb-2 text-center">
-                        <h6 class="lead" style="font-weight:bolder ;"><b>Produk : </b>
-                            <?php
-                            $no = 1;
+                    <div class="section">
+                        <div class="container">
+                            <div class="box">
+                                <h4 class="text-center text-info p-2" style="font-weight:bolder ;">Selesaikan Pesanan Anda</h4>
+                                <div class="jumbotron p-3 mb-2 text-center">
+                                    <h6 class="lead" style="font-weight:bolder ;"><b>Produk : </b>
+                                        <?php
+                                        $no = 1;
 
-                            $keranjang = mysqli_query($conn, "SELECT * FROM data_cart LEFT JOIN data_category USING (category_id) LEFT JOIN data_product USING (product_id) WHERE data_cart.user_id = '" . $iduser . "' AND data_cart.office_id = '" . $kantoruser . "' ");
-                            $cart_id = rand();
-                            if (mysqli_num_rows($keranjang) > 0) {
-                                while ($fo_keranjang = mysqli_fetch_array($keranjang)) {
-                                    echo '<br>';
-                                    echo $no++, '. ';
-                                    echo $fo_keranjang['product_name'], " (", $fo_keranjang['quantity'], ")";
+                                        $keranjang = mysqli_query($conn, "SELECT * FROM data_cart LEFT JOIN data_category USING (category_id) LEFT JOIN data_product USING (product_id) WHERE data_cart.user_id = '" . $iduser . "' AND data_cart.office_id = '" . $kantoruser . "' ");
+                                        $cart_id = rand();
+                                        if (mysqli_num_rows($keranjang) > 0) {
+                                            while ($fo_keranjang = mysqli_fetch_array($keranjang)) {
+                                                echo '<br>';
+                                                echo $no++, '. ';
+                                                echo $fo_keranjang['product_name'], " (", $fo_keranjang['quantity'], ")";
 
-                            ?>
-                                <?php
-                                }
-                                ?>
+                                        ?>
+                                            <?php
+                                            }
+                                            ?>
 
 
-                            <?php
-                            }
-                            ?>
-                        </h6>
+                                        <?php
+                                        }
+                                        ?>
+                                    </h6>
+                                </div>
+                                <form action="" method="post" id="placeOrder">
+
+                                    <div class="form-group">
+                                        <h4>Cart ID</h4>
+                                        <input type="text" name="cart" class="form-control" value="<?php echo $cart_id ?>" readonly>
+                                    </div>
+                                    <div class="form-group">
+                                        <h4>ID User</h4>
+                                        <input type="text" name="id" class="form-control" value="<?php echo $_SESSION['a_global']->user_id ?>" readonly>
+                                    </div>
+                                    <div class="form-group">
+                                        <h4>Nama</h4>
+                                        <input type="text" name="name" class="form-control" value="<?php echo $_SESSION['a_global']->user_name ?>" readonly </div>
+                                        <div class="form-group">
+                                            <h4>Email</h4>
+                                            <input type="email" name="email" class="form-control" value="<?php echo $_SESSION['a_global']->user_email ?>" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <h4>Nomor Telfon</h4>
+                                            <input type="tel" name="phone" class="form-control" value="<?php echo $_SESSION['a_global']->user_telp ?>" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <h4>Perwakilan</h4>
+                                            <input type="tel" name="office" class="form-control" value="<?php echo $row_np['office_name'] ?>" readonly>
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="submit" name="submit" value="Pesan Sekarang" class="btn btn-danger btn-block">
+                                        </div>
+                                </form>
+                            </div>
+                        </div>
                     </div>
-                    <form action="" method="post" id="placeOrder">
 
-                        <div class="form-group">
-                            <h4>Cart ID</h4>
-                            <input type="text" name="cart" class="form-control" value="<?php echo $cart_id ?>" readonly>
-                        </div>
-                        <div class="form-group">
-                            <h4>ID User</h4>
-                            <input type="text" name="id" class="form-control" value="<?php echo $_SESSION['a_global']->user_id ?>" readonly>
-                        </div>
-                        <div class="form-group">
-                            <h4>Nama</h4>
-                            <input type="text" name="name" class="form-control" value="<?php echo $_SESSION['a_global']->user_name ?>" readonly </div>
-                            <div class="form-group">
-                                <h4>Email</h4>
-                                <input type="email" name="email" class="form-control" value="<?php echo $_SESSION['a_global']->user_email ?>" required>
-                            </div>
-                            <div class="form-group">
-                                <h4>Nomor Telfon</h4>
-                                <input type="tel" name="phone" class="form-control" value="<?php echo $_SESSION['a_global']->user_telp ?>" required>
-                            </div>
-                            <div class="form-group">
-                                <h4>Perwakilan</h4>
-                                <input type="tel" name="office" class="form-control" value="<?php echo $row_np['office_name'] ?>" readonly>
-                            </div>
-                            <div class="form-group">
-                                <input type="submit" name="submit" value="Pesan Sekarang" class="btn btn-danger btn-block">
-                            </div>
-                    </form>
                     <?php
                     if (isset($_POST['submit'])) {
 
@@ -158,8 +168,14 @@ $row_np = mysqli_fetch_array($namaperwakilan);
                             null
                             
                         )");
-                        echo '<script>alert("Berhasil Order")</script>';
-                        echo '<script>window.location="user-home.php"</script>';
+                        echo '<script>Swal.fire({
+                            title: "Berhasil Order Barang !",
+                            text: "Klik OK Untuk Lanjut",
+                            icon : "success"
+                       }).then(function() {
+                            window.location = "user-order.php";
+                       });
+                       </script>';
                     }
                     ?>
                 </div>

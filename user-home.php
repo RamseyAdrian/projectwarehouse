@@ -23,7 +23,7 @@ $user_id = $_SESSION['a_global']->user_id;
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KP Ombudsman</title>
+    <title>Ombudsman</title>
     <link rel="stylesheet" type="text/css" href="css/style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -84,8 +84,9 @@ $user_id = $_SESSION['a_global']->user_id;
     <!-- header -->
     <header>
         <div class="container">
-            <h1><a href="user-home.php">KP Ombudsman</a></h1>
-            <ul>
+
+            <h1><img style="width: 80px ; margin-bottom :-10px ;" src="img/logo-ombudsman2.png" alt=""><a href="user-home.php"> Gudang Ombudsman</a></h1>
+            <ul style="margin-top: 20px ;">
                 <?php
                 $isi = 0;
                 $keranjang = mysqli_query($conn, "SELECT * FROM data_cart WHERE user_id = '" . $user_id . "' AND office_id = '" . $user_office . "' ");
@@ -97,14 +98,10 @@ $user_id = $_SESSION['a_global']->user_id;
                 ?>
                 <li><a href="user-homepage-product.php">Produk</a></li>
                 <li><a href="user-cart.php"><img style="width:16px ;" src="img/cart.png" alt="">(<?php echo $isi; ?>)</a></li>
-                <li><a href="user-order.php">Pesanan</a></li>
+                <li><a href="user-order.php">Transaksi</a></li>
                 <li><a href="user-profile.php">Profil Saya</a></li>
                 <li><a href="logout.php">Log out</a></li>
             </ul>
-        </div>
-        <div class="container">
-
-            <h4>Selamat Datang <?php echo $_SESSION['a_global']->user_name ?> di Warehouse Ombudsman</h4>
         </div>
     </header>
 

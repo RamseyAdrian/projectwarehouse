@@ -150,6 +150,7 @@ header {
 header h1 {
     float: left;
     padding: 10px;
+    text-decoration: none;
 }
 
 header ul {
@@ -171,6 +172,10 @@ header ul li a {
 header ul li a:hover {
     border-radius: 5px;
     color: red;
+}
+
+header .container h1 a {
+    text-decoration: none;
 }
 
 a {
