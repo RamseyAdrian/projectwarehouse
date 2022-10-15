@@ -89,13 +89,15 @@ $kantoruser = $_SESSION['a_global']->office_id;
                         ?>
                                 <tr>
                                     <td><?php echo $no++ ?></td>
-                                    <td><a href="produk/<?php echo $fo_keranjang['product_image'] ?>"> <img src="produk/<?php echo $fo_keranjang['product_image'] ?>" width="50px"></a></td>
+                                    <td><a href="produk/<?php echo $fo_keranjang['product_image'] ?>">
+                                            <center><img src="produk/<?php echo $fo_keranjang['product_image'] ?>" width="50px"></center>
+                                        </a></td>
                                     <td><?php echo $fo_keranjang['product_id'] ?></td>
                                     <td><?php echo $fo_keranjang['category_name'] ?></td>
                                     <td><?php echo $fo_keranjang['product_name'] ?></td>
                                     <td style="text-align:center ;"><?php echo $fo_keranjang['quantity'] ?></td>
                                     <td style="text-align:center ;">
-                                        <a class="abutt" href="edit-user-cart.php?id=<?php echo $fo_keranjang['product_id'] ?>">Edit Jumlah</a> <a class="abutt" href="delete-data.php?idc=<?php echo $fo_keranjang['product_id'] ?>" onclick="return confirm('R U Sure about dat ?') ">Hapus</a>
+                                        <a class="abutt" href="edit-user-cart.php?id=<?php echo $fo_keranjang['product_id'] ?>">Edit Jumlah</a> <a class="abutt" href="delete-data.php?idc=<?php echo $fo_keranjang['product_id'] ?>" onclick="return confirm('Lanjut Hapus Barang ?') ">Hapus</a>
                                     </td>
                                 </tr>
                             <?php
@@ -119,9 +121,42 @@ $kantoruser = $_SESSION['a_global']->office_id;
         </div>
     </div>
 
+    <style>
+        .section .container #checkout {
+            text-decoration: none;
+            border-radius: 5px;
+            margin-right: 30px;
+        }
+
+        .section .container #kembali {
+            text-decoration: none;
+            background-color: white;
+            color: black;
+            font-weight: bold;
+            border: 1px solid;
+            padding: 8px;
+            border-radius: 5px;
+        }
+
+        .section .container #checkout:hover {
+            border: 1px solid red;
+            background-color: white;
+            color: red;
+            border-radius: 5px;
+        }
+
+        .section .container #kembali:hover {
+            border: 1px solid white;
+            background-color: black;
+            color: white;
+            padding: 8px;
+            border-radius: 5px;
+        }
+    </style>
     <div class="section">
         <div class="container">
-            <a href="checkout.php" class="btn">Checkout</a>
+            <a id="checkout" href="checkout.php" class="btn">Checkout</a>
+            <a id="kembali" href="user-home.php">Kembali Pesan</a>
         </div>
     </div>
 

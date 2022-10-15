@@ -33,6 +33,7 @@ $fo = mysqli_fetch_object($qd);
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Quicksand&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body>
@@ -72,7 +73,7 @@ $fo = mysqli_fetch_object($qd);
             <h3>Detail Produk</h3>
             <div class="box">
                 <div class="col-2">
-                    <img src="produk/<?php echo $p->product_image ?>" width="100%">
+                    <img src="produk/<?php echo $p->product_image ?>" width="80%">
                 </div>
                 <div class="col-2">
                     <form action="" method="POST">
@@ -85,7 +86,7 @@ $fo = mysqli_fetch_object($qd);
                         </p>
                         <h4>Jumlah</h4>
                         <input type="number" name="qty" class="input-control" min="1" max="<?php echo $qty ?>" value="1" required>
-                        <input type="submit" name="submit" value="Masukkan Keranjang" class="btn">
+                        <input type="submit" name="submit" value="Tambah ke Keranjang" class="btn">
                     </form>
                     <?php
                     if (isset($_POST['submit'])) {
@@ -117,11 +118,22 @@ $fo = mysqli_fetch_object($qd);
                                 NOW(),
                                 NOW()
                             )");
-                            echo '<script>alert("Berhasil masuk ke keranjang")</script>';
-                            echo '<script>window.location="user-home.php"</script>';
+                            echo '<script>Swal.fire({
+                                title: "Berhasil Masuk Keranjang !",
+                                text: "Klik OK Untuk Lanjut",
+                                icon : "success"
+                           }).then(function() {
+                                window.location = "user-cart.php";
+                           });
+                           </script>';
                         } else if ($produk_yang_sama > 0) {
-                            echo '<script>alert("Produk Sudah ada di Keranjang")</script>';
-                            echo '<script>window.location="user-home.php"</script>';
+                            echo '<script>Swal.fire({
+                                title: "Barang Sudah di Keranjang !",
+                                icon : "info"
+                           }).then(function() {
+                                window.location = "user-cart.php";
+                           });
+                           </script>';
                         } else {
                             echo 'gagal' . mysqli_error($conn);
                         }

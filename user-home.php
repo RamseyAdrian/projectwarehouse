@@ -14,6 +14,7 @@ $qd = mysqli_query($conn, "SELECT * FROM data_office WHERE office_id = 11");
 $fo = mysqli_fetch_object($qd);
 
 $user_office = $_SESSION['a_global']->office_id;
+$user_id = $_SESSION['a_global']->user_id;
 ?>
 
 <!DOCTYPE html>
@@ -85,8 +86,17 @@ $user_office = $_SESSION['a_global']->office_id;
         <div class="container">
             <h1><a href="user-home.php">KP Ombudsman</a></h1>
             <ul>
+                <?php
+                $isi = 0;
+                $keranjang = mysqli_query($conn, "SELECT * FROM data_cart WHERE user_id = '" . $user_id . "' AND office_id = '" . $user_office . "' ");
+                if (mysqli_num_rows($keranjang) > 0) {
+                    while ($fetch_keranjang = mysqli_fetch_array($keranjang)) {
+                        $isi++;
+                    }
+                }
+                ?>
                 <li><a href="user-homepage-product.php">Produk</a></li>
-                <li><a href="user-cart.php">Keranjang</a></li>
+                <li><a href="user-cart.php"><img style="width:16px ;" src="img/cart.png" alt="">(<?php echo $isi; ?>)</a></li>
                 <li><a href="user-order.php">Pesanan</a></li>
                 <li><a href="user-profile.php">Profil Saya</a></li>
                 <li><a href="logout.php">Log out</a></li>
@@ -148,6 +158,7 @@ $user_office = $_SESSION['a_global']->office_id;
                             <div class="col-4">
                                 <center>
                                     <img src="produk/<?php echo $p['product_image'] ?>" alt="">
+                                    <br><br>
                                     <h3 class="nama"><?php echo substr($p['product_name'], 0, 30) ?></h3>
                                 </center>
                                 <!-- <p class="nama"><?php echo $p['office_name'] ?></p> -->
@@ -155,11 +166,15 @@ $user_office = $_SESSION['a_global']->office_id;
                                 <?php
                                 if ($p['stock'] == 0) {
                                 ?>
-                                    <p style="color: red ;">Stock Habis, Hubungi Admin untuk Restock</p>
+                                    <center>
+                                        <p style="color: red ;">Stock Habis, Hubungi Admin untuk Restock</p>
+                                    </center>
                                 <?php
                                 } else {
                                 ?>
-                                    <p class="nama">Sisa Stok : <?php echo $p['stock'] ?></p>
+                                    <center>
+                                        <p class="nama">Sisa Stok : <?php echo $p['stock'] ?></p>
+                                    </center>
                                 <?php
                                 }
                                 ?>
