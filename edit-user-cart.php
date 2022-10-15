@@ -7,12 +7,16 @@ if ($_SESSION['role_login'] != 'user') {
 } else if ($_SESSION['status_login'] != true) {
     echo '<script>window.location="login.php"</script>';
 }
-$keranjang = mysqli_query($conn, "SELECT * FROM data_cart WHERE data_cart.product_id = '" . $_GET['id'] . "' ");
+
+$iduser = $_SESSION['a_global']->user_id;
 $produk = mysqli_query($conn, "SELECT * FROM data_product WHERE product_id = '" . $_GET['id'] . "' ");
+$keranjang = mysqli_query($conn, "SELECT * FROM data_cart WHERE data_cart.product_id = '" . $_GET['id'] . "' AND data_cart.user_id = '" . $iduser . "' ");
+$fetch_keranjang = mysqli_fetch_object($keranjang);
 if (mysqli_num_rows($keranjang) == 0) {
     echo '<script>window.location="user-home.php"</script>';
 }
 $p = mysqli_fetch_object($produk);
+$idkategori = $p->category_id;
 
 ?>
 <!DOCTYPE html>
@@ -30,7 +34,7 @@ $p = mysqli_fetch_object($produk);
     <link href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.css" rel="stylesheet" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert-dev.js"></script>
-    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 </head>
 
 <body>
@@ -51,105 +55,60 @@ $p = mysqli_fetch_object($produk);
     <!-- Content -->
     <div class="section">
         <div class="container">
-            <h3>Edit Data Produk</h3>
+            <h3>Edit Jumlah Pesanan</h3>
             <div class="box">
-                <form action="" method="POST" enctype="multipart/form-data">
-                    <h4>Kategori Barang</h4>
-                    <select class="input-control" name="kategori" required>
-                        <option value="">--Pilih--</option>
+                <div class="col-2">
+                    <img src="produk/<?php echo $p->product_image ?>" width="70%">
+                </div>
+                <div class="col-2">
+                    <form action="" method="POST" enctype="multipart/form-data">
                         <?php
-                        $kategori = mysqli_query($conn, "SELECT * FROM data_category ORDER BY category_id DESC");
-                        while ($r = mysqli_fetch_array($kategori)) {
+                        $kategori = mysqli_query($conn, "SELECT * FROM data_category WHERE category_id = '" . $idkategori . "' ");
+                        $fetch_kategori = mysqli_fetch_array($kategori);
                         ?>
-                            <option value="<?php echo $r['category_id'] ?>" <?php echo ($r['category_id'] == $p->category_id) ?
-                                                                                'selected' : ''; ?>><?php echo $r['category_name'] ?> </option>
-                        <?php } ?>
-                    </select>
-                    <h4>ID Barang</h4>
-                    <input type="text" name="idbarang" class="input-control" value="<?php echo $p->product_id ?>" readonly>
-                    <h4>Nama Barang</h4>
-                    <input type="text" name="nama" class="input-control" placeholder="Nama Produk" value="<?php echo $p->product_name ?>" required>
-                    <h4>Harga Barang</h4>
-                    <input type="text" name="harga" class="input-control" placeholder="Harga" value="<?php echo $p->product_price ?>">
+                        <h3>Kategori Barang : <?php echo $fetch_kategori['category_name'] ?></h3><br>
+                        <?php
+                        ?>
+                        <h3>ID Barang : <?php echo $p->product_id ?></h3><br>
+                        <h3>Nama : <?php echo $p->product_name ?></h3><br>
+                        <h3>Deskripsi Barang</h3>
+                        <h4><?php echo $p->product_description ?></h4><br><br>
+                        <?php
 
-                    <h4>Gambar Barang</h4>
-                    <img src="produk/<?php echo $p->product_image ?>" width="100px">
-                    <input type="hidden" name="gambar" value="<?php echo $p->product_image ?>">
+                        ?>
+                        <h4>Stok Barang : <?php echo $p->stock ?> </h4>
+                        <h3>Edit Jumlah</h3>
+                        <input type="number" name="jumlah" class="input-control" value="<?php echo $fetch_keranjang->quantity ?>" min="1" max="<?php echo $p->stock ?>">
+                        <input type="submit" name="submit" value="Ubah Jumlah Pesanan" class="btn">
+                    </form>
+                </div>
 
-                    <input type="file" name="gambar" class="input-control" value="<?php echo $p->product_image ?>">
-                    <h4>Deskripsi Barang</h4>
-                    <textarea name="deskripsi" class="input-control" placeholder="Deskripsi"><?php echo $p->product_description ?></textarea><br>
-                    <h4>ID Kantor</h4>
-                    <input type="text" name="idkantor" class="input-control" value="<?php echo $_SESSION['a_global']->office_id ?>">
-                    <h4>Jumlah Stok</h4>
-                    <input type="text" name="stok" class="input-control" placeholder="Jumlah Stok" value="<?php echo $p->stock ?>" required>
-                    <h4>Status Barang</h4>
-                    <select name="status" class="input-control">
-                        <option value="">--Pilih--</option>
-                        <option value="1" <?php echo ($p->product_status == 1) ? 'selected' : ''; ?>>Aktif</option>
-                        <option value="0" <?php echo ($p->product_status == 0) ? 'selected' : ''; ?>>Tidak Aktif</option>
-                    </select>
-                    <input type="submit" name="submit" value="Submit" class="btn">
-                </form>
                 <?php
                 if (isset($_POST['submit'])) {
-                    $idbarang = $_POST['idbarang'];
-                    $kategori = $_POST['kategori'];
-                    $nama = $_POST['nama'];
-                    $harga = $_POST['harga'];
-                    $deskripsi = $_POST['deskripsi'];
-                    $status = $_POST['status'];
-                    $stok = $_POST['stok'];
-                    $idkantor = $_POST['idkantor'];
+                    $update_jumlah = $_POST['jumlah'];
 
-                    //menampung data file yang diupload
-                    $filename = $_FILES['gambar']['name'];
-                    $tmp_name = $_FILES['gambar']['tmp_name'];
-
-                    $type1 = explode('.', $filename);
-                    $type2 = $type1[1];
-
-                    $newname = 'produk' . time() . '.' . $type2;
-
-                    //menampung data format file yang diizinkan
-                    $tipe_diizinkan = array('jpg', 'jpeg', 'png', 'gif');
-
-                    //validasi format file
-                    if (!in_array($type2, $tipe_diizinkan)) {
-                        echo '<script>alert("Format file tidak diizinkan")</script>';
-                    } else {
-                        move_uploaded_file($tmp_name, './produk/' . $newname);
-                        // echo '<script>alert("Berhasil Upload")</script>';
-
-                        $update = mysqli_query($conn, "UPDATE data_product SET 
-                            category_id = '" . $kategori . "',
-                            product_name= '" . $nama . "',
-                            product_price = '" . $harga . "',
-                            product_description = '" . $deskripsi . "',
-                            product_image = '" . $newname . "',
-                            product_status = '" . $status . "',
-                            stock = '" . $stok . "'
-                            WHERE product_id = '" . $p->product_id . "'
+                    $update = mysqli_query($conn, "UPDATE data_cart SET 
+                            quantity = '" . $update_jumlah . "'
+                            WHERE product_id = '" . $p->product_id . "' AND user_id = '" . $iduser . "'
                     ");
 
-                        if ($update) {
-                            echo '<script>Swal.fire({
+                    if ($update) {
+                        echo '<script>Swal.fire({
                             title: "Berhasil Edit Produk !",
                             text: "Klik OK Untuk Lanjut.",
                             icon: "success"
-                          },
-                          function(){
-                            window.location="product-data.php"
+                          }).then(function() {
+                            window.location = "user-cart.php";
                           });
                         </script>';
-                        } else {
-                            echo 'gagal' . mysqli_error($conn);
-                        }
+                    } else {
+                        echo 'gagal' . mysqli_error($conn);
                     }
-
-                    //query update data produk
-
                 }
+
+                //query update data produk
+
+
                 ?>
             </div>
         </div>
