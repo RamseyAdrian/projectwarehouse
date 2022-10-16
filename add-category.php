@@ -60,7 +60,8 @@ if ($_SESSION['role_login'] == 'user' || $_SESSION['role_login'] == 'admin') {
 
                     $insert = mysqli_query($conn, "INSERT INTO data_category VALUES (
                                             '" . $id . "',
-                                            '" . $nama . "') ");
+                                            '" . $nama . "',
+                                            null) ");
                     if ($insert) {
                         echo '<script>alert("Tambah data berhasil")</script>';
                         echo '<script>window.location="category-data.php"</script>';

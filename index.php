@@ -77,9 +77,11 @@ $fo = mysqli_fetch_object($qd);
     <!-- header -->
     <header>
         <div class="container">
-            <h1><a href="index.php">KP Ombudsman</a></h1>
-            <ul>
-                <li><a href="homepage-product.php">Produk</a></li>
+            <h1><img style="width: 80px ; margin-bottom :-10px ;" src="img/logo-ombudsman2.png" alt=""><a href="index.php"> Gudang Ombudsman</a></h1>
+            <ul style="margin-top: 20px ;">
+                <li><a href="index.php">Home</a></li>
+                <li><a href="category-product.php">Kategori</a></li>
+                <!-- <li><a href="homepage-product.php">Produk</a></li> -->
                 <li><a href="login.php">Login</a></li>
             </ul>
         </div>
@@ -96,34 +98,12 @@ $fo = mysqli_fetch_object($qd);
         </div>
     </div>
 
-    <!--Category-->
-    <div class="section">
-        <div class="container">
-            <h3>Kategori</h3>
-            <div class="box">
-                <?php
-                $kategori = mysqli_query($conn, "SELECT * FROM data_category ORDER BY category_id  DESC");
-                if (mysqli_num_rows($kategori) > 0) {
-                    while ($k = mysqli_fetch_array($kategori)) {
-                ?>
-                        <a href="homepage-product.php?kat=<?php echo $k['category_id'] ?> ">
-                            <div class="col-5">
-                                <!-- <img src="img/menu_icon.png" width="50px" style="margin-bottom: 5px;"> -->
-                                <p><?php echo $k['category_name'] ?></p>
-                            </div>
-                        </a>
-                    <?php }
-                } else { ?>
-                    <p>Tidak Ada Kategori</p>
-                <?php } ?>
-            </div>
-        </div>
-    </div>
+
 
     <!--New Product-->
     <div class="section">
         <div class="container">
-            <h3>Produk Terbaru</h3>
+
             <div class="box">
                 <?php
                 $produk = mysqli_query($conn, "SELECT * FROM data_product LEFT JOIN data_office USING (office_id) WHERE product_status=1 ORDER BY product_id LIMIT $start_from, $per_page_record ");
@@ -134,16 +114,31 @@ $fo = mysqli_fetch_object($qd);
 
                 ?>
                         <a href="product-detail.php?id=<?php echo $p['product_id'] ?>">
-                            <?php
-
-                            ?>
                             <div class="col-4">
-                                <img src="produk/<?php echo $p['product_image'] ?>" alt="">
-                                <p class="nama"><?php echo substr($p['product_name'], 0, 30) ?></p>
+                                <center>
+                                    <img src="produk/<?php echo $p['product_image'] ?>" alt="">
+                                    <br><br>
+                                    <h3 class="nama"><?php echo substr($p['product_name'], 0, 30) ?></h3>
+                                </center>
+                                <!-- <p class="nama"><?php echo $p['office_name'] ?></p> -->
 
-                                <p class="nama"><?php echo $p['office_name'] ?></p>
-                                <p class="nama">Sisa Stok : <?php echo $p['stock'] ?></p>
-                                <p class="harga">Rp<?php echo $p['product_price'] ?></p>
+                                <?php
+                                if ($p['stock'] == 0) {
+                                ?>
+                                    <center>
+                                        <p style="color: red ;">Stock Habis, Hubungi Admin untuk Restock</p>
+                                    </center>
+                                <?php
+                                } else {
+                                ?>
+                                    <center>
+                                        <p class="nama">Sisa Stok : <?php echo $p['stock'] ?></p>
+                                    </center>
+                                <?php
+                                }
+                                ?>
+
+                                <!-- <p class="harga">Rp<?php echo $p['product_price'] ?></p> -->
                             </div>
                         </a>
                     <?php }

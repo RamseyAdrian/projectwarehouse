@@ -1,5 +1,4 @@
 <?php
-error_reporting(0);
 include 'db.php';
 $kontak = mysqli_query($conn, "SELECT admin_telp, admin_email, admin_address FROM data_admin WHERE admin_id = 1");
 $a = mysqli_fetch_object($kontak);
@@ -11,6 +10,8 @@ $fo = mysqli_fetch_object($qd);
 <!DOCTYPE html>
 <html lang="en">
 
+</html>
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -19,7 +20,12 @@ $fo = mysqli_fetch_object($qd);
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Quicksand&display=swap" rel="stylesheet">
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css" />
     <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
+    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> -->
     <style>
         table {
             border-collapse: collapse;
@@ -30,6 +36,7 @@ $fo = mysqli_fetch_object($qd);
             /* float: right; */
             margin: 20px 0px;
         }
+
 
         .pagination {
             display: inline-block;
@@ -64,6 +71,7 @@ $fo = mysqli_fetch_object($qd);
             <ul style="margin-top: 20px ;">
                 <li><a href="index.php">Home</a></li>
                 <li><a href="category-product.php">Kategori</a></li>
+                <!-- <li><a href="homepage-product.php">Produk</a></li> -->
                 <li><a href="login.php">Login</a></li>
             </ul>
         </div>
@@ -72,42 +80,41 @@ $fo = mysqli_fetch_object($qd);
     <!--search-->
     <div class="search">
         <div class="container">
-            <form action="homepage-product.php" method="GET">
-                <input type="text" name="search" placeholder="Cari Produk" value="<?php echo $_GET['search'] ?>">
+            <form action="category-search.php" method="GET">
+                <input type="text" name="search" placeholder="Cari Kategori">
                 <input type="submit" name="cari" value="Cari">
             </form>
+
         </div>
     </div>
 
-    <!-- New Product -->
-
+    <!--Category-->
     <div class="section">
         <div class="container">
-            <h3>Produk</h3>
+            <h2>Kategori</h2>
             <div class="box">
                 <?php
-                if ($_GET['search'] != '' || $_GET['kat'] != '') {
-                    $where = "AND product_name LIKE '%" . $_GET['search'] . "%' AND category_id LIKE '%" . $_GET['kat'] . "%' ";
+                if ($_GET['search'] != '') {
+                    $where = " category_name LIKE '%" . $_GET['search'] . "%'  ";
                 }
-                $produk = mysqli_query($conn, "SELECT * FROM data_product WHERE product_status=1 $where
-                ORDER BY product_id ");
-                if (mysqli_num_rows($produk) > 0) {
-                    while ($p = mysqli_fetch_array($produk)) {
+                $kategori = mysqli_query($conn, "SELECT * FROM data_category WHERE $where ORDER BY category_name ");
+                if (mysqli_num_rows($kategori) > 0) {
+                    while ($k = mysqli_fetch_array($kategori)) {
                 ?>
-                        <a href="product-detail.php?id=<?php echo $p['product_id'] ?>">
-                            <div class="col-4">
-                                <img src="produk/<?php echo $p['product_image'] ?>" alt="">
-                                <p class="nama"><?php echo substr($p['product_name'], 0, 30) ?></p>
-                                <p class="harga">Rp<?php echo $p['product_price'] ?></p>
+                        <a href="homepage-product.php?kat=<?php echo $k['category_id'] ?> ">
+                            <div class="col-5">
+                                <!-- <img src="img/menu_icon.png" width="50px" style="margin-bottom: 5px;"> -->
+                                <p><?php echo $k['category_name'] ?></p>
                             </div>
                         </a>
                     <?php }
                 } else { ?>
-                    <p>Tidak Ada Produk</p>
+                    <p>Tidak Ada Kategori</p>
                 <?php } ?>
             </div>
         </div>
     </div>
+
 
 
 
@@ -125,8 +132,6 @@ $fo = mysqli_fetch_object($qd);
             <small>Copyright &copy; 2022 - KP Ombudsman</small>
         </div>
     </div>
-
-
 </body>
 
 </html>
