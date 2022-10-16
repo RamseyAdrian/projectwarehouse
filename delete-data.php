@@ -3,6 +3,7 @@ include 'db.php';
 
 if (isset($_GET['idk'])) {
     $delete = mysqli_query($conn, "DELETE FROM data_category WHERE category_id = '" . $_GET['idk'] . "' ");
+    $delete_barang = mysqli_query($conn, "DELETE * FROM data_product WHERE category_id = '" . $_GET['idk'] . "' ");
     echo '<script>window.location="category-data.php"</script>';
 }
 
@@ -14,6 +15,11 @@ if (isset($_GET['idp'])) {
 
     $delete = mysqli_query($conn, "DELETE FROM data_product WHERE product_id = '" . $_GET['idp'] . "' ");
     echo '<script>window.location="product-data.php"</script>';
+}
+
+if (isset($_GET['ida'])) {
+    $delete = mysqli_query($conn, "DELETE FROM data_admin WHERE admin_id = '" . $_GET['ida'] . "' ");
+    echo '<script>window.location="admin-data.php"</script>';
 }
 
 if (isset($_GET['idu'])) {

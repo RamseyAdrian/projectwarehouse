@@ -43,6 +43,25 @@ $idkantoradmin = $_SESSION['a_global']->office_id;
             background-color: black;
             color: white;
         }
+
+        .section .container .box table tbody tr td button {
+            font-size: 17px;
+            background-color: white;
+            color: black;
+            border-radius: 5px;
+            padding: 2px;
+        }
+
+        .section .container .box table tbody tr td button a {
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .section .container .box table tbody tr td button:hover {
+            background-color: black;
+            color: white;
+            transition-duration: 0.3s;
+        }
     </style>
 
 </head>
@@ -167,15 +186,16 @@ $idkantoradmin = $_SESSION['a_global']->office_id;
         <!-- header -->
         <header>
             <div class="container">
-                <h1><a href="dashboard.php">KP Ombudsman</a></h1>
-                <ul>
-                    <li><a href="dashboard.php">Dashboard</a></li>
+                <h1><a href="dashboard.php"><img style="width: 70px ; margin-bottom :-10px ;" src="img/logo-ombudsman2.png" alt=""> Gudang Ombudsman</a></h1>
+                <ul style="margin-top: 20px ;">
+                    <li><a href="dashboard.php">Dashboard </a></li>
                     <li><a href="profile.php">Profil</a></li>
-                    <li><a href="category-data.php">Data Kategori</a></li>
-                    <li><a href="product-data.php">Data Produk</a></li>
+                    <li><a href="category-data.php">Kategori</a></li>
+                    <li><a href="product-data.php">Barang</a></li>
+                    <li><a href="unit-data.php">Satuan</a></li>
                     <li><a href="office-data.php">Perwakilan</a></li>
-                    <li><a href="admin-data.php">Data Admin</a></li>
-                    <li><a href="user-data.php">Data User</a></li>
+                    <li><a href="admin-data.php">Admin</a></li>
+                    <li><a href="user-data.php">User</a></li>
                     <li><a href="order-table.php">Pesanan</a></li>
                     <li><a href="logout.php">Keluar</a></li>
                 </ul>
@@ -185,30 +205,26 @@ $idkantoradmin = $_SESSION['a_global']->office_id;
         <!-- Content -->
         <div class="section">
             <div class="container">
-                <h3>Data Produk</h3>
+                <h2>Data Barang</h2>
                 <div class="box1">
                     <button><a href="add-product.php" style="text-decoration: none ;">Tambah Data Produk</a></button><br><br>
                     <button><a href="stocking-product.php" style="text-decoration: none ;">Stocking Barang</a></button>
                     <button><a href="stocking-history.php" style="text-decoration: none ;">Riwayat Stocking</a></button>
                 </div>
                 <div class="box">
-                    <p><a href="add-product.php">Tambah Data Produk</a></p><br>
-                    <!-- <button><a href="add-product.php" style="text-decoration:none ;">Tambah Data</a></button> -->
                     <table border="1" cellspacing="0" class="table">
                         <thead>
                             <tr>
-                                <th width="60px">No</th>
+                                <th>No</th>
                                 <th>Perwakilan</th>
-                                <th>ID Kategori</th>
                                 <th>Kategori</th>
-                                <th>ID Produk</th>
+                                <th>ID Barang</th>
                                 <th>Nama Produk</th>
-                                <th>Harga</th>
                                 <!-- <th>Deskripsi</th> -->
                                 <th>Gambar</th>
                                 <th>Status</th>
                                 <th>Stock</th>
-                                <th width="150px">Aksi</th>
+                                <th>Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -224,17 +240,22 @@ $idkantoradmin = $_SESSION['a_global']->office_id;
                                     <tr>
                                         <td><?php echo $no++ ?></td>
                                         <td><?php echo $row_np['office_name'] ?></td>
-                                        <td><?php echo $row['category_id'] ?></td>
                                         <td><?php echo $row['category_name'] ?></td>
                                         <td><?php echo $row['product_id'] ?></td>
-                                        <td><?php echo $row['product_name'] ?></td>
-                                        <td>Rp. <?php echo number_format($row['product_price']) ?></td>
+                                        <td><?php echo substr($row['product_name'], 0, 20) ?></td>
                                         <!-- <td><?php echo $row['product_description'] ?></td> -->
                                         <td><a href="produk/<?php echo $row['product_image'] ?>"> <img src="produk/<?php echo $row['product_image'] ?>" width="50px"></a></td>
                                         <td><?php echo ($row['product_status'] == 0) ? 'Tidak AKtif' : 'Aktif' ?></td>
                                         <td><?php echo ($row['stock']) ?></td>
                                         <td>
-                                            <a href="edit-product.php?id=<?php echo $row['product_id'] ?>">Edit</a> || <a href="delete-data.php?idp=<?php echo $row['product_id'] ?>" onclick="return confirm('R U Sure about dat ?') ">Hapus</a>
+                                            <center>
+                                                <button>
+                                                    <a id="buttdetail" href="edit-product.php?id=<?php echo $row['product_id'] ?>">Edit</a>
+                                                </button>
+                                                <button>
+                                                    <a id="buttdetail" href="delete-data.php?idp=<?php echo $row['product_id'] ?>" onclick="return confirm('Yakin Hapus Barang ?') ">Hapus</a> </button>
+                                            </center>
+
                                         </td>
                                     </tr>
                                 <?php }

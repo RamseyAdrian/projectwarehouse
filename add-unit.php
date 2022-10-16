@@ -46,12 +46,13 @@ if ($_SESSION['role_login'] == 'user' || $_SESSION['role_login'] == 'admin') {
     <!-- Content -->
     <div class="section">
         <div class="container">
-            <h2>Tambah Kategori</h2>
+            <h2>Tambah Satuan</h2>
             <div class="box">
                 <form action="" method="POST">
-                    <h4>ID Kategori</h4>
-                    <input type="text" name="id" placeholder="ID Kategori" class="input-control" value="<?php echo rand() ?>" readonly>
-                    <h4>Nama Kategori</h4>
+                    <h4>ID Satuan</h4>
+                    <?php $unit_id = rand() ?>
+                    <input type="text" name="id" placeholder="ID Kategori" value="<?php echo $unit_id ?>" class="input-control" value="<?php echo rand() ?>" readonly>
+                    <h4>Nama Satuan</h4>
                     <input type="text" name="nama" placeholder="Nama Kategori" class="input-control" required>
                     <input type="submit" name="submit" value="Submit" class="btn">
                 </form>
@@ -60,17 +61,17 @@ if ($_SESSION['role_login'] == 'user' || $_SESSION['role_login'] == 'admin') {
                     $nama = ucwords($_POST['nama']);
                     $id = $_POST['id'];
 
-                    $insert = mysqli_query($conn, "INSERT INTO data_category VALUES (
+                    $insert = mysqli_query($conn, "INSERT INTO data_unit VALUES (
                                             '" . $id . "',
-                                            '" . $nama . "',
-                                            null) ");
+                                            '" . $nama . "'
+                                            ) ");
                     if ($insert) {
                         echo '<script>Swal.fire({
-                            title: "Berhasil Tambah Kategori",
+                            title: "Berhasil Tambah Satuan",
                             text: "Klik OK Untuk Lanjut",
                             icon: "success"
                           }).then(function() {
-                            window.location = "category-data.php";
+                            window.location = "unit-data.php";
                           });
                         </script>';
                     } else {

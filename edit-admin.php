@@ -8,11 +8,11 @@ if ($_SESSION['role_login'] == 'user') {
     echo '<script>window.location="login.php"</script>';
 }
 
-$user = mysqli_query($conn, "SELECT * FROM data_admin WHERE admin_id = '" . $_GET['id'] . "' ");
-if (mysqli_num_rows($user) == 0) {
-    echo '<script>window.location="user-data.php"</script>';
+$query_admin = mysqli_query($conn, "SELECT * FROM data_admin WHERE admin_id = '" . $_GET['id'] . "' ");
+if (mysqli_num_rows($query_admin) == 0) {
+    echo '<script>window.location="admin-data.php"</script>';
 }
-$u = mysqli_fetch_object($user);
+$fo_admin = mysqli_fetch_object($query_admin);
 
 ?>
 
@@ -27,18 +27,24 @@ $u = mysqli_fetch_object($user);
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Quicksand&display=swap" rel="stylesheet">
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 </head>
 
 <body>
     <!-- header -->
     <header>
         <div class="container">
-            <h1><a href="dashboard.php">KP Ombudsman</a></h1>
-            <ul>
-                <li><a href="dashboard.php">Dashboard</a></li>
+            <h1><a href="dashboard.php"><img style="width: 70px ; margin-bottom :-10px ;" src="img/logo-ombudsman2.png" alt=""> Gudang Ombudsman</a></h1>
+            <ul style="margin-top: 20px ;">
+                <li><a href="dashboard.php">Dashboard </a></li>
                 <li><a href="profile.php">Profil</a></li>
-                <li><a href="product-data.php">Data Produk</a></li>
-                <li><a href="user-data.php">Data User</a></li>
+                <li><a href="category-data.php">Kategori</a></li>
+                <li><a href="product-data.php">Barang</a></li>
+                <li><a href="unit-data.php">Satuan</a></li>
+                <li><a href="office-data.php">Perwakilan</a></li>
+                <li><a href="admin-data.php">Admin</a></li>
+                <li><a href="user-data.php">User</a></li>
                 <li><a href="order-table.php">Pesanan</a></li>
                 <li><a href="logout.php">Keluar</a></li>
             </ul>
@@ -48,49 +54,49 @@ $u = mysqli_fetch_object($user);
     <!-- Content -->
     <div class="section">
         <div class="container">
-            <h3>Edit Data User</h3>
+            <h3>Edit Data Admin</h3>
             <div class="box">
                 <form action="" method="POST">
-                    <h4>ID User</h4>
-                    <input type="text" name="id" class="input-control" value="<?php echo $u->user_id ?>" required>
-                    <h4>Nama User</h4>
-                    <input type="text" name="nama" class="input-control" value="<?php echo $u->user_name ?>" required>
+                    <h4>ID Admin</h4>
+                    <input type="text" name="id" class="input-control" value="<?php echo $fo_admin->admin_id ?>" readonly>
+                    <h4>Nama Admin</h4>
+                    <input type="text" name="nama" class="input-control" value="<?php echo $fo_admin->admin_name ?>" required>
                     <h4>Username Akun</h4>
-                    <input type="text" name="username" class="input-control" value="<?php echo $u->user_username ?>" required>
-                    <h4>Password Akun</h4>
-                    <input type="text" name="pass" class="input-control" value="<?php echo $u->user_password ?>" required>
+                    <input type="text" name="username" class="input-control" value="<?php echo $fo_admin->admin_username ?>" required>
                     <h4>Nomor Telfon</h4>
-                    <input type="text" name="telp" class="input-control" value="<?php echo $u->user_telp ?>" required>
-                    <h4>Email User</h4>
-                    <input type="text" name="email" class="input-control" value="<?php echo $u->user_email ?>" required>
-                    <h4>Alamat User</h4>
-                    <input type="text" name="address" class="input-control" value="<?php echo $u->user_address ?>" required>
+                    <input type="text" name="telp" class="input-control" value="<?php echo $fo_admin->admin_telp ?>" required>
+                    <h4>Email Admin</h4>
+                    <input type="text" name="email" class="input-control" value="<?php echo $fo_admin->admin_email ?>" required>
+                    <h4>Alamat Admin</h4>
+                    <input type="text" name="address" class="input-control" value="<?php echo $fo_admin->admin_address ?>" required>
                     <input type="submit" name="submit" value="Submit" class="btn">
                 </form>
                 <?php
                 if (isset($_POST['submit'])) {
                     $nama = ucwords($_POST['nama']);
-                    $id = $_POST['id'];
                     $username = $_POST['username'];
-                    $pass = $_POST['pass'];
                     $telp = $_POST['telp'];
                     $email = $_POST['email'];
                     $address = $_POST['address'];
-                    $location = $_POST[""];
 
-                    $update = mysqli_query($conn, "UPDATE data_user SET
-                                            user_id = '" . $id . "',
-                                            user_name = '" . $nama . "',
-                                            user_username = '" . $username . "',
-                                            user_password = '" . MD5($pass) . "',
-                                            user_telp = '" . $telp . "',
-                                            user_email = '" . $email . "',
-                                            user_address = '" . $address . "'
-                                            WHERE user_id = '" . $u->user_id . "'
+
+                    $update = mysqli_query($conn, "UPDATE data_admin SET                                            
+                                            admin_name = '" . $nama . "',
+                                            admin_username = '" . $username . "',                                            
+                                            admin_telp = '" . $telp . "',
+                                            admin_email = '" . $email . "',
+                                            admin_address = '" . $address . "'
+                                            WHERE admin_id = '" . $fo_admin->admin_id . "'
                                             ");
                     if ($update) {
-                        echo '<script>alert("Edit data berhasil")</script>';
-                        echo '<script>window.location="user-data.php"</script>';
+                        echo '<script>Swal.fire({
+                            title: "Berhasil Edit Admin",
+                            text: "Klik OK Untuk Lanjut",
+                            icon: "success"
+                          }).then(function() {
+                            window.location = "admin-data.php";
+                          });
+                        </script>';
                     } else {
                         echo 'gagal' . mysqli_error($conn);
                     }

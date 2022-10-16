@@ -22,6 +22,7 @@ $kantor_admin = $_SESSION['a_global']->office_id;
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Quicksand&display=swap" rel="stylesheet">
     <script src="https://cdn.ckeditor.com/4.19.1/standard/ckeditor.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <style>
         .box1 {
             margin: 10px 0 -10px 0;
@@ -176,8 +177,14 @@ $kantor_admin = $_SESSION['a_global']->office_id;
                              null 
                         ) ");
                             if ($insert) {
-                                echo '<script>alert("Tambah Data Produk Berhasil")</script>';
-                                echo '<script>window.location="product-data.php"</script>';
+                                echo '<script>Swal.fire({
+                                    title: "Berhasil Tambah Barang Baru",
+                                    text: "Klik OK Untuk Lanjut",
+                                    icon: "success"
+                                  }).then(function() {
+                                    window.location = "product-data.php";
+                                  });
+                                </script>';
                             }
                             // else if ($nama = ) {
 
@@ -210,15 +217,16 @@ $kantor_admin = $_SESSION['a_global']->office_id;
         <!-- header -->
         <header>
             <div class="container">
-                <h1><a href="dashboard.php">KP Ombudsman</a></h1>
-                <ul>
-                    <li><a href="dashboard.php">Dashboard</a></li>
+                <h1><a href="dashboard.php"><img style="width: 70px ; margin-bottom :-10px ;" src="img/logo-ombudsman2.png" alt=""> Gudang Ombudsman</a></h1>
+                <ul style="margin-top: 20px ;">
+                    <li><a href="dashboard.php">Dashboard </a></li>
                     <li><a href="profile.php">Profil</a></li>
-                    <li><a href="category-data.php">Data Kategori</a></li>
-                    <li><a href="product-data.php">Data Produk</a></li>
+                    <li><a href="category-data.php">Kategori</a></li>
+                    <li><a href="product-data.php">Barang</a></li>
+                    <li><a href="unit-data.php">Satuan</a></li>
                     <li><a href="office-data.php">Perwakilan</a></li>
-                    <li><a href="admin-data.php">Data Admin</a></li>
-                    <li><a href="user-data.php">Data User</a></li>
+                    <li><a href="admin-data.php">Admin</a></li>
+                    <li><a href="user-data.php">User</a></li>
                     <li><a href="order-table.php">Pesanan</a></li>
                     <li><a href="logout.php">Keluar</a></li>
                 </ul>
@@ -247,7 +255,7 @@ $kantor_admin = $_SESSION['a_global']->office_id;
                         <h4>ID Barang</h4>
                         <!--Jika Ingin me-Random ID Barang -->
                         <?php $barang_id = rand() ?>
-                        <input type="text" name="idbarang" class="input-control" placeholder="ID Produk" required>
+                        <input type="text" name="idbarang" class="input-control" value="<?php echo $barang_id ?>" placeholder="ID Produk" required>
                         <h4>Nama Barang</h4>
                         <input type="text" name="nama" class="input-control" placeholder="Nama Produk" required>
                         <h4>Harga Barang</h4>
@@ -268,8 +276,6 @@ $kantor_admin = $_SESSION['a_global']->office_id;
                             }
                             ?>
                         </select>
-                        <h4>Jumlah Stok</h4>
-                        <input type="text" name="stok" class="input-control" placeholder="Jumlah Stock" required>
                         <h4>Status Barang</h4>
                         <select name="status" class="input-control">
                             <option value="">--Pilih--</option>
@@ -289,7 +295,6 @@ $kantor_admin = $_SESSION['a_global']->office_id;
                         $harga = $_POST['harga'];
                         $deskripsi = $_POST['deskripsi'];
                         $status = $_POST['status'];
-                        $stok = $_POST['stok'];
                         $idkantor = $_POST['idkantor'];
 
                         //menampung data file yang diupload
@@ -320,12 +325,18 @@ $kantor_admin = $_SESSION['a_global']->office_id;
                              '" . $deskripsi . "',
                              '" . $newname . "',
                              '" . $status . "',
-                             '" . $stok . "',
+                             '0',
                              null 
                         ) ");
                             if ($insert) {
-                                echo '<script>alert("Tambah Data Produk Berhasil")</script>';
-                                echo '<script>window.location="product-data.php"</script>';
+                                echo '<script>Swal.fire({
+                                    title: "Berhasil Tambah Barang Baru",
+                                    text: "Klik OK Untuk Lanjut",
+                                    icon: "success"
+                                  }).then(function() {
+                                    window.location = "product-data.php";
+                                  });
+                                </script>';
                             }
                             // else if ($nama = ) {
 

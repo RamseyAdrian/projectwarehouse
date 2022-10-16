@@ -25,21 +25,24 @@ $k = mysqli_fetch_object($kategori);
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Quicksand&display=swap" rel="stylesheet">
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 </head>
 
 <body>
     <!-- header -->
     <header>
         <div class="container">
-            <h1><a href="dashboard.php">KP Ombudsman</a></h1>
-            <ul>
-                <li><a href="dashboard.php">Dashboard</a></li>
+            <h1><a href="dashboard.php"><img style="width: 70px ; margin-bottom :-10px ;" src="img/logo-ombudsman2.png" alt=""> Gudang Ombudsman</a></h1>
+            <ul style="margin-top: 20px ;">
+                <li><a href="dashboard.php">Dashboard </a></li>
                 <li><a href="profile.php">Profil</a></li>
-                <li><a href="category-data.php">Data Kategori</a></li>
-                <li><a href="product-data.php">Data Produk</a></li>
+                <li><a href="category-data.php">Kategori</a></li>
+                <li><a href="product-data.php">Produk</a></li>
+                <li><a href="unit-data.php">Satuan</a></li>
                 <li><a href="office-data.php">Perwakilan</a></li>
-                <li><a href="admin-data.php">Data Admin</a></li>
-                <li><a href="user-data.php">Data User</a></li>
+                <li><a href="admin-data.php">Admin</a></li>
+                <li><a href="user-data.php">User</a></li>
                 <li><a href="order-table.php">Pesanan</a></li>
                 <li><a href="logout.php">Keluar</a></li>
             </ul>
@@ -69,8 +72,14 @@ $k = mysqli_fetch_object($kategori);
                                            WHERE category_id = '" . $k->category_id . "'
                                            ");
                     if ($update) {
-                        echo '<script>alert("Edit data berhasil")</script>';
-                        echo '<script>window.location="category-data.php"</script>';
+                        echo '<script>Swal.fire({
+                            title: "Berhasil Edit Kategori",
+                            text: "Klik OK Untuk Lanjut",
+                            icon: "success"
+                          }).then(function() {
+                            window.location = "category-data.php";
+                          });
+                        </script>';
                     } else {
                         echo 'gagal' . mysqli_error($conn);
                     }

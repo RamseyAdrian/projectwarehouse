@@ -34,6 +34,9 @@ $idkantoradmin = $_SESSION['a_global']->office_id;
 </head>
 
 <body>
+    <?php
+
+    ?>
     <!-- header -->
     <header>
         <div class="container">

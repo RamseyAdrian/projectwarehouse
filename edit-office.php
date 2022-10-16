@@ -38,15 +38,16 @@ $k = mysqli_fetch_object($kantor);
     <!-- header -->
     <header>
         <div class="container">
-            <h1><a href="dashboard.php">KP Ombudsman</a></h1>
-            <ul>
-                <li><a href="dashboard.php">Dashboard</a></li>
+            <h1><a href="dashboard.php"><img style="width: 70px ; margin-bottom :-10px ;" src="img/logo-ombudsman2.png" alt=""> Gudang Ombudsman</a></h1>
+            <ul style="margin-top: 20px ;">
+                <li><a href="dashboard.php">Dashboard </a></li>
                 <li><a href="profile.php">Profil</a></li>
-                <li><a href="category-data.php">Data Kategori</a></li>
-                <li><a href="product-data.php">Data Produk</a></li>
+                <li><a href="category-data.php">Kategori</a></li>
+                <li><a href="product-data.php">Barang</a></li>
+                <li><a href="unit-data.php">Satuan</a></li>
                 <li><a href="office-data.php">Perwakilan</a></li>
-                <li><a href="admin-data.php">Data Admin</a></li>
-                <li><a href="user-data.php">Data User</a></li>
+                <li><a href="admin-data.php">Admin</a></li>
+                <li><a href="user-data.php">User</a></li>
                 <li><a href="order-table.php">Pesanan</a></li>
                 <li><a href="logout.php">Keluar</a></li>
             </ul>

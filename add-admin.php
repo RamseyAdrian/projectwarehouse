@@ -32,15 +32,16 @@ if ($_SESSION['role_login'] == 'user') {
     <!-- header -->
     <header>
         <div class="container">
-            <h1><a href="dashboard.php">KP Ombudsman</a></h1>
-            <ul>
-                <li><a href="dashboard.php">Dashboard</a></li>
+            <h1><a href="dashboard.php"><img style="width: 70px ; margin-bottom :-10px ;" src="img/logo-ombudsman2.png" alt=""> Gudang Ombudsman</a></h1>
+            <ul style="margin-top: 20px ;">
+                <li><a href="dashboard.php">Dashboard </a></li>
                 <li><a href="profile.php">Profil</a></li>
-                <li><a href="category-data.php">Data Kategori</a></li>
-                <li><a href="product-data.php">Data Produk</a></li>
+                <li><a href="category-data.php">Kategori</a></li>
+                <li><a href="product-data.php">Barang</a></li>
+                <li><a href="unit-data.php">Satuan</a></li>
                 <li><a href="office-data.php">Perwakilan</a></li>
-                <li><a href="admin-data.php">Data Admin</a></li>
-                <li><a href="user-data.php">Data User</a></li>
+                <li><a href="admin-data.php">Admin</a></li>
+                <li><a href="user-data.php">User</a></li>
                 <li><a href="order-table.php">Pesanan</a></li>
                 <li><a href="logout.php">Keluar</a></li>
             </ul>
@@ -54,7 +55,8 @@ if ($_SESSION['role_login'] == 'user') {
             <div class="box">
                 <form action="" method="POST">
                     <h4>ID Admin</h4>
-                    <input type="text" name="id" class="input-control" required>
+                    <?php $admin_id = rand() ?>
+                    <input type="text" name="id" value="<?php echo $admin_id ?>" class="input-control" required>
                     <h4>Perwakilan</h4>
                     <select name="perwakilan" class="input-control" required>
                         <option value="">--Pilih Perwakilan</option>
@@ -117,23 +119,22 @@ if ($_SESSION['role_login'] == 'user') {
                                             '" . $address . "'
                                             ) ");
                         echo '<script>Swal.fire({
-                                title: "Berhasil Tambah Admin !",
-                                text: "Klik OK Untuk Lanjut.",
-                                icon: "success"
-                              },
-                              function(){
-                                window.location="user-data.php"
-                              });
-                            </script>';
+                            title: "Berhasil Tambah Admin",
+                            text: "Klik OK Untuk Lanjut",
+                            icon: "success"
+                          }).then(function() {
+                            window.location = "admin-data.php";
+                          });
+                        </script>';
                     } else {
                         echo '<script>Swal.fire({
-                            title: "ID tidak tersedia",
-                            text: "Input ID selain ini",
+                            title: "ID Tidak Tersedia",
+                            text: "Klik OK Untuk Lanjut",
                             icon: "error"
-                        },
-                        function(){
-                            window.location="user-data.php"
-                        })</script>';
+                          }).then(function() {
+                            window.location = "admin-data.php";
+                          });
+                        </script>';
                     }
                 }
                 ?>

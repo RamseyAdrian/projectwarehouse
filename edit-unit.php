@@ -6,6 +6,11 @@ if ($_SESSION['role_login'] == 'user' || $_SESSION['role_login'] == 'admin') {
     echo '<script>window.location="logout.php"</script>';
 }
 
+$query_unit = mysqli_query($conn, "SELECT * FROM data_unit WHERE unit_id = '" . $_GET['id'] . "' ");
+if (mysqli_num_rows($query_unit) == 0) {
+    echo '<script>window.location="unit-data.php"</script>';
+}
+$fo_unit = mysqli_fetch_object($query_unit);
 
 ?>
 
@@ -21,6 +26,7 @@ if ($_SESSION['role_login'] == 'user' || $_SESSION['role_login'] == 'admin') {
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Quicksand&display=swap" rel="stylesheet">
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 </head>
 
 <body>
@@ -46,13 +52,13 @@ if ($_SESSION['role_login'] == 'user' || $_SESSION['role_login'] == 'admin') {
     <!-- Content -->
     <div class="section">
         <div class="container">
-            <h2>Tambah Kategori</h2>
+            <h3>Edit Data Satuan</h3>
             <div class="box">
                 <form action="" method="POST">
-                    <h4>ID Kategori</h4>
-                    <input type="text" name="id" placeholder="ID Kategori" class="input-control" value="<?php echo rand() ?>" readonly>
-                    <h4>Nama Kategori</h4>
-                    <input type="text" name="nama" placeholder="Nama Kategori" class="input-control" required>
+                    <h4>ID Satuan</h4>
+                    <input type="text" name="id" placeholder="ID Kategori" class="input-control" value="<?php echo $fo_unit->unit_id ?>" readonly>
+                    <h4>Nama Satuan</h4>
+                    <input type="text" name="nama" placeholder="Nama Kategori" class="input-control" value="<?php echo $fo_unit->unit_name ?>" required>
                     <input type="submit" name="submit" value="Submit" class="btn">
                 </form>
                 <?php
@@ -60,17 +66,18 @@ if ($_SESSION['role_login'] == 'user' || $_SESSION['role_login'] == 'admin') {
                     $nama = ucwords($_POST['nama']);
                     $id = $_POST['id'];
 
-                    $insert = mysqli_query($conn, "INSERT INTO data_category VALUES (
-                                            '" . $id . "',
-                                            '" . $nama . "',
-                                            null) ");
-                    if ($insert) {
+                    $update = mysqli_query($conn, "UPDATE data_unit SET  
+                                           unit_id = '" . $id . "', 
+                                           unit_name = '" . $nama . "' 
+                                           WHERE unit_id = '" . $fo_unit->unit_id . "'
+                                           ");
+                    if ($update) {
                         echo '<script>Swal.fire({
-                            title: "Berhasil Tambah Kategori",
+                            title: "Berhasil Edit Satuan",
                             text: "Klik OK Untuk Lanjut",
                             icon: "success"
                           }).then(function() {
-                            window.location = "category-data.php";
+                            window.location = "unit-data.php";
                           });
                         </script>';
                     } else {

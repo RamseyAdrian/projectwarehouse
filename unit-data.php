@@ -136,38 +136,38 @@ if ($_SESSION['role_login'] == 'user' || $_SESSION['role_login'] == 'admin') {
     <!-- Content -->
     <div class="section">
         <div class="container">
-            <h2>Data Kategori</h2>
+            <h2>Satuan Barang</h2>
             <div class="box1">
-                <button><a href="add-category.php" style="text-decoration: none ;">Tambah Kategori</a></button><br><br>
+                <button><a href="add-unit.php" style="text-decoration: none ;">Tambah Satuan</a></button><br><br>
             </div><br>
             <div class="box">
                 <table border="1" cellspacing="0" class="table">
                     <thead>
                         <tr>
                             <th width="60px">No</th>
-                            <th>ID Kategori</th>
-                            <th>Kategori</th>
+                            <th>ID Satuan</th>
+                            <th>Satuan</th>
                             <th width="150px">Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
                         <?php
                         $no = 1;
-                        $kategori = mysqli_query($conn, "SELECT * FROM data_category ORDER BY category_name LIMIT $start_from, $per_page_record");
+                        $kategori = mysqli_query($conn, "SELECT * FROM data_unit ORDER BY unit_name ");
                         if (mysqli_num_rows($kategori) > 0) {
                             while ($row = mysqli_fetch_array($kategori)) {
                         ?>
                                 <tr>
                                     <td><?php echo $no++ ?></td>
-                                    <td><?php echo $row['category_id'] ?></td>
-                                    <td><?php echo $row['category_name'] ?></td>
+                                    <td><?php echo $row['unit_id'] ?></td>
+                                    <td><?php echo $row['unit_name'] ?></td>
                                     <td>
                                         <center>
                                             <button>
-                                                <a id="buttdetail" href="edit-category.php?id=<?php echo $row['category_id'] ?>">Edit</a>
+                                                <a id="buttdetail" href="edit-unit.php?id=<?php echo $row['unit_id'] ?>">Edit</a>
                                             </button>
                                             <button>
-                                                <a id="buttdetail" href="delete-data.php?idk=<?php echo $row['category_id'] ?>" onclick="return confirm('Yakin Hapus Kategori? Semua Barang di Kategori ini Juga akan Terhapus') ">Hapus</a>
+                                                <a id="buttdetail" href="delete-data.php?ids=<?php echo $row['unit_id'] ?>" onclick="return confirm('Yakin Hapus Satuan?') ">Hapus</a>
                                             </button>
                                         </center>
 
@@ -185,54 +185,7 @@ if ($_SESSION['role_login'] == 'user' || $_SESSION['role_login'] == 'admin') {
         </div>
     </div>
 
-    <center>
-        <div class="pagination">
-            <?php
-            $query = "SELECT COUNT(*) FROM data_category";
-            $rs_result = mysqli_query($conn, $query);
-            $row = mysqli_fetch_row($rs_result);
-            $total_records = $row[0];
 
-            echo "</br>";
-            // Number of pages required.   
-            $total_pages = ceil($total_records / $per_page_record);
-            $pagLink = "";
-
-            if ($page >= 2) {
-                echo "<a href='category-data.php?page=" . ($page - 1) . "'>  Prev </a>";
-            }
-
-            for ($i = 1; $i <= $total_pages; $i++) {
-                if ($i == $page) {
-                    $pagLink .= "<a class = 'active' href='category-data.php?page="
-                        . $i . "'>" . $i . " </a>";
-                } else {
-                    $pagLink .= "<a href='category-data.php?page=" . $i . "'>   
-                                        " . $i . " </a>";
-                }
-            };
-            echo $pagLink;
-
-            if ($page < $total_pages) {
-                echo "<a href='category-data.php?page=" . ($page + 1) . "'>  Next </a>";
-            }
-            ?>
-        </div><br><br><br><br>
-
-        <!-- <div class="inline">
-            <input id="page" type="number" min="1" max="<?php echo $total_pages ?>" placeholder="<?php echo $page . "/" . $total_pages; ?>" required>
-            <button onclick="go2Page();">Go</button>
-        </div> -->
-    </center>
-
-
-    <script>
-        function go2Page() {
-            var page = document.getElementById("page").value;
-            page = ((page > <?php echo $total_pages; ?>) ? <?php echo $total_pages; ?> : ((page < 1) ? 1 : page));
-            window.location.href = 'category-data.php?page=' + page;
-        }
-    </script>
 
     <!-- Footer -->
     <footer>

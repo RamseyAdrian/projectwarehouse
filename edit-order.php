@@ -331,7 +331,7 @@ $idkantoradmin = $_SESSION['a_global']->office_id;
                                     $delete_data_transaction = mysqli_query($conn, "DELETE FROM data_transaction WHERE data_transaction.order_id = '" . $orderid . "' ");
                                 }
                                 echo '<script>Swal.fire({
-                                    title: "Pesanan User Berhasil Diproses !",
+                                    title: "Pesanan User Berhasil Diproses",
                                     text: "Klik OK Untuk Lanjut",
                                     icon : "success"
                                }).then(function() {
