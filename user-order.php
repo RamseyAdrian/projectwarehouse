@@ -101,11 +101,21 @@ $kantoruser = $_SESSION['a_global']->office_id;
     <!-- header -->
     <header>
         <div class="container">
-            <h1><a href="user-home.php">KP Ombudsman</a></h1>
-            <ul>
-                <li><a href="user-homepage-product.php">Produk</a></li>
-                <li><a href="user-cart.php">Keranjang</a></li>
-                <li><a href="user-order.php">Pesanan</a></li>
+            <h1><img style="width: 80px ; margin-bottom :-10px ;" src="img/logo-ombudsman2.png" alt=""><a href="user-home.php"> Gudang Ombudsman</a></h1>
+            <ul style="margin-top: 20px ;">
+                <?php
+                $isi = 0;
+                $keranjang = mysqli_query($conn, "SELECT * FROM data_cart WHERE user_id = '" . $iduser . "' AND office_id = '" . $kantoruser . "' ");
+                if (mysqli_num_rows($keranjang) > 0) {
+                    while ($fetch_keranjang = mysqli_fetch_array($keranjang)) {
+                        $isi++;
+                    }
+                }
+                ?>
+                <li><a href="user-home.php">Home</a></li>
+                <li><a href="user-category-product.php">Kategori</a></li>
+                <li><a href="user-cart.php"><img style="width:16px ;" src="img/cart.png" alt="">(<?php echo $isi; ?>)</a></li>
+                <li><a href="user-order.php">Transaksi</a></li>
                 <li><a href="user-profile.php">Profil Saya</a></li>
                 <li><a href="logout.php">Log out</a></li>
             </ul>

@@ -55,13 +55,32 @@ $idkantoradmin = $_SESSION['a_global']->office_id;
         <!-- header -->
         <header>
             <div class="container">
-                <h1><a href="dashboard.php">KP Ombudsman</a></h1>
-                <ul>
+                <h1><a href="dashboard.php"><img style="width: 80px ; margin-bottom :-10px ;" src="img/logo-ombudsman2.png" alt=""> Gudang Ombudsman</a></h1>
+                <ul style="margin-top: 20px ;">
+                    <?php
+                    $idk_1 = "";
+                    $idk_2 = "";
+                    $jml_produk = 0;
+                    $jml_keranjang = 0;
+                    $keranjang = mysqli_query($conn, "SELECT * FROM data_transaction WHERE office_id = '" . $idkantoradmin . "' ORDER BY cart_id");
+                    if (mysqli_num_rows($keranjang) > 0) {
+                        while ($fetch_keranjang = mysqli_fetch_array($keranjang)) {
+                            $jml_produk++;
+                            $idk_1 = $fetch_keranjang['cart_id'];
+                            if ($idk_2 == $idk_1) {
+                                $jml_keranjang = $jml_keranjang * 1;
+                            } else {
+                                $jml_keranjang++;
+                            }
+                            $idk_2 = $fetch_keranjang['cart_id'];
+                        }
+                    }
+                    ?>
                     <li><a href="dashboard.php">Dashboard</a></li>
                     <li><a href="profile.php">Profil</a></li>
                     <li><a href="product-data.php">Data Produk</a></li>
                     <li><a href="user-data.php">Data User</a></li>
-                    <li><a href="order-table.php">Pesanan</a></li>
+                    <li><a href="order-table.php">Pesanan (<?php echo $jml_keranjang; ?>)</a></li>
                     <li><a href="logout.php">Keluar</a></li>
                 </ul>
             </div>
@@ -75,7 +94,7 @@ $idkantoradmin = $_SESSION['a_global']->office_id;
                     <button><a href="add-product.php" style="text-decoration: none ; font-weight:bold;">Tambah Data Produk</a></button><br><br>
                     <button><a href="stocking-product.php" style="text-decoration: none ; font-weight:bold;">Stocking Barang</a></button>
                     <button><a href="min-stocking-product.php" style="text-decoration: none ; font-weight:bold;">Barang Keluar</a></button>
-                    <button><a href="stocking-history.php" style="text-decoration: none ; font-weight:bold;">Riwayat Stocking</a></button>
+                    <button><a href="stocking-history.php" style="text-decoration: none ; font-weight:bold;">Item In & Out History</a></button>
                 </div>
                 <br>
                 <div class="box">

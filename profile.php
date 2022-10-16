@@ -13,7 +13,7 @@ $d = mysqli_fetch_object($query);
 
 $query_super = mysqli_query($conn, "SELECT * FROM data_superadmin WHERE super_admin_id = '" . $_SESSION['id'] . "' ");
 $s = mysqli_fetch_object($query_super);
-
+$kantor_admin = $_SESSION['a_global']->office_id;
 ?>
 
 <!DOCTYPE html>
@@ -41,13 +41,32 @@ $s = mysqli_fetch_object($query_super);
         <!-- header -->
         <header>
             <div class="container">
-                <h1><a href="dashboard.php">KP Ombudsman</a></h1>
-                <ul>
+                <h1><a href="dashboard.php"><img style="width: 80px ; margin-bottom :-10px ;" src="img/logo-ombudsman2.png" alt=""> Gudang Ombudsman</a></h1>
+                <ul style="margin-top: 20px ;">
+                    <?php
+                    $idk_1 = "";
+                    $idk_2 = "";
+                    $jml_produk = 0;
+                    $jml_keranjang = 0;
+                    $keranjang = mysqli_query($conn, "SELECT * FROM data_transaction WHERE office_id = '" . $kantor_admin . "' ORDER BY cart_id");
+                    if (mysqli_num_rows($keranjang) > 0) {
+                        while ($fetch_keranjang = mysqli_fetch_array($keranjang)) {
+                            $jml_produk++;
+                            $idk_1 = $fetch_keranjang['cart_id'];
+                            if ($idk_2 == $idk_1) {
+                                $jml_keranjang = $jml_keranjang * 1;
+                            } else {
+                                $jml_keranjang++;
+                            }
+                            $idk_2 = $fetch_keranjang['cart_id'];
+                        }
+                    }
+                    ?>
                     <li><a href="dashboard.php">Dashboard</a></li>
                     <li><a href="profile.php">Profil</a></li>
                     <li><a href="product-data.php">Data Produk</a></li>
                     <li><a href="user-data.php">Data User</a></li>
-                    <li><a href="order-table.php">Pesanan</a></li>
+                    <li><a href="order-table.php">Pesanan (<?php echo $jml_keranjang; ?>)</a></li>
                     <li><a href="logout.php">Keluar</a></li>
                 </ul>
             </div>
@@ -168,8 +187,27 @@ $s = mysqli_fetch_object($query_super);
         <!-- header -->
         <header>
             <div class="container">
-                <h1><a href="dashboard.php">KP Ombudsman</a></h1>
-                <ul>
+                <h1><a href="dashboard.php"><img style="width: 80px ; margin-bottom :-10px ;" src="img/logo-ombudsman2.png" alt=""> Gudang Ombudsman</a></h1>
+                <ul style="margin-top: 20px ;">
+                    <?php
+                    $idk_1 = "";
+                    $idk_2 = "";
+                    $jml_produk = 0;
+                    $jml_keranjang = 0;
+                    $keranjang = mysqli_query($conn, "SELECT * FROM data_transaction WHERE office_id = '" . $kantor_admin . "' ORDER BY cart_id");
+                    if (mysqli_num_rows($keranjang) > 0) {
+                        while ($fetch_keranjang = mysqli_fetch_array($keranjang)) {
+                            $jml_produk++;
+                            $idk_1 = $fetch_keranjang['cart_id'];
+                            if ($idk_2 == $idk_1) {
+                                $jml_keranjang = $jml_keranjang * 1;
+                            } else {
+                                $jml_keranjang++;
+                            }
+                            $idk_2 = $fetch_keranjang['cart_id'];
+                        }
+                    }
+                    ?>
                     <li><a href="dashboard.php">Dashboard</a></li>
                     <li><a href="profile.php">Profil</a></li>
                     <li><a href="category-data.php">Data Kategori</a></li>
@@ -177,7 +215,7 @@ $s = mysqli_fetch_object($query_super);
                     <li><a href="office-data.php">Perwakilan</a></li>
                     <li><a href="admin-data.php">Data Admin</a></li>
                     <li><a href="user-data.php">Data User</a></li>
-                    <li><a href="order-table.php">Pesanan</a></li>
+                    <li><a href="order-table.php">Pesanan (<?php echo $jml_keranjang; ?>)</a></li>
                     <li><a href="logout.php">Keluar</a></li>
                 </ul>
             </div>
