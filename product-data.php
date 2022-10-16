@@ -112,8 +112,8 @@ $idkantoradmin = $_SESSION['a_global']->office_id;
                 <div class="box1">
                     <button><a href="add-product.php" style="text-decoration: none ; font-weight:bold;">Tambah Data Produk</a></button><br><br>
                     <button><a href="stocking-product.php" style="text-decoration: none ; font-weight:bold;">Stocking Barang</a></button>
-                    <button><a href="min-stocking-product.php" style="text-decoration: none ; font-weight:bold;">Barang Keluar</a></button>
-                    <button><a href="stocking-history.php" style="text-decoration: none ; font-weight:bold;">Item In & Out History</a></button>
+                    <!-- <button><a href="min-stocking-product.php" style="text-decoration: none ; font-weight:bold;">Barang Keluar</a></button> -->
+                    <button><a href="stocking-history.php" style="text-decoration: none ; font-weight:bold;">Riwayat Stocking</a></button>
                 </div>
                 <br>
                 <div class="box">
@@ -174,11 +174,39 @@ $idkantoradmin = $_SESSION['a_global']->office_id;
         </div>
 
         <!-- Footer -->
-        <footer>
-            <div class="container">
-                <small>Copyright &copy; 2022 - Universitas Pertamina</small>
-            </div>
-        </footer>
+        <div class="footer-dark">
+            <footer>
+                <div class="container">
+                    <div class="row" style="display: flex ;">
+                        <div class="col-md-6 item text" style="margin-right: 90px ;">
+                            <h3>Ombudsman RI</h3>
+                            <p>Kantor Pusat <br>
+                                Jl. HR. Rasuna Said Kav. C-19 Kuningan, Jakarta Selatan 12920</p>
+                        </div>
+                        <div class="col-sm-6 col-md-3 item" style="margin-right: 90px ;">
+                            <h3>Kontak</h3>
+                            <ul>
+                                <li><a href="#">No Telfon : (021) 2251 3737</a></li>
+                                <li><a href="#">Fax : (021) 5296 0907 / 5296 0908</a></li>
+                                <li><a href="#">Email : humas@ombudsman.go.id</a></li>
+                            </ul>
+                        </div>
+                        <br>
+                        <div class="col-sm-6 col-md-3 item" style="margin-right: 90px ;">
+                            <h3>About</h3>
+                            <ul>
+                                <li><a href="#">Company</a></li>
+                                <li><a href="#">Team</a></li>
+                            </ul>
+                        </div>
+                        <br>
+
+                    </div>
+                    <p class="copyright">Ombudsman RI © 2022</p>
+                    <p class="copyright">Made By Divisi HTI & Team RJN</p>
+                </div>
+            </footer>
+        </div>
         <!--------------------------------------------------------------------------------- SUPER ADMIN ---------------------------------------------------------------------------->
     <?php
     } else if ($_SESSION['role_login'] == 'super') {
@@ -270,11 +298,39 @@ $idkantoradmin = $_SESSION['a_global']->office_id;
         </div>
 
         <!-- Footer -->
-        <footer>
-            <div class="container">
-                <small>Copyright &copy; 2022 - Universitas Pertamina</small>
-            </div>
-        </footer>
+        <div class="footer-dark">
+            <footer>
+                <div class="container">
+                    <div class="row" style="display: flex ;">
+                        <div class="col-md-6 item text" style="margin-right: 90px ;">
+                            <h3>Ombudsman RI</h3>
+                            <p>Kantor Pusat <br>
+                                Jl. HR. Rasuna Said Kav. C-19 Kuningan, Jakarta Selatan 12920</p>
+                        </div>
+                        <div class="col-sm-6 col-md-3 item" style="margin-right: 90px ;">
+                            <h3>Kontak</h3>
+                            <ul>
+                                <li><a href="#">No Telfon : (021) 2251 3737</a></li>
+                                <li><a href="#">Fax : (021) 5296 0907 / 5296 0908</a></li>
+                                <li><a href="#">Email : humas@ombudsman.go.id</a></li>
+                            </ul>
+                        </div>
+                        <br>
+                        <div class="col-sm-6 col-md-3 item" style="margin-right: 90px ;">
+                            <h3>About</h3>
+                            <ul>
+                                <li><a href="#">Company</a></li>
+                                <li><a href="#">Team</a></li>
+                            </ul>
+                        </div>
+                        <br>
+
+                    </div>
+                    <p class="copyright">Ombudsman RI © 2022</p>
+                    <p class="copyright">Made By Divisi HTI & Team RJN</p>
+                </div>
+            </footer>
+        </div>
     <?php
     }
     ?>

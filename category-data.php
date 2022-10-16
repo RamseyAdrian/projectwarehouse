@@ -216,12 +216,7 @@ if ($_SESSION['role_login'] == 'user' || $_SESSION['role_login'] == 'admin') {
             ?>
         </div><br><br><br><br>
 
-        <!-- <div class="inline">
-            <input id="page" type="number" min="1" max="<?php echo $total_pages ?>" placeholder="<?php echo $page . "/" . $total_pages; ?>" required>
-            <button onclick="go2Page();">Go</button>
-        </div> -->
     </center>
-
 
     <script>
         function go2Page() {
@@ -232,11 +227,39 @@ if ($_SESSION['role_login'] == 'user' || $_SESSION['role_login'] == 'admin') {
     </script>
 
     <!-- Footer -->
-    <footer>
-        <div class="container">
-            <small>Copyright &copy; 2022 - Universitas Pertamina</small>
-        </div>
-    </footer>
+    <div class="footer-dark">
+        <footer>
+            <div class="container">
+                <div class="row" style="display: flex ;">
+                    <div class="col-md-6 item text" style="margin-right: 90px ;">
+                        <h3>Ombudsman RI</h3>
+                        <p>Kantor Pusat <br>
+                            Jl. HR. Rasuna Said Kav. C-19 Kuningan, Jakarta Selatan 12920</p>
+                    </div>
+                    <div class="col-sm-6 col-md-3 item" style="margin-right: 90px ;">
+                        <h3>Kontak</h3>
+                        <ul>
+                            <li><a href="#">No Telfon : (021) 2251 3737</a></li>
+                            <li><a href="#">Fax : (021) 5296 0907 / 5296 0908</a></li>
+                            <li><a href="#">Email : humas@ombudsman.go.id</a></li>
+                        </ul>
+                    </div>
+                    <br>
+                    <div class="col-sm-6 col-md-3 item" style="margin-right: 90px ;">
+                        <h3>About</h3>
+                        <ul>
+                            <li><a href="#">Company</a></li>
+                            <li><a href="#">Team</a></li>
+                        </ul>
+                    </div>
+                    <br>
+
+                </div>
+                <p class="copyright">Ombudsman RI © 2022</p>
+                <p class="copyright">Made By Divisi HTI & Team RJN</p>
+            </div>
+        </footer>
+    </div>
 
 </body>
 
