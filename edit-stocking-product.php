@@ -61,6 +61,8 @@ $s = mysqli_fetch_object($query_super);
             <h3>Tambah Stock Produk</h3>
             <div class="box">
                 <form action="" method="POST" enctype="multipart/form-data">
+                    <h2><?php echo $p->product_name ?></h2>
+                    <h3>Sisa Stock : <?php echo $p->stock ?></h3><br>
 
                     <h4>Jumlah Stok Tambahan</h4>
                     <input type="number" name="stock" class="input-control" value="1" min="1" max="1000">

@@ -34,7 +34,7 @@ $idkategori = $p->category_id;
     <link href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.css" rel="stylesheet" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert-dev.js"></script>
-
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body>
@@ -94,7 +94,7 @@ $idkategori = $p->category_id;
 
                     if ($update) {
                         echo '<script>Swal.fire({
-                            title: "Berhasil Edit Produk !",
+                            title: "Berhasil Mengubah Pesanan !",
                             text: "Klik OK Untuk Lanjut.",
                             icon: "success"
                           }).then(function() {

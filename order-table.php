@@ -107,6 +107,7 @@ $kantoradmin = $_SESSION['a_global']->office_id;
                             <tr>
                                 <th>No</th>
                                 <th>ID Pesanan</th>
+                                <th>Barang</th>
                                 <th>Waktu</th>
                                 <th>Aksi</th>
                             </tr>
@@ -122,6 +123,16 @@ $kantoradmin = $_SESSION['a_global']->office_id;
                                     <tr>
                                         <td><?php echo $no++ ?></td>
                                         <td><?php echo $fo_trans['cart_id'] ?></td>
+                                        <td>
+                                            <?php
+                                            $query_trans = mysqli_query($conn, "SELECT * FROM data_transaction WHERE data_transaction.cart_id = '" . $fo_trans['cart_id'] . "' ");
+                                            if (mysqli_num_rows($query_trans) > 0) {
+                                                while ($fa_trans = mysqli_fetch_array($query_trans)) {
+                                                    echo $fa_trans['product_name'], "(", $fa_trans['quantity'], ")";
+                                                }
+                                            }
+                                            ?>
+                                        </td>
                                         <td><?php echo $fo_trans['created'] ?></td>
                                         <td>
                                             <center>

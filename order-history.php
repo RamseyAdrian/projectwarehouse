@@ -136,7 +136,7 @@ $kantoradmin = $_SESSION['a_global']->office_id;
                                             $fetch_trans = mysqli_query($conn, "SELECT * FROM transaction_history WHERE transaction_history.cart_id = '" . $fo_trans['cart_id'] . "' ");
                                             if (mysqli_num_rows($fetch_trans) > 0) {
                                                 while ($fa_fetch = mysqli_fetch_array($fetch_trans)) {
-                                                    echo $fa_fetch['product_name'], "(", $fa_fetch['quantity'], ")";
+                                                    echo $fa_fetch['product_name'], " (", $fa_fetch['quantity'], ") ";
                                                 }
                                             }
                                             ?>
@@ -144,7 +144,7 @@ $kantoradmin = $_SESSION['a_global']->office_id;
                                         <td><?php echo $fo_trans['created'] ?></td>
                                         <td>
                                             <center>
-                                                <button id="buttdetail"><a href="admin-order-history.php?id=<?php echo $fo_trans['cart_id'] ?>">Lihat Detail Pesanan</a></button>
+                                                <button id="buttdetail"><a href="admin-order-history.php?id=<?php echo $fo_trans['cart_id'] ?>">Detail</a></button>
                                             </center>
                                         </td>
                                     </tr>
@@ -205,7 +205,7 @@ $kantoradmin = $_SESSION['a_global']->office_id;
                                             $fetch_trans = mysqli_query($conn, "SELECT * FROM transaction_history WHERE transaction_history.cart_id = '" . $fo_trans['cart_id'] . "' ");
                                             if (mysqli_num_rows($fetch_trans) > 0) {
                                                 while ($fa_fetch = mysqli_fetch_array($fetch_trans)) {
-                                                    echo $fa_fetch['product_name'], "(", $fa_fetch['quantity'], ")";
+                                                    echo $fa_fetch['product_name'], " (", $fa_fetch['quantity'], ") ";
                                                 }
                                             }
                                             ?>
@@ -213,7 +213,7 @@ $kantoradmin = $_SESSION['a_global']->office_id;
                                         <td><?php echo $fo_trans['created'] ?></td>
                                         <td>
                                             <center>
-                                                <button id="buttdetail"><a href="admin-order-history.php?id=<?php echo $fo_trans['cart_id'] ?>">Lihat Detail Pesanan</a></button>
+                                                <button id="buttdetail"><a href="admin-order-history.php?id=<?php echo $fo_trans['cart_id'] ?>">Detail</a></button>
                                             </center>
                                         </td>
                                     </tr>
@@ -274,7 +274,7 @@ $kantoradmin = $_SESSION['a_global']->office_id;
                                             $fetch_trans = mysqli_query($conn, "SELECT * FROM transaction_history WHERE transaction_history.cart_id = '" . $fo_trans['cart_id'] . "' ");
                                             if (mysqli_num_rows($fetch_trans) > 0) {
                                                 while ($fa_fetch = mysqli_fetch_array($fetch_trans)) {
-                                                    echo $fa_fetch['product_name'], "(", $fa_fetch['quantity'], ")";
+                                                    echo $fa_fetch['product_name'], " (", $fa_fetch['quantity'], ") ";
                                                 }
                                             }
                                             ?>
@@ -282,7 +282,7 @@ $kantoradmin = $_SESSION['a_global']->office_id;
                                         <td><?php echo $fo_trans['created'] ?></td>
                                         <td>
                                             <center>
-                                                <button id="buttdetail"><a href="admin-order-history.php?id=<?php echo $fo_trans['cart_id'] ?>">Lihat Detail Pesanan</a></button>
+                                                <button id="buttdetail"><a href="admin-order-history.php?id=<?php echo $fo_trans['cart_id'] ?>">Detail</a></button>
                                             </center>
                                         </td>
                                     </tr>

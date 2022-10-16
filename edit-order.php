@@ -58,6 +58,25 @@ $idcart = $_GET['id'];
                     color: red;
                     font-weight: bold;
                 }
+
+                .section .container .box form #button-restock {
+                    background-color: red;
+                    color: white;
+                    font-weight: bold;
+                    padding: 5px;
+                    border-radius: 5px;
+                    margin-top: 5px;
+                    font-size: 15px;
+                }
+
+                .section .container .box form #button-restock:hover {
+                    background-color: black;
+                    color: white;
+                }
+
+                .section .container .box form #button-restock a {
+                    text-decoration: none;
+                }
             </style>
             <div class="box">
                 <form action="" method="POST" enctype="multipart/form-data">
@@ -74,9 +93,9 @@ $idcart = $_GET['id'];
                             <h2 id="h2produk"><?php echo $fo_trans->product_name ?></h2><br><br>
                             <img src="produk/<?php echo $fo_trans->product_image ?>" width="100px">
                             <br><br>
-                            <h4>Jumlah Pesanan</h4>
+                            <h3>Jumlah Pesanan</h3>
                             <input type="text" name="quantity" class="input-control" value="<?php echo $fo_trans->quantity ?>" readonly>
-                            <h4>Waktu Pesanan Dibuat</h4>
+                            <h3>Waktu Pesanan Dibuat</h3>
                             <input type="text" name="waktu" class="input-control" value="<?php echo $fo_trans->created ?>" readonly>
                             <h3>Ketersediaan Barang</h3>
                             <h4>Stock : <?php echo $fo_trans->stock ?></h4>
@@ -98,7 +117,7 @@ $idcart = $_GET['id'];
                                 ");
                             ?>
                                 <h4 style="color: red ;">Stock tidak mencukupi</h4>
-                                <button><a href="">Restock</a></button>
+                                <button id="button-restock"><a href="edit-stocking-product.php?id=<?php echo $fo_trans->product_id ?>">Restock</a></button>
                             <?php
                             }
                             ?>
@@ -110,7 +129,7 @@ $idcart = $_GET['id'];
                         }
                     }
                     ?>
-                    <h4>Catatan Dari Admin</h4>
+                    <h3>Catatan Dari Admin</h3>
                     <textarea name="notes" class="input-control"></textarea><br>
                     <br>
                     <h2>Status Pemesanan Barang</h2>
@@ -122,7 +141,7 @@ $idcart = $_GET['id'];
                     </select>
                     <br><br><br>
                     <center>
-                        <input type="submit" name="kembali" class="input-control" value="Kembali">
+                        <input style="cursor: pointer ;" type="submit" name="kembali" class="input-control" value="Kembali">
                     </center>
                     <center>
                         <input type="submit" name="submit" class="btn" value="Submit">
@@ -188,12 +207,23 @@ $idcart = $_GET['id'];
                                 )");
                                 $delete_data_transaction = mysqli_query($conn, "DELETE FROM data_transaction WHERE data_transaction.order_id = '" . $orderid . "' ");
 
-                                echo '<script>alert("Pesanan User Berhasil Diproses")</script>';
-                                echo '<script>window.location="order-table.php"</script>';
+                                echo '<script>Swal.fire({
+                                    title: "Pesanan User Berhasil Diproses ",
+                                    text: "Klik OK Untuk Lanjut",
+                                    icon : "success"
+                               }).then(function() {
+                                    window.location = "order-table.php";
+                               });
+                               </script>';
                             }
                         }
                     } else if ($_POST['status'] == "Berhasil" && $stock_ready < mysqli_num_rows($trans)) {
-                        echo '<script>alert("Stock Tidak Cukup, Pilih Sebagian Disetujui atau Restock Barang")</script>';
+                        echo '<script>Swal.fire({
+                            title: "Stock Tidak Mencukupi!",
+                            text: "Pilih Tidak Setuju atau Sebagian Disetujui !",
+                            icon : "error"
+                       });
+                       </script>';
                     } else if ($_POST['status'] == "Gagal" && $stock_ready == mysqli_num_rows($trans)) {
                         $update_data_order = mysqli_query($conn, "UPDATE data_order SET 
                             status = '" . $_POST['status'] . "',
@@ -281,6 +311,14 @@ $idcart = $_GET['id'];
                                     )");
                                     $delete_data_transaction = mysqli_query($conn, "DELETE FROM data_transaction WHERE data_transaction.order_id = '" . $orderid . "' ");
                                 }
+                                echo '<script>Swal.fire({
+                                    title: "Pesanan User Berhasil Diproses !",
+                                    text: "Klik OK Untuk Lanjut",
+                                    icon : "success"
+                               }).then(function() {
+                                    window.location = "order-table.php";
+                               });
+                               </script>';
                             }
                         }
                     } else if ($_POST['status'] == "Berhasil Sebagian" && $stock_ready < mysqli_num_rows($trans)) {
@@ -387,8 +425,14 @@ $idcart = $_GET['id'];
                                     )");
                                     $delete_data_transaction = mysqli_query($conn, "DELETE FROM data_transaction WHERE data_transaction.order_id = '" . $orderid . "' ");
                                 }
-                                echo '<script>alert("Pesanan User Berhasil Diproses")</script>';
-                                echo '<script>window.location="order-table.php"</script>';
+                                echo '<script>Swal.fire({
+                                    title: "Pesanan User Berhasil Diproses",
+                                    text: "Klik OK Untuk Lanjut",
+                                    icon : "success"
+                               }).then(function() {
+                                    window.location = "order-table.php";
+                               });
+                               </script>';
                             }
                         }
                     } else if ($_POST['status'] == "Gagal" && $stock_ready < mysqli_num_rows($trans)) {
@@ -481,7 +525,26 @@ $idcart = $_GET['id'];
                             }
                         }
                     } else if ($_POST['status'] == "Berhasil Sebagian" && $stock_ready == mysqli_num_rows($trans)) {
-                        echo '<script>alert("Semua Stock Aman, Silahkan Pilih Setuju")</script>';
+                        echo '<script>Swal.fire({
+                            title: "Semua Stok Aman, Pilih Setuju !",
+                            text: "Klik OK Untuk Lanjut",
+                            icon : "info"
+                       });
+                       </script>';
+                    } else if ($_POST['status'] == "" && $stock_ready == mysqli_num_rows($trans)) {
+                        echo '<script>Swal.fire({
+                            title: "Status Pemesanan Barang Belum Dipilih !",
+                            text: "Cek Terlebih Dahulu",
+                            icon : "warning"
+                       });
+                       </script>';
+                    } else if ($_POST['status'] == "" && $stock_ready < mysqli_num_rows($trans)) {
+                        echo '<script>Swal.fire({
+                            title: "Status Pemesanan Barang Belum Dipilih !",
+                            text: "Cek Terlebih Dahulu",
+                            icon : "warning"
+                       });
+                       </script>';
                     }
 
                     // if ($update) {
@@ -512,7 +575,7 @@ $idcart = $_GET['id'];
         </div>
     </footer>
     <script>
-        CKEDITOR.replace('deskripsi');
+        CKEDITOR.replace('notes');
     </script>
 
 </body>
