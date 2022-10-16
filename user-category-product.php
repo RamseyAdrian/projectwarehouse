@@ -1,11 +1,10 @@
 <?php
-error_reporting(0);
 session_start();
 include 'db.php';
 $kontak = mysqli_query($conn, "SELECT admin_telp, admin_email, admin_address FROM data_admin WHERE admin_id = 1");
 $a = mysqli_fetch_object($kontak);
-
 if ($_SESSION['role_login'] != 'user') {
+
     echo '<script>window.location="logout.php"</script>';
 } else if ($_SESSION['status_login'] != true) {
     echo '<script>window.location="login.php"</script>';
@@ -15,11 +14,13 @@ $qd = mysqli_query($conn, "SELECT * FROM data_office WHERE office_id = 11");
 $fo = mysqli_fetch_object($qd);
 
 $user_office = $_SESSION['a_global']->office_id;
-$iduser = $_SESSION['a_global']->user_id;
+$user_id = $_SESSION['a_global']->user_id;
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
+
+</html>
 
 <head>
     <meta charset="UTF-8">
@@ -29,7 +30,12 @@ $iduser = $_SESSION['a_global']->user_id;
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Quicksand&display=swap" rel="stylesheet">
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css" />
     <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
+    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> -->
     <style>
         table {
             border-collapse: collapse;
@@ -40,6 +46,7 @@ $iduser = $_SESSION['a_global']->user_id;
             /* float: right; */
             margin: 20px 0px;
         }
+
 
         .pagination {
             display: inline-block;
@@ -67,7 +74,7 @@ $iduser = $_SESSION['a_global']->user_id;
 
 <body>
     <?php
-    $per_page_record = 12;  // Number of entries to show in a page.   
+    $per_page_record = 15;  // Number of entries to show in a page.   
     // Look for a GET variable page if not found default is 1.        
     if (isset($_GET["page"])) {
         $page  = $_GET["page"];
@@ -84,7 +91,7 @@ $iduser = $_SESSION['a_global']->user_id;
             <ul style="margin-top: 20px ;">
                 <?php
                 $isi = 0;
-                $keranjang = mysqli_query($conn, "SELECT * FROM data_cart WHERE user_id = '" . $iduser . "' AND office_id = '" . $user_office . "' ");
+                $keranjang = mysqli_query($conn, "SELECT * FROM data_cart WHERE user_id = '" . $user_id . "' AND office_id = '" . $user_office . "' ");
                 if (mysqli_num_rows($keranjang) > 0) {
                     while ($fetch_keranjang = mysqli_fetch_array($keranjang)) {
                         $isi++;
@@ -101,72 +108,46 @@ $iduser = $_SESSION['a_global']->user_id;
         </div>
     </header>
 
-
-
     <!--search-->
     <div class="search">
         <div class="container">
-            <form action="user-homepage-product.php" method="GET">
-                <input type="text" name="search" placeholder="cari produk" value="<?php echo $_GET['search'] ?>">
+            <form action="user-category-search.php" method="GET">
+                <input type="text" name="search" placeholder="Cari Kategori">
                 <input type="submit" name="cari" value="Cari">
             </form>
+
         </div>
     </div>
 
-    <!-- New Product -->
-
+    <!--Category-->
     <div class="section">
         <div class="container">
-            <h3>Produk</h3>
+            <h2>Kategori</h2>
             <div class="box">
                 <?php
-                if ($_GET['search'] != '' || $_GET['kat'] != '') {
-                    $where = "AND product_name LIKE '%" . $_GET['search'] . "%' AND category_id LIKE '%" . $_GET['kat'] . "%' ";
-                }
-                $produk = mysqli_query($conn, "SELECT * FROM data_product LEFT JOIN data_office USING (office_id) WHERE product_status=1 AND office_id = '" . $user_office . "' $where
-                ORDER BY product_id LIMIT $start_from, $per_page_record ");
-                if (mysqli_num_rows($produk) > 0) {
-                    while ($p = mysqli_fetch_array($produk)) {
+                $kategori = mysqli_query($conn, "SELECT * FROM data_category ORDER BY category_name   LIMIT $start_from, $per_page_record");
+                if (mysqli_num_rows($kategori) > 0) {
+                    while ($k = mysqli_fetch_array($kategori)) {
                 ?>
-                        <a href="user-product-detail.php?id=<?php echo $p['product_id'] ?>">
-                            <div class="col-4">
-                                <center>
-                                    <img src="produk/<?php echo $p['product_image'] ?>" alt="">
-                                    <br><br>
-                                    <h3 class="nama"><?php echo substr($p['product_name'], 0, 30) ?></h3>
-                                </center>
-                                <!-- <p class="nama"><?php echo $p['office_name'] ?></p> -->
-
-                                <?php
-                                if ($p['stock'] == 0) {
-                                ?>
-                                    <center>
-                                        <p style="color: red ;">Stock Habis, Hubungi Admin untuk Restock</p>
-                                    </center>
-                                <?php
-                                } else {
-                                ?>
-                                    <center>
-                                        <p class="nama">Sisa Stok : <?php echo $p['stock'] ?></p>
-                                    </center>
-                                <?php
-                                }
-                                ?>
-                                <!-- <p class="harga">Rp<?php echo $p['product_price'] ?></p> -->
+                        <a href="user-homepage-product.php?kat=<?php echo $k['category_id'] ?> ">
+                            <div class="col-5">
+                                <!-- <img src="img/menu_icon.png" width="50px" style="margin-bottom: 5px;"> -->
+                                <p><?php echo $k['category_name'] ?></p>
                             </div>
                         </a>
                     <?php }
                 } else { ?>
-                    <p>Tidak Ada Produk</p>
+                    <p>Tidak Ada Kategori</p>
                 <?php } ?>
             </div>
         </div>
     </div>
 
+
     <center>
         <div class="pagination">
             <?php
-            $query = "SELECT COUNT(*) FROM data_product";
+            $query = "SELECT COUNT(*) FROM data_category";
             $rs_result = mysqli_query($conn, $query);
             $row = mysqli_fetch_row($rs_result);
             $total_records = $row[0];
@@ -177,22 +158,22 @@ $iduser = $_SESSION['a_global']->user_id;
             $pagLink = "";
 
             if ($page >= 2) {
-                echo "<a href='user-homepage-product.php?page=" . ($page - 1) . "'>  Prev </a>";
+                echo "<a href='category-product.php?page=" . ($page - 1) . "'>  Prev </a>";
             }
 
             for ($i = 1; $i <= $total_pages; $i++) {
                 if ($i == $page) {
-                    $pagLink .= "<a class = 'active' href='user-homepage-product.php?page="
+                    $pagLink .= "<a class = 'active' href='category-product.php?page="
                         . $i . "'>" . $i . " </a>";
                 } else {
-                    $pagLink .= "<a href='user-homepage-product.php?page=" . $i . "'>   
+                    $pagLink .= "<a href='category-product.php?page=" . $i . "'>   
                                         " . $i . " </a>";
                 }
             };
             echo $pagLink;
 
             if ($page < $total_pages) {
-                echo "<a href='user-homepage-product.php?page=" . ($page + 1) . "'>  Next </a>";
+                echo "<a href='category-product.php?page=" . ($page + 1) . "'>  Next </a>";
             }
             ?>
         </div><br><br><br><br>
@@ -202,6 +183,15 @@ $iduser = $_SESSION['a_global']->user_id;
             <button onclick="go2Page();">Go</button>
         </div> -->
     </center>
+
+
+    <script>
+        function go2Page() {
+            var page = document.getElementById("page").value;
+            page = ((page > <?php echo $total_pages; ?>) ? <?php echo $total_pages; ?> : ((page < 1) ? 1 : page));
+            window.location.href = 'category-product.php?page=' + page;
+        }
+    </script>
 
     <!-- Footer -->
     <div class="footer">
@@ -217,8 +207,6 @@ $iduser = $_SESSION['a_global']->user_id;
             <small>Copyright &copy; 2022 - KP Ombudsman</small>
         </div>
     </div>
-
-
 </body>
 
 </html>

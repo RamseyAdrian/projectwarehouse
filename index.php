@@ -118,7 +118,7 @@ $fo = mysqli_fetch_object($qd);
                                 <center>
                                     <img src="produk/<?php echo $p['product_image'] ?>" alt="">
                                     <br><br>
-                                    <h3 class="nama"><?php echo substr($p['product_name'], 0, 30) ?></h3>
+                                    <h3 class="nama"><?php echo substr($p['product_name'], 0, 20) ?></h3>
                                 </center>
                                 <!-- <p class="nama"><?php echo $p['office_name'] ?></p> -->
 
@@ -137,6 +137,9 @@ $fo = mysqli_fetch_object($qd);
                                 <?php
                                 }
                                 ?>
+                                <center>
+                                    <h4 style="color: red ;"><?php echo $p['office_name'] ?></h4>
+                                </center>
 
                                 <!-- <p class="harga">Rp<?php echo $p['product_price'] ?></p> -->
                             </div>

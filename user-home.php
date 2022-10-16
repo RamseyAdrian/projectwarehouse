@@ -97,7 +97,8 @@ $user_id = $_SESSION['a_global']->user_id;
                     }
                 }
                 ?>
-                <li><a href="user-homepage-product.php">Produk</a></li>
+                <li><a href="user-home.php">Home</a></li>
+                <li><a href="user-category-product.php">Kategori</a></li>
                 <li><a href="user-cart.php"><img style="width:16px ;" src="img/cart.png" alt="">(<?php echo $isi; ?>)</a></li>
                 <li><a href="user-order.php">Transaksi</a></li>
                 <li><a href="user-profile.php">Profil Saya</a></li>
@@ -118,34 +119,9 @@ $user_id = $_SESSION['a_global']->user_id;
         </div>
     </div>
 
-    <!--Category-->
-    <div class="section">
-        <div class="container">
-            <h3>Kategori</h3>
-            <div class="box">
-                <?php
-                $kategori = mysqli_query($conn, "SELECT * FROM data_category ORDER BY category_id DESC");
-                if (mysqli_num_rows($kategori) > 0) {
-                    while ($k = mysqli_fetch_array($kategori)) {
-                ?>
-                        <a href="user-homepage-product.php?kat=<?php echo $k['category_id'] ?> ">
-                            <div class="col-5">
-                                <img src="" width="50px" style="margin-bottom: 5px;">
-                                <p><?php echo $k['category_name'] ?></p>
-                            </div>
-                        </a>
-                    <?php }
-                } else { ?>
-                    <p>Tidak Ada Kategori</p>
-                <?php } ?>
-            </div>
-        </div>
-    </div>
-
     <!--New Product-->
     <div class="section">
         <div class="container">
-            <h3>Produk </h3>
             <div class="box">
                 <?php
                 $produk = mysqli_query($conn, "SELECT * FROM data_product LEFT JOIN data_office USING (office_id) WHERE product_status=1 AND office_id = '" . $user_office . "' ORDER BY product_id LIMIT $start_from, $per_page_record ");
