@@ -186,15 +186,16 @@ $kantoradmin = $_SESSION['a_global']->office_id;
         <!-- header -->
         <header>
             <div class="container">
-                <h1><a href="dashboard.php">KP Ombudsman</a></h1>
-                <ul>
-                    <li><a href="dashboard.php">Dashboard</a></li>
+                <h1><a href="dashboard.php"><img style="width: 70px ; margin-bottom :-10px ;" src="img/logo-ombudsman2.png" alt=""> Gudang Ombudsman</a></h1>
+                <ul style="margin-top: 20px ;">
+                    <li><a href="dashboard.php">Dashboard </a></li>
                     <li><a href="profile.php">Profil</a></li>
-                    <li><a href="category-data.php">Data Kategori</a></li>
-                    <li><a href="product-data.php">Data Produk</a></li>
+                    <li><a href="category-data.php">Kategori</a></li>
+                    <li><a href="product-data.php">Barang</a></li>
+                    <li><a href="unit-data.php">Satuan</a></li>
                     <li><a href="office-data.php">Perwakilan</a></li>
-                    <li><a href="admin-data.php">Data Admin</a></li>
-                    <li><a href="user-data.php">Data User</a></li>
+                    <li><a href="admin-data.php">Admin</a></li>
+                    <li><a href="user-data.php">User</a></li>
                     <li><a href="order-table.php">Pesanan</a></li>
                     <li><a href="logout.php">Keluar</a></li>
                 </ul>
@@ -209,71 +210,78 @@ $kantoradmin = $_SESSION['a_global']->office_id;
                     <button><a href="order-history.php" style="text-decoration: none ;">Riwayat Transaksi</a></button><br><br>
                 </div><br>
                 <div class="box">
-                    <table border="1" cellspacing="0" class="table">
-                        <thead>
-                            <tr>
-                                <th>No</th>
-                                <th>Perwakilan</th>
-                                <th>ID Pesanan</th>
-                                <th>Barang</th>
-                                <th>Waktu</th>
-                                <th>Aksi</th>
-                            </tr>
-                        </thead>
-                        <tbody>
+                    <form action="" method="POST">
+                        <h3>Perwakilan</h3>
+                        <select name="perwakilan" class="input-control">
+                            <option value="">--Pilih--</option>
                             <?php
-                            $no = 1;
-                            $trans = mysqli_query($conn, "SELECT * FROM data_order WHERE data_order.status = 'Diproses Admin'  ");
-                            if (mysqli_num_rows($trans) > 0) {
-
-                                while ($fo_trans = mysqli_fetch_array($trans)) {
+                            $query_office = mysqli_query($conn, "SELECT * FROM data_office ORDER BY office_id");
+                            while ($fa_office = mysqli_fetch_array($query_office)) {
                             ?>
-                                    <tr>
-                                        <td><?php echo $no++ ?></td>
-                                        <td>
-                                            <?php
-                                            $query_office = mysqli_query($conn, "SELECT * FROM data_office WHERE office_id = '" . $fo_trans['office_id'] . "' ");
-                                            while ($fa_query_office = mysqli_fetch_array($query_office)) {
-                                                echo $fa_query_office['office_name'];
-                                            }
-                                            ?>
-                                        </td>
-                                        <td><?php echo $fo_trans['cart_id'] ?></td>
-                                        <td>
-                                            <?php
-                                            $query_trans = mysqli_query($conn, "SELECT * FROM data_transaction WHERE data_transaction.cart_id = '" . $fo_trans['cart_id'] . "' ");
-                                            if (mysqli_num_rows($query_trans) > 0) {
-                                                while ($fa_trans = mysqli_fetch_array($query_trans)) {
-                                                    echo $fa_trans['product_name'], "(", $fa_trans['quantity'], ")";
-                                                }
-                                            }
-                                            ?>
-                                        </td>
-                                        <td><?php echo $fo_trans['created'] ?></td>
-                                        <td>
-                                            <center>
-                                                <button id="buttdetail"><a href="edit-order.php?id=<?php echo $fo_trans['cart_id'] ?>">Lihat Detail Pesanan</a></button>
-                                            </center>
-                                        </td>
-                                    </tr>
-                                <?php
-                                }
-
-
-
-                                ?>
-
-
-                            <?php
-                            } else {
-                            ?>
-                                <td colspan="8">Tidak Ada Data</td>
+                                <option value="<?php echo $fa_office['office_id'] ?>"><?php echo $fa_office['office_name'] ?></option>
                             <?php
                             }
                             ?>
-                        </tbody>
-                    </table>
+                        </select>
+                        <input type="submit" name="submit" value="Submit" class="btn">
+                    </form>
+                    <?php
+                    if (isset($_POST['submit'])) {
+                    ?>
+                        <div class="box">
+                            <table border="1" cellspacing="0" class="table">
+                                <thead>
+                                    <tr>
+                                        <th>No</th>
+                                        <th>ID Pesanan</th>
+                                        <th>Barang</th>
+                                        <th>Waktu</th>
+                                        <th>Aksi</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php
+                                    $no = 1;
+                                    $query_order = mysqli_query($conn, "SELECT * FROM data_order WHERE office_id = '" . $_POST['perwakilan'] . "' AND data_order.status = 'Diproses Admin' ");
+                                    if (mysqli_num_rows($query_order) > 0) {
+                                        while ($fa_order = mysqli_fetch_array($query_order)) {
+                                    ?>
+                                            <tr>
+                                                <td><?php echo $no++ ?></td>
+                                                <td><?php echo $fa_order['cart_id'] ?></td>
+                                                <td>
+                                                    <?php
+                                                    $query_trans = mysqli_query($conn, "SELECT * FROM data_transaction WHERE data_transaction.cart_id = '" . $fa_order['cart_id'] . "' ");
+                                                    if (mysqli_num_rows($query_trans) > 0) {
+                                                        while ($fa_trans = mysqli_fetch_array($query_trans)) {
+                                                            echo $fa_trans['product_name'], "(", $fa_trans['quantity'], ")";
+                                                        }
+                                                    }
+                                                    ?>
+                                                </td>
+                                                <td><?php echo $fa_order['created'] ?></td>
+                                                <td>
+                                                    <center>
+                                                        <button id="buttdetail"><a href="edit-order.php?id=<?php echo $fa_order['cart_id'] ?>">Lihat Detail Pesanan</a></button>
+                                                    </center>
+                                                </td>
+                                            </tr>
+                                        <?php
+                                        }
+                                    } else {
+                                        ?>
+                                        <td colspan="8">Tidak Ada Data</td>
+                                    <?php
+                                    }
+                                    ?>
+                                </tbody>
+                            </table>
+                        </div>
+                    <?php
+                    }
+                    ?>
                 </div>
+
             </div>
         </div>
     <?php

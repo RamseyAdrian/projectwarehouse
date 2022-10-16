@@ -332,15 +332,16 @@ $kantoradmin = $_SESSION['a_global']->office_id;
         <!-- header -->
         <header>
             <div class="container">
-                <h1><a href="dashboard.php">KP Ombudsman</a></h1>
-                <ul>
-                    <li><a href="dashboard.php">Dashboard</a></li>
+                <h1><a href="dashboard.php"><img style="width: 70px ; margin-bottom :-10px ;" src="img/logo-ombudsman2.png" alt=""> Gudang Ombudsman</a></h1>
+                <ul style="margin-top: 20px ;">
+                    <li><a href="dashboard.php">Dashboard </a></li>
                     <li><a href="profile.php">Profil</a></li>
-                    <li><a href="category-data.php">Data Kategori</a></li>
-                    <li><a href="product-data.php">Data Produk</a></li>
+                    <li><a href="category-data.php">Kategori</a></li>
+                    <li><a href="product-data.php">Barang</a></li>
+                    <li><a href="unit-data.php">Satuan</a></li>
                     <li><a href="office-data.php">Perwakilan</a></li>
-                    <li><a href="admin-data.php">Data Admin</a></li>
-                    <li><a href="user-data.php">Data User</a></li>
+                    <li><a href="admin-data.php">Admin</a></li>
+                    <li><a href="user-data.php">User</a></li>
                     <li><a href="order-table.php">Pesanan</a></li>
                     <li><a href="logout.php">Keluar</a></li>
                 </ul>
@@ -354,240 +355,267 @@ $kantoradmin = $_SESSION['a_global']->office_id;
                 <div class="box1">
                     <button><a href="order-table.php" style="text-decoration: none ;">Data Pesanan</a></button><br><br>
                 </div><br>
-                <center>
-                    <h3>Pesanan Berhasil</h3>
-                </center>
+
                 <div class="box">
-
-                    <table border="1" cellspacing="0" class="table">
-                        <thead>
-                            <tr>
-                                <th>No</th>
-                                <th>ID Pesanan</th>
-                                <th>Perwakilan</th>
-                                <th>Nama Pemesan</th>
-                                <th>Produk</th>
-                                <th>Waktu Pesanan</th>
-                                <th>Aksi</th>
-                            </tr>
-                        </thead>
-                        <tbody>
+                    <form action="" method="POST">
+                        <h3>Perwakilan</h3>
+                        <select name="perwakilan" class="input-control" value="<?php echo $_POST['perwakilan'] ?>">
+                            <option value="">--Pilih--</option>
                             <?php
-                            $no = 1;
-                            $trans = mysqli_query($conn, "SELECT * FROM data_order WHERE data_order.status = 'Berhasil' ORDER BY times_updated DESC ");
-                            if (mysqli_num_rows($trans) > 0) {
-
-                                while ($fo_trans = mysqli_fetch_array($trans)) {
+                            $query_office = mysqli_query($conn, "SELECT * FROM data_office ORDER BY office_id");
+                            while ($fa_office = mysqli_fetch_array($query_office)) {
                             ?>
-                                    <tr>
-                                        <td><?php echo $no++ ?></td>
-                                        <td><?php echo $fo_trans['cart_id'] ?></td>
-                                        <td>
-                                            <?php
-                                            $query_office = mysqli_query($conn, "SELECT * FROM data_office WHERE office_id = '" . $fo_trans['office_id'] . "' ");
-                                            while ($fa_query_office = mysqli_fetch_array($query_office)) {
-                                                echo $fa_query_office['office_name'];
-                                            }
-                                            ?>
-                                        </td>
-                                        <?php
-                                        $fetch_trans1 = mysqli_query($conn, "SELECT * FROM transaction_history WHERE transaction_history.cart_id = '" . $fo_trans['cart_id'] . "' ");
-                                        $fa_fetch1 = mysqli_fetch_array($fetch_trans1)
-                                        ?>
-                                        <td><?php echo $fa_fetch1['user_name'] ?></td>
-                                        <?php
-                                        ?>
-                                        <td>
-                                            <?php
-                                            $fetch_trans = mysqli_query($conn, "SELECT * FROM transaction_history WHERE transaction_history.cart_id = '" . $fo_trans['cart_id'] . "' ");
-                                            if (mysqli_num_rows($fetch_trans) > 0) {
-                                                while ($fa_fetch = mysqli_fetch_array($fetch_trans)) {
-                                                    echo $fa_fetch['product_name'], " (", $fa_fetch['quantity'], ") ";
-                                                }
-                                            }
-                                            ?>
-                                        </td>
-                                        <td><?php echo $fo_trans['created'] ?></td>
-                                        <td>
-                                            <center>
-                                                <button id="buttdetail"><a href="admin-order-history.php?id=<?php echo $fo_trans['cart_id'] ?>">Detail</a></button>
-                                            </center>
-                                        </td>
-                                    </tr>
-                                <?php
-                                }
-
-
-
-                                ?>
-
-
-                            <?php
-                            } else {
-                            ?>
-                                <td colspan="8">Tidak Ada Data</td>
+                                <option value="<?php echo $fa_office['office_id'] ?>"><?php echo $fa_office['office_name'] ?></option>
                             <?php
                             }
                             ?>
-                        </tbody>
-                    </table>
+                        </select>
+                        <input type="submit" name="submit" value="Submit" class="btn">
+                    </form>
                 </div>
-                <center>
-                    <h3>Pesanan Berhasil Sebagian</h3>
-                </center>
-                <div class="box">
 
-                    <table border="1" cellspacing="0" class="table">
-                        <thead>
-                            <tr>
-                                <th>No</th>
-                                <th>ID Pesanan</th>
-                                <th>Perwakilan</th>
-                                <th>Nama Pemesan</th>
-                                <th>Produk</th>
-                                <th>Waktu Pesanan</th>
-                                <th>Aksi</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php
-                            $no = 1;
-                            $trans = mysqli_query($conn, "SELECT * FROM data_order WHERE data_order.status = 'Berhasil Sebagian' ORDER BY times_updated DESC ");
-                            if (mysqli_num_rows($trans) > 0) {
+                <?php
+                if (isset($_POST['submit'])) {
+                ?>
+                    <center>
+                        <h3>Pesanan Berhasil</h3>
+                    </center>
+                    <div class="box">
 
-                                while ($fo_trans = mysqli_fetch_array($trans)) {
-                            ?>
-                                    <tr>
-                                        <td><?php echo $no++ ?></td>
-                                        <td><?php echo $fo_trans['cart_id'] ?></td>
-                                        <td>
-                                            <?php
-                                            $query_office = mysqli_query($conn, "SELECT * FROM data_office WHERE office_id = '" . $fo_trans['office_id'] . "' ");
-                                            while ($fa_query_office = mysqli_fetch_array($query_office)) {
-                                                echo $fa_query_office['office_name'];
-                                            }
-                                            ?>
-                                        </td>
-                                        <?php
-                                        $fetch_trans1 = mysqli_query($conn, "SELECT * FROM transaction_history WHERE transaction_history.cart_id = '" . $fo_trans['cart_id'] . "' ");
-                                        $fa_fetch1 = mysqli_fetch_array($fetch_trans1)
-                                        ?>
-                                        <td><?php echo $fa_fetch1['user_name'] ?></td>
-                                        <?php
-                                        ?>
-                                        <td>
-                                            <?php
-                                            $fetch_trans = mysqli_query($conn, "SELECT * FROM transaction_history WHERE transaction_history.cart_id = '" . $fo_trans['cart_id'] . "' ");
-                                            if (mysqli_num_rows($fetch_trans) > 0) {
-                                                while ($fa_fetch = mysqli_fetch_array($fetch_trans)) {
-                                                    echo $fa_fetch['product_name'], " (", $fa_fetch['quantity'], ") ";
+                        <table border="1" cellspacing="0" class="table">
+                            <thead>
+                                <tr>
+                                    <th>No</th>
+                                    <th>ID Pesanan</th>
+                                    <th>Perwakilan</th>
+                                    <th>Nama Pemesan</th>
+                                    <th>Produk</th>
+                                    <th>Waktu Pesanan</th>
+                                    <th>Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php
+                                $no = 1;
+                                $trans = mysqli_query($conn, "SELECT * FROM data_order WHERE data_order.status = 'Berhasil' AND data_order.office_id = '" . $_POST['perwakilan'] . "' ORDER BY times_updated DESC ");
+                                if (mysqli_num_rows($trans) > 0) {
+
+                                    while ($fo_trans = mysqli_fetch_array($trans)) {
+                                ?>
+                                        <tr>
+                                            <td><?php echo $no++ ?></td>
+                                            <td><?php echo $fo_trans['cart_id'] ?></td>
+                                            <td>
+                                                <?php
+                                                $query_office = mysqli_query($conn, "SELECT * FROM data_office WHERE office_id = '" . $fo_trans['office_id'] . "' ");
+                                                while ($fa_query_office = mysqli_fetch_array($query_office)) {
+                                                    echo $fa_query_office['office_name'];
                                                 }
-                                            }
+                                                ?>
+                                            </td>
+                                            <?php
+                                            $fetch_trans1 = mysqli_query($conn, "SELECT * FROM transaction_history WHERE transaction_history.cart_id = '" . $fo_trans['cart_id'] . "' ");
+                                            $fa_fetch1 = mysqli_fetch_array($fetch_trans1)
                                             ?>
-                                        </td>
-                                        <td><?php echo $fo_trans['created'] ?></td>
-                                        <td>
-                                            <center>
-                                                <button id="buttdetail"><a href="admin-order-history.php?id=<?php echo $fo_trans['cart_id'] ?>">Detail</a></button>
-                                            </center>
-                                        </td>
-                                    </tr>
+                                            <td><?php echo $fa_fetch1['user_name'] ?></td>
+                                            <?php
+                                            ?>
+                                            <td>
+                                                <?php
+                                                $fetch_trans = mysqli_query($conn, "SELECT * FROM transaction_history WHERE transaction_history.cart_id = '" . $fo_trans['cart_id'] . "' ");
+                                                if (mysqli_num_rows($fetch_trans) > 0) {
+                                                    while ($fa_fetch = mysqli_fetch_array($fetch_trans)) {
+                                                        echo $fa_fetch['product_name'], " (", $fa_fetch['quantity'], ") ";
+                                                    }
+                                                }
+                                                ?>
+                                            </td>
+                                            <td><?php echo $fo_trans['created'] ?></td>
+                                            <td>
+                                                <center>
+                                                    <button id="buttdetail"><a href="admin-order-history.php?id=<?php echo $fo_trans['cart_id'] ?>">Detail</a></button>
+                                                </center>
+                                            </td>
+                                        </tr>
+                                    <?php
+                                    }
+
+
+
+                                    ?>
+
+
+                                <?php
+                                } else {
+                                ?>
+                                    <td colspan="8">Tidak Ada Data</td>
                                 <?php
                                 }
-
-
-
                                 ?>
+                            </tbody>
+                        </table>
+                    </div>
+                    <center>
+                        <h3>Pesanan Berhasil Sebagian</h3>
+                    </center>
+                    <div class="box">
 
+                        <table border="1" cellspacing="0" class="table">
+                            <thead>
+                                <tr>
+                                    <th>No</th>
+                                    <th>ID Pesanan</th>
+                                    <th>Perwakilan</th>
+                                    <th>Nama Pemesan</th>
+                                    <th>Produk</th>
+                                    <th>Waktu Pesanan</th>
+                                    <th>Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php
+                                $no = 1;
+                                $trans = mysqli_query($conn, "SELECT * FROM data_order WHERE data_order.status = 'Berhasil Sebagian' AND data_order.office_id = '" . $_POST['perwakilan'] . "' ORDER BY times_updated DESC ");
+                                if (mysqli_num_rows($trans) > 0) {
 
-                            <?php
-                            } else {
-                            ?>
-                                <td colspan="8">Tidak Ada Data</td>
-                            <?php
-                            }
-                            ?>
-                        </tbody>
-                    </table>
-                </div>
-                <center>
-                    <h3>Pesanan Gagal</h3>
-                </center>
-                <div class="box">
-
-                    <table border="1" cellspacing="0" class="table">
-                        <thead>
-                            <tr>
-                                <th>No</th>
-                                <th>ID Pesanan</th>
-                                <th>Perwakilan</th>
-                                <th>Nama Pemesan</th>
-                                <th>Produk</th>
-                                <th>Waktu Pesanan</th>
-                                <th>Aksi</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php
-                            $no = 1;
-                            $trans = mysqli_query($conn, "SELECT * FROM data_order WHERE data_order.status = 'Gagal' ORDER BY times_updated DESC ");
-                            if (mysqli_num_rows($trans) > 0) {
-
-                                while ($fo_trans = mysqli_fetch_array($trans)) {
-                            ?>
-                                    <tr>
-                                        <td><?php echo $no++ ?></td>
-                                        <td><?php echo $fo_trans['cart_id'] ?></td>
-                                        <td>
-                                            <?php
-                                            $query_office = mysqli_query($conn, "SELECT * FROM data_office WHERE office_id = '" . $fo_trans['office_id'] . "' ");
-                                            while ($fa_query_office = mysqli_fetch_array($query_office)) {
-                                                echo $fa_query_office['office_name'];
-                                            }
-                                            ?>
-                                        </td>
-                                        <?php
-                                        $fetch_trans1 = mysqli_query($conn, "SELECT * FROM transaction_history WHERE transaction_history.cart_id = '" . $fo_trans['cart_id'] . "' ");
-                                        $fa_fetch1 = mysqli_fetch_array($fetch_trans1)
-                                        ?>
-                                        <td><?php echo $fa_fetch1['user_name'] ?></td>
-                                        <?php
-                                        ?>
-                                        <td>
-                                            <?php
-                                            $fetch_trans = mysqli_query($conn, "SELECT * FROM transaction_history WHERE transaction_history.cart_id = '" . $fo_trans['cart_id'] . "' ");
-                                            if (mysqli_num_rows($fetch_trans) > 0) {
-                                                while ($fa_fetch = mysqli_fetch_array($fetch_trans)) {
-                                                    echo $fa_fetch['product_name'], " (", $fa_fetch['quantity'], ") ";
+                                    while ($fo_trans = mysqli_fetch_array($trans)) {
+                                ?>
+                                        <tr>
+                                            <td><?php echo $no++ ?></td>
+                                            <td><?php echo $fo_trans['cart_id'] ?></td>
+                                            <td>
+                                                <?php
+                                                $query_office = mysqli_query($conn, "SELECT * FROM data_office WHERE office_id = '" . $fo_trans['office_id'] . "' ");
+                                                while ($fa_query_office = mysqli_fetch_array($query_office)) {
+                                                    echo $fa_query_office['office_name'];
                                                 }
-                                            }
+                                                ?>
+                                            </td>
+                                            <?php
+                                            $fetch_trans1 = mysqli_query($conn, "SELECT * FROM transaction_history WHERE transaction_history.cart_id = '" . $fo_trans['cart_id'] . "' ");
+                                            $fa_fetch1 = mysqli_fetch_array($fetch_trans1)
                                             ?>
-                                        </td>
-                                        <td><?php echo $fo_trans['created'] ?></td>
-                                        <td>
-                                            <center>
-                                                <button id="buttdetail"><a href="admin-order-history.php?id=<?php echo $fo_trans['cart_id'] ?>">Detail</a></button>
-                                            </center>
-                                        </td>
-                                    </tr>
+                                            <td><?php echo $fa_fetch1['user_name'] ?></td>
+                                            <?php
+                                            ?>
+                                            <td>
+                                                <?php
+                                                $fetch_trans = mysqli_query($conn, "SELECT * FROM transaction_history WHERE transaction_history.cart_id = '" . $fo_trans['cart_id'] . "' ");
+                                                if (mysqli_num_rows($fetch_trans) > 0) {
+                                                    while ($fa_fetch = mysqli_fetch_array($fetch_trans)) {
+                                                        echo $fa_fetch['product_name'], " (", $fa_fetch['quantity'], ") ";
+                                                    }
+                                                }
+                                                ?>
+                                            </td>
+                                            <td><?php echo $fo_trans['created'] ?></td>
+                                            <td>
+                                                <center>
+                                                    <button id="buttdetail"><a href="admin-order-history.php?id=<?php echo $fo_trans['cart_id'] ?>">Detail</a></button>
+                                                </center>
+                                            </td>
+                                        </tr>
+                                    <?php
+                                    }
+
+
+
+                                    ?>
+
+
+                                <?php
+                                } else {
+                                ?>
+                                    <td colspan="8">Tidak Ada Data</td>
                                 <?php
                                 }
-
-
-
                                 ?>
+                            </tbody>
+                        </table>
+                    </div>
+                    <center>
+                        <h3>Pesanan Gagal</h3>
+                    </center>
+                    <div class="box">
+
+                        <table border="1" cellspacing="0" class="table">
+                            <thead>
+                                <tr>
+                                    <th>No</th>
+                                    <th>ID Pesanan</th>
+                                    <th>Perwakilan</th>
+                                    <th>Nama Pemesan</th>
+                                    <th>Produk</th>
+                                    <th>Waktu Pesanan</th>
+                                    <th>Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php
+                                $no = 1;
+                                $trans = mysqli_query($conn, "SELECT * FROM data_order WHERE data_order.status = 'Gagal' AND data_order.office_id = '" . $_POST['perwakilan'] . "' ORDER BY times_updated DESC ");
+                                if (mysqli_num_rows($trans) > 0) {
+
+                                    while ($fo_trans = mysqli_fetch_array($trans)) {
+                                ?>
+                                        <tr>
+                                            <td><?php echo $no++ ?></td>
+                                            <td><?php echo $fo_trans['cart_id'] ?></td>
+                                            <td>
+                                                <?php
+                                                $query_office = mysqli_query($conn, "SELECT * FROM data_office WHERE office_id = '" . $fo_trans['office_id'] . "' ");
+                                                while ($fa_query_office = mysqli_fetch_array($query_office)) {
+                                                    echo $fa_query_office['office_name'];
+                                                }
+                                                ?>
+                                            </td>
+                                            <?php
+                                            $fetch_trans1 = mysqli_query($conn, "SELECT * FROM transaction_history WHERE transaction_history.cart_id = '" . $fo_trans['cart_id'] . "' ");
+                                            $fa_fetch1 = mysqli_fetch_array($fetch_trans1)
+                                            ?>
+                                            <td><?php echo $fa_fetch1['user_name'] ?></td>
+                                            <?php
+                                            ?>
+                                            <td>
+                                                <?php
+                                                $fetch_trans = mysqli_query($conn, "SELECT * FROM transaction_history WHERE transaction_history.cart_id = '" . $fo_trans['cart_id'] . "' ");
+                                                if (mysqli_num_rows($fetch_trans) > 0) {
+                                                    while ($fa_fetch = mysqli_fetch_array($fetch_trans)) {
+                                                        echo $fa_fetch['product_name'], " (", $fa_fetch['quantity'], ") ";
+                                                    }
+                                                }
+                                                ?>
+                                            </td>
+                                            <td><?php echo $fo_trans['created'] ?></td>
+                                            <td>
+                                                <center>
+                                                    <button id="buttdetail"><a href="admin-order-history.php?id=<?php echo $fo_trans['cart_id'] ?>">Detail</a></button>
+                                                </center>
+                                            </td>
+                                        </tr>
+                                    <?php
+                                    }
 
 
-                            <?php
-                            } else {
-                            ?>
-                                <td colspan="8">Tidak Ada Data</td>
-                            <?php
-                            }
-                            ?>
-                        </tbody>
-                    </table>
-                </div>
+
+                                    ?>
+
+
+                                <?php
+                                } else {
+                                ?>
+                                    <td colspan="8">Tidak Ada Data</td>
+                                <?php
+                                }
+                                ?>
+                            </tbody>
+                        </table>
+                    </div>
+                <?php
+                }
+                ?>
+
+
             </div>
         </div>
     <?php

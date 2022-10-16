@@ -39,9 +39,6 @@ if ($_SESSION['role_login'] == 'user' || $_SESSION['role_login'] == 'admin') {
             transition-duration: 0.4s;
         }
 
-        .section .container .box1 button a {
-            font-weight: bold;
-        }
 
         .section .container .box1 button:hover {
             background-color: black;
@@ -139,7 +136,7 @@ if ($_SESSION['role_login'] == 'user' || $_SESSION['role_login'] == 'admin') {
             <h2>Data Kategori</h2>
             <div class="box1">
                 <button><a href="add-category.php" style="text-decoration: none ;">Tambah Kategori</a></button><br><br>
-            </div><br>
+            </div>
             <div class="box">
                 <table border="1" cellspacing="0" class="table">
                     <thead>

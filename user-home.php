@@ -209,7 +209,7 @@ $user_id = $_SESSION['a_global']->user_id;
         function go2Page() {
             var page = document.getElementById("page").value;
             page = ((page > <?php echo $total_pages; ?>) ? <?php echo $total_pages; ?> : ((page < 1) ? 1 : page));
-            window.location.href = 'index.php?page=' + page;
+            window.location.href = 'user-home.php?page=' + page;
         }
     </script>
 
