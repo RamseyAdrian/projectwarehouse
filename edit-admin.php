@@ -103,6 +103,49 @@ $fo_admin = mysqli_fetch_object($query_admin);
                 }
                 ?>
             </div>
+
+            <h3>Ubah Password</h3>
+            <div class="box">
+                <form action="" method="POST">
+                    <input type="password" name="pass1" placeholder="Password Baru" class="input-control" required>
+                    <input type="password" name="pass2" placeholder="Konfirmasi Password Baru" class="input-control" required>
+                    <input type="submit" name="ubah_password" value="Ubah Password" class="btn">
+                </form>
+                <?php
+                if (isset($_POST['ubah_password'])) {
+
+                    $pass1 = $_POST['pass1'];
+                    $pass2 = $_POST['pass2'];
+
+                    if ($pass2 != $pass1) {
+                        echo '<script>
+                            Swal.fire({
+                                icon: "error",
+                                title: "Update Password Gagal !",
+                                text: "Password baru tidak sesuai dengan Konfirmasi Password"
+                              })
+                            </script>';
+                    } else {
+                        $a_pass = mysqli_query($conn, "UPDATE data_admin SET
+                                        admin_password = '" . MD5($pass1) . "'
+                                        WHERE admin_id = '" . $fo_admin->admin_id . "' ");
+                        if ($a_pass) {
+                            echo '<script>Swal.fire({
+                                    title: "Berhasil Ubah Password",
+                                    text: "Klik OK Untuk Lanjut",
+                                    icon : "success"
+                               }).then(function() {
+                                    window.location = "admin-data.php";
+                               });
+                               </script>';
+                        } else {
+                            echo 'gagal' . mysqli_error($conn);
+                        }
+                    }
+                }
+                ?>
+
+            </div>
         </div>
     </div>
 

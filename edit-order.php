@@ -33,6 +33,7 @@ $idkantoradmin = $_SESSION['a_global']->office_id;
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
+
 <body>
     <?php
     if ($_SESSION['role_login'] == 'admin') {

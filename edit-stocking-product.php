@@ -1,7 +1,7 @@
 <?php
 session_start();
 include 'db.php';
-if ($_SESSION['role_login'] == 'user') {
+if ($_SESSION['role_login'] == 'user' && $_SESSION['role_login'] == 'super') {
 
     echo '<script>window.location="logout.php"</script>';
 } else if ($_SESSION['status_login'] != true) {
@@ -13,6 +13,9 @@ if (mysqli_num_rows($produk) == 0) {
     echo '<script>window.location="product-data.php"</script>';
 }
 $p = mysqli_fetch_object($produk);
+
+$satuan = mysqli_query($conn, "SELECT * FROM data_unit WHERE unit_id = '" . $p->unit_id . "' ");
+$fo_satuan = mysqli_fetch_object($satuan);
 
 $query = mysqli_query($conn, "SELECT * FROM data_admin WHERE admin_id = '" . $_SESSION['id'] . "' ");
 $d = mysqli_fetch_object($query);
@@ -108,6 +111,8 @@ $kantor_admin = $_SESSION['a_global']->office_id;
                     $kategori_id = $p->category_id;
                     $kategori_nama = $p->category_name;
                     $stoking_sebelum = $p->stock;
+                    $satuan_id = $p->unit_id;
+                    $satuan_nama = $fo_satuan->unit_name;
 
                     $stok = $stok_added + $p->stock;
 
@@ -133,6 +138,8 @@ $kantor_admin = $_SESSION['a_global']->office_id;
                         '" . $produk_nama . "',
                         '" . $kategori_id . "',
                         '" . $kategori_nama . "',
+                        '" . $satuan_id . "',
+                        '" . $satuan_nama . "',
                         '" . $stoking_sebelum . "',
                         '" . $stoking_setelah . "',
                         '" . $admin_id . "',

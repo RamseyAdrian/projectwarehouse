@@ -76,12 +76,6 @@ $u = mysqli_fetch_object($user);
                         <input type="text" name="nama" class="input-control" value="<?php echo $u->user_name ?>" required>
                         <h4>Username Akun</h4>
                         <input type="text" name="username" class="input-control" value="<?php echo $u->user_username ?>" required>
-                        <h4>Password Akun</h4>
-                        <?php
-                        $pw = $u->user_password;
-                        $decode_pw = MD5($pw);
-                        ?>
-                        <input type="text" name="pass" class="input-control" value="<?php echo $decode_pw ?>" required>
                         <h4>Nomor Telfon</h4>
                         <input type="text" name="telp" class="input-control" value="<?php echo $u->user_telp ?>" required>
                         <h4>Email User</h4>
@@ -112,13 +106,61 @@ $u = mysqli_fetch_object($user);
                                             WHERE user_id = '" . $u->user_id . "'
                                             ");
                         if ($update) {
-                            echo '<script>alert("Edit data berhasil")</script>';
-                            echo '<script>window.location="user-data.php"</script>';
+                            echo '<script>Swal.fire({
+                                title: "Berhasil Edit User",
+                                text: "Klik OK Untuk Lanjut",
+                                icon : "success"
+                           }).then(function() {
+                                window.location = "user-data.php";
+                           });
+                           </script>';
                         } else {
                             echo 'gagal' . mysqli_error($conn);
                         }
                     }
                     ?>
+                </div>
+                <h3>Ubah Password</h3>
+                <div class="box">
+                    <form action="" method="POST">
+                        <input type="password" name="pass1" placeholder="Password Baru" class="input-control" required>
+                        <input type="password" name="pass2" placeholder="Konfirmasi Password Baru" class="input-control" required>
+                        <input type="submit" name="ubah_password" value="Ubah Password" class="btn">
+                    </form>
+                    <?php
+                    if (isset($_POST['ubah_password'])) {
+
+                        $pass1 = $_POST['pass1'];
+                        $pass2 = $_POST['pass2'];
+
+                        if ($pass2 != $pass1) {
+                            echo '<script>
+                            Swal.fire({
+                                icon: "error",
+                                title: "Update Password Gagal !",
+                                text: "Password baru tidak sesuai dengan Konfirmasi Password"
+                              })
+                            </script>';
+                        } else {
+                            $u_pass = mysqli_query($conn, "UPDATE data_user SET
+                                        user_password = '" . MD5($pass1) . "'
+                                        WHERE user_id = '" . $u->user_id . "' ");
+                            if ($u_pass) {
+                                echo '<script>Swal.fire({
+                                    title: "Berhasil Ubah Password",
+                                    text: "Klik OK Untuk Lanjut",
+                                    icon : "success"
+                               }).then(function() {
+                                    window.location = "user-data.php";
+                               });
+                               </script>';
+                            } else {
+                                echo 'gagal' . mysqli_error($conn);
+                            }
+                        }
+                    }
+                    ?>
+
                 </div>
             </div>
         </div>
@@ -237,19 +279,62 @@ $u = mysqli_fetch_object($user);
                                             ");
                         if ($update) {
                             echo '<script>Swal.fire({
-                                title: "Berhasil Edit User !",
-                                text: "Klik OK Untuk Lanjut.",
-                                icon: "success"
-                              },
-                              function(){
-                                window.location="user-data.php"
-                              });
-                            </script>';
+                                title: "Berhasil Ubah Data",
+                                text: "Klik OK Untuk Lanjut",
+                                icon : "success"
+                           }).then(function() {
+                                window.location = "user-data.php";
+                           });
+                           </script>';
                         } else {
                             echo 'gagal' . mysqli_error($conn);
                         }
                     }
                     ?>
+                </div>
+
+                <h3>Ubah Password</h3>
+                <div class="box">
+                    <form action="" method="POST">
+                        <input type="password" name="pass1" placeholder="Password Baru" class="input-control" required>
+                        <input type="password" name="pass2" placeholder="Konfirmasi Password Baru" class="input-control" required>
+                        <input type="submit" name="ubah_password" value="Ubah Password" class="btn">
+                    </form>
+                    <?php
+                    if (isset($_POST['ubah_password'])) {
+
+                        $pass1 = $_POST['pass1'];
+                        $pass2 = $_POST['pass2'];
+
+                        if ($pass2 != $pass1) {
+                            echo '<script>
+                            Swal.fire({
+                                icon: "error",
+                                title: "Update Password Gagal !",
+                                text: "Password baru tidak sesuai dengan Konfirmasi Password"
+                              })
+                            </script>';
+                        } else {
+                            $u_pass = mysqli_query($conn, "UPDATE data_user SET
+                            user_password = '" . MD5($pass1) . "'
+                            WHERE user_id = '" . $u->user_id . "' ");
+                            if ($u_pass) {
+                                echo '<script>Swal.fire({
+                                    title: "Berhasil Update Password !",
+                                    text: "Klik OK Untuk Lanjut.",
+                                    icon: "success"
+                                  },
+                                  function(){
+                                    window.location="profile.php"
+                                  });
+                                </script>';
+                            } else {
+                                echo 'gagal' . mysqli_error($conn);
+                            }
+                        }
+                    }
+                    ?>
+
                 </div>
             </div>
         </div>

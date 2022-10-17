@@ -164,7 +164,7 @@ $kantoruser = $_SESSION['a_global']->office_id;
         }
     </style>
     <div class="section">
-        <div class="container" style=" margin-left : 1120px ;">
+        <div class="container">
             <a id="kembali" href="user-home.php">Kembali Pesan</a>
             <?php
             $keranjang1 = mysqli_query($conn, "SELECT * FROM data_cart LEFT JOIN data_category USING (category_id) LEFT JOIN data_product USING (product_id) WHERE data_cart.user_id = '" . $iduser . "' AND data_cart.office_id = '" . $kantoruser . "' ");

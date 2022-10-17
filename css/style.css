@@ -332,6 +332,16 @@ a {
     font-size: 14px;
 }
 
+/*--------------------------------Change Picture Button --------------------------*/
+
+.chg-pic {
+    background-color: #000;
+    color: #fff;
+    padding: 5px;
+    border-radius: 5px;
+    margin-left: 30px;
+}
+
 /*------------------------------------Footer----------------------------*/
 
 .footer-dark {
