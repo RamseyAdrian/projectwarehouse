@@ -144,7 +144,7 @@ $kantoruser = $_SESSION['a_global']->office_id;
                     <tbody>
                         <?php
                         $no = 1;
-                        $trans = mysqli_query($conn, "SELECT * FROM data_order WHERE data_order.status = 'Diproses Admin' AND data_order.user_id = '" . $iduser . "' ");
+                        $trans = mysqli_query($conn, "SELECT * FROM data_order WHERE data_order.status = 'Diproses Admin' AND data_order.user_id = '" . $iduser . "' ORDER BY created DESC ");
                         if (mysqli_num_rows($trans) > 0) {
 
                             while ($fo_trans = mysqli_fetch_array($trans)) {

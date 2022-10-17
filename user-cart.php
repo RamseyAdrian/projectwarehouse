@@ -87,7 +87,7 @@ $kantoruser = $_SESSION['a_global']->office_id;
                             <th>Kategori</th>
                             <th>Produk</th>
                             <th>Jumlah</th>
-                            <th>Edit/Hapus</th>
+                            <th>Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -105,7 +105,14 @@ $kantoruser = $_SESSION['a_global']->office_id;
                                     <td><?php echo $fo_keranjang['product_id'] ?></td>
                                     <td><?php echo $fo_keranjang['category_name'] ?></td>
                                     <td><?php echo $fo_keranjang['product_name'] ?></td>
-                                    <td style="text-align:center ;"><?php echo $fo_keranjang['quantity'] ?></td>
+                                    <?php
+                                    $satuan = mysqli_query($conn, "SELECT * FROM data_unit WHERE unit_id = '" . $fo_keranjang['unit_id'] . "' ");
+                                    while ($fa_satuan = mysqli_fetch_array($satuan)) {
+                                    ?>
+                                        <td style="text-align:center ;"><?php echo $fo_keranjang['quantity'], " ", $fa_satuan['unit_name'] ?></td>
+                                    <?php
+                                    }
+                                    ?>
                                     <td style="text-align:center ;">
                                         <a class="abutt" href="edit-user-cart.php?id=<?php echo $fo_keranjang['product_id'] ?>">Edit Jumlah</a> <a class="abutt" href="delete-data.php?idc=<?php echo $fo_keranjang['product_id'] ?>" onclick="return confirm('Lanjut Hapus Barang ?') ">Hapus</a>
                                     </td>

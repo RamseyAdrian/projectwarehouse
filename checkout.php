@@ -61,9 +61,11 @@ $row_np = mysqli_fetch_array($namaperwakilan);
                                         $cart_id = rand();
                                         if (mysqli_num_rows($keranjang) > 0) {
                                             while ($fo_keranjang = mysqli_fetch_array($keranjang)) {
+                                                $namasatuan = mysqli_query($conn, "SELECT * FROM data_unit WHERE unit_id = '" . $fo_keranjang['unit_id'] . "' ");
+                                                $fa_satuan = mysqli_fetch_array($namasatuan);
                                                 echo '<br>';
                                                 echo $no++, '. ';
-                                                echo $fo_keranjang['product_name'], " (", $fo_keranjang['quantity'], ")";
+                                                echo $fo_keranjang['product_name'], " (", $fo_keranjang['quantity'], " ", $fa_satuan['unit_name'], ")";
 
                                         ?>
                                             <?php
@@ -115,6 +117,9 @@ $row_np = mysqli_fetch_array($namaperwakilan);
                         $keranjang1 = mysqli_query($conn, "SELECT * FROM data_cart LEFT JOIN data_category USING (category_id) LEFT JOIN data_product USING (product_id) WHERE data_cart.user_id = '" . $iduser . "' AND data_cart.office_id = '" . $kantoruser . "' ");
                         if (mysqli_num_rows($keranjang1) > 0) {
                             while ($fo_keranjang1 = mysqli_fetch_array($keranjang1)) {
+                                $namasatuan2 = mysqli_query($conn, "SELECT * FROM data_unit WHERE unit_id = '" . $fo_keranjang1['unit_id'] . "' ");
+                                $fa_satuan2 = mysqli_fetch_array($namasatuan2);
+
                                 $orderid = rand();
                                 $keranjang = $_POST['cart'];
                                 $iduser = $_POST['id'];
@@ -125,6 +130,8 @@ $row_np = mysqli_fetch_array($namaperwakilan);
                                 $idkantor = $kantoruser;
                                 $productname = $fo_keranjang1['product_name'];
                                 $idkategori = $fo_keranjang1['category_id'];
+                                $idsatuan = $fo_keranjang1['unit_id'];
+                                $satuannama = $fa_satuan2['unit_name'];
                                 $namakategori = $fo_keranjang1['category_name'];
                                 $idproduk = $fo_keranjang1['product_id'];
                                 $namaproduk = $fo_keranjang1['product_name'];
@@ -145,6 +152,8 @@ $row_np = mysqli_fetch_array($namaperwakilan);
                                         '" . $namaproduk . "',
                                         '" . $idkategori . "',
                                         '" . $namakategori . "',
+                                        '" . $idsatuan . "',
+                                        '" . $satuannama . "',
                                         '" . $kuantitas . "',
                                         NOW(),
                                         null,

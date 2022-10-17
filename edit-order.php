@@ -184,6 +184,9 @@ $idkantoradmin = $_SESSION['a_global']->office_id;
                             $trans2 = mysqli_query($conn, "SELECT * FROM data_transaction LEFT JOIN data_product USING (product_id) WHERE cart_id = '" . $idcart . "' ");
                             if (mysqli_num_rows($trans2) > 0) {
                                 while ($fo_trans2 = mysqli_fetch_array($trans2)) {
+                                    $unit = mysqli_query($conn, "SELECT * FROM data_unit WHERE unit_id = '" . $fo_trans2['unit_id'] . "' ");
+                                    $fa_unit = mysqli_fetch_array($unit);
+
                                     $orderid = $fo_trans2['order_id'];
                                     $keranjang = $fo_trans2['cart_id'];
                                     $iduser = $fo_trans2['user_id'];
@@ -195,6 +198,8 @@ $idkantoradmin = $_SESSION['a_global']->office_id;
                                     $productname = $fo_trans2['product_name'];
                                     $idkategori = $fo_trans2['category_id'];
                                     $namakategori = $fo_trans2['category_name'];
+                                    $idsatuan = $fo_trans2['unit_id'];
+                                    $namasatuan = $fa_unit['unit_name'];
                                     $idproduk = $fo_trans2['product_id'];
                                     $namaproduk = $fo_trans2['product_name'];
                                     $kuantitas = $fo_trans2['quantity'];
@@ -221,6 +226,8 @@ $idkantoradmin = $_SESSION['a_global']->office_id;
                                     '" . $namaproduk . "',
                                     '" . $idkategori . "',
                                     '" . $namakategori . "',
+                                    '" . $idsatuan . "',
+                                    '" . $namasatuan . "',
                                     '" . $kuantitas . "',
                                     NOW(),
                                     '" . $fo_trans2['red_flag'] . "',
@@ -257,6 +264,8 @@ $idkantoradmin = $_SESSION['a_global']->office_id;
                             $trans2 = mysqli_query($conn, "SELECT * FROM data_transaction LEFT JOIN data_product USING (product_id) WHERE cart_id = '" . $idcart . "' ");
                             if (mysqli_num_rows($trans2) > 0) {
                                 while ($fo_trans2 = mysqli_fetch_array($trans2)) {
+                                    $unit = mysqli_query($conn, "SELECT * FROM data_unit WHERE unit_id = '" . $fo_trans2['unit_id'] . "' ");
+                                    $fa_unit = mysqli_fetch_array($unit);
                                     if ($fo_trans2['red_flag'] == 'red') {
                                         $orderid = $fo_trans2['order_id'];
                                         $keranjang = $fo_trans2['cart_id'];
@@ -269,6 +278,8 @@ $idkantoradmin = $_SESSION['a_global']->office_id;
                                         $productname = $fo_trans2['product_name'];
                                         $idkategori = $fo_trans2['category_id'];
                                         $namakategori = $fo_trans2['category_name'];
+                                        $idsatuan = $fo_trans2['unit_id'];
+                                        $namasatuan = $fa_unit['unit_name'];
                                         $idproduk = $fo_trans2['product_id'];
                                         $namaproduk = $fo_trans2['product_name'];
                                         $kuantitas = $fo_trans2['quantity'];
@@ -287,6 +298,8 @@ $idkantoradmin = $_SESSION['a_global']->office_id;
                                         '" . $namaproduk . "',
                                         '" . $idkategori . "',
                                         '" . $namakategori . "',
+                                        '" . $idsatuan . "',
+                                        '" . $namasatuan . "',
                                         '" . $kuantitas . "',
                                         NOW(),
                                         '" . $fo_trans2['red_flag'] . "',
@@ -307,6 +320,8 @@ $idkantoradmin = $_SESSION['a_global']->office_id;
                                         $productname = $fo_trans2['product_name'];
                                         $idkategori = $fo_trans2['category_id'];
                                         $namakategori = $fo_trans2['category_name'];
+                                        $idsatuan = $fo_trans2['unit_id'];
+                                        $namasatuan = $fa_unit['unit_name'];
                                         $idproduk = $fo_trans2['product_id'];
                                         $namaproduk = $fo_trans2['product_name'];
                                         $kuantitas = $fo_trans2['quantity'];
@@ -325,6 +340,8 @@ $idkantoradmin = $_SESSION['a_global']->office_id;
                                         '" . $namaproduk . "',
                                         '" . $idkategori . "',
                                         '" . $namakategori . "',
+                                        '" . $idsatuan . "',
+                                        '" . $namasatuan . "',
                                         '" . $kuantitas . "',
                                         NOW(),
                                         '" . $fo_trans2['red_flag'] . "',
@@ -355,6 +372,8 @@ $idkantoradmin = $_SESSION['a_global']->office_id;
                             $trans2 = mysqli_query($conn, "SELECT * FROM data_transaction LEFT JOIN data_product USING (product_id) WHERE cart_id = '" . $idcart . "' ");
                             if (mysqli_num_rows($trans2) > 0) {
                                 while ($fo_trans2 = mysqli_fetch_array($trans2)) {
+                                    $unit = mysqli_query($conn, "SELECT * FROM data_unit WHERE unit_id = '" . $fo_trans2['unit_id'] . "' ");
+                                    $fa_unit = mysqli_fetch_array($unit);
                                     if ($fo_trans2['red_flag'] == 'red') {
                                         $orderid = $fo_trans2['order_id'];
                                         $keranjang = $fo_trans2['cart_id'];
@@ -367,6 +386,8 @@ $idkantoradmin = $_SESSION['a_global']->office_id;
                                         $productname = $fo_trans2['product_name'];
                                         $idkategori = $fo_trans2['category_id'];
                                         $namakategori = $fo_trans2['category_name'];
+                                        $idsatuan = $fo_trans2['unit_id'];
+                                        $namasatuan = $fa_unit['unit_name'];
                                         $idproduk = $fo_trans2['product_id'];
                                         $namaproduk = $fo_trans2['product_name'];
                                         $kuantitas = $fo_trans2['quantity'];
@@ -393,6 +414,8 @@ $idkantoradmin = $_SESSION['a_global']->office_id;
                                         '" . $namaproduk . "',
                                         '" . $idkategori . "',
                                         '" . $namakategori . "',
+                                        '" . $idsatuan . "',
+                                        '" . $namasatuan . "',
                                         '" . $kuantitas . "',
                                         NOW(),
                                         '" . $fo_trans2['red_flag'] . "',
@@ -413,6 +436,8 @@ $idkantoradmin = $_SESSION['a_global']->office_id;
                                         $productname = $fo_trans2['product_name'];
                                         $idkategori = $fo_trans2['category_id'];
                                         $namakategori = $fo_trans2['category_name'];
+                                        $idsatuan = $fo_trans2['unit_id'];
+                                        $namasatuan = $fa_unit['unit_name'];
                                         $idproduk = $fo_trans2['product_id'];
                                         $namaproduk = $fo_trans2['product_name'];
                                         $kuantitas = $fo_trans2['quantity'];
@@ -439,6 +464,8 @@ $idkantoradmin = $_SESSION['a_global']->office_id;
                                         '" . $namaproduk . "',
                                         '" . $idkategori . "',
                                         '" . $namakategori . "',
+                                        '" . $idsatuan . "',
+                                        '" . $namasatuan . "',
                                         '" . $kuantitas . "',
                                         NOW(),
                                         '" . $fo_trans2['red_flag'] . "',
@@ -468,6 +495,8 @@ $idkantoradmin = $_SESSION['a_global']->office_id;
                             $trans2 = mysqli_query($conn, "SELECT * FROM data_transaction LEFT JOIN data_product USING (product_id) WHERE cart_id = '" . $idcart . "' ");
                             if (mysqli_num_rows($trans2) > 0) {
                                 while ($fo_trans2 = mysqli_fetch_array($trans2)) {
+                                    $unit = mysqli_query($conn, "SELECT * FROM data_unit WHERE unit_id = '" . $fo_trans2['unit_id'] . "' ");
+                                    $fa_unit = mysqli_fetch_array($unit);
                                     if ($fo_trans2['red_flag'] == 'red') {
                                         $orderid = $fo_trans2['order_id'];
                                         $keranjang = $fo_trans2['cart_id'];
@@ -480,6 +509,8 @@ $idkantoradmin = $_SESSION['a_global']->office_id;
                                         $productname = $fo_trans2['product_name'];
                                         $idkategori = $fo_trans2['category_id'];
                                         $namakategori = $fo_trans2['category_name'];
+                                        $idsatuan = $fo_trans2['unit_id'];
+                                        $namasatuan = $fa_unit['unit_name'];
                                         $idproduk = $fo_trans2['product_id'];
                                         $namaproduk = $fo_trans2['product_name'];
                                         $kuantitas = $fo_trans2['quantity'];
@@ -498,6 +529,8 @@ $idkantoradmin = $_SESSION['a_global']->office_id;
                                         '" . $namaproduk . "',
                                         '" . $idkategori . "',
                                         '" . $namakategori . "',
+                                        '" . $idsatuan . "',
+                                        '" . $namasatuan . "',
                                         '" . $kuantitas . "',
                                         NOW(),
                                         '" . $fo_trans2['red_flag'] . "',
@@ -518,6 +551,8 @@ $idkantoradmin = $_SESSION['a_global']->office_id;
                                         $productname = $fo_trans2['product_name'];
                                         $idkategori = $fo_trans2['category_id'];
                                         $namakategori = $fo_trans2['category_name'];
+                                        $idsatuan = $fo_trans2['unit_id'];
+                                        $namasatuan = $fa_unit['unit_name'];
                                         $idproduk = $fo_trans2['product_id'];
                                         $namaproduk = $fo_trans2['product_name'];
                                         $kuantitas = $fo_trans2['quantity'];
@@ -536,6 +571,8 @@ $idkantoradmin = $_SESSION['a_global']->office_id;
                                         '" . $namaproduk . "',
                                         '" . $idkategori . "',
                                         '" . $namakategori . "',
+                                        '" . $idsatuan . "',
+                                        '" . $namasatuan . "',
                                         '" . $kuantitas . "',
                                         NOW(),
                                         '" . $fo_trans2['red_flag'] . "',

@@ -134,7 +134,7 @@ $kantoradmin = $_SESSION['a_global']->office_id;
                         <tbody>
                             <?php
                             $no = 1;
-                            $trans = mysqli_query($conn, "SELECT * FROM data_order WHERE data_order.office_id = '" . $kantoradmin . "' AND data_order.status = 'Diproses Admin'  ");
+                            $trans = mysqli_query($conn, "SELECT * FROM data_order WHERE data_order.office_id = '" . $kantoradmin . "' AND data_order.status = 'Diproses Admin'  ORDER BY created DESC ");
                             if (mysqli_num_rows($trans) > 0) {
 
                                 while ($fo_trans = mysqli_fetch_array($trans)) {
@@ -242,7 +242,7 @@ $kantoradmin = $_SESSION['a_global']->office_id;
                                 <tbody>
                                     <?php
                                     $no = 1;
-                                    $query_order = mysqli_query($conn, "SELECT * FROM data_order WHERE office_id = '" . $_POST['perwakilan'] . "' AND data_order.status = 'Diproses Admin' ");
+                                    $query_order = mysqli_query($conn, "SELECT * FROM data_order WHERE office_id = '" . $_POST['perwakilan'] . "' AND data_order.status = 'Diproses Admin' ORDER BY created DESC ");
                                     if (mysqli_num_rows($query_order) > 0) {
                                         while ($fa_order = mysqli_fetch_array($query_order)) {
                                     ?>

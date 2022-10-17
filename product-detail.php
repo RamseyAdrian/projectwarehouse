@@ -59,7 +59,7 @@ $fo = mysqli_fetch_object($qd);
                 </div>
                 <div class="col-2">
                     <form action="" method="POST">
-                        <h3><?php echo $p->product_name ?></h3>
+                        <h2><?php echo $p->product_name ?></h2>
                         <h4>RP. <?php echo number_format($p->product_price)  ?></h4>
                         <?php $qty = $p->stock;
                         $satuan = mysqli_query($conn, "SELECT * FROM data_unit WHERE unit_id = '" . $p->unit_id . "' ");

@@ -66,17 +66,22 @@ $idkategori = $p->category_id;
                         $kategori = mysqli_query($conn, "SELECT * FROM data_category WHERE category_id = '" . $idkategori . "' ");
                         $fetch_kategori = mysqli_fetch_array($kategori);
                         ?>
-                        <h3>Kategori Barang : <?php echo $fetch_kategori['category_name'] ?></h3><br>
+                        <h2 style="color: red ;"><?php echo $p->product_name ?></h2><br>
+                        <h3>Kategori Barang : <?php echo $fetch_kategori['category_name'] ?></h3>
                         <?php
                         ?>
-                        <h3>ID Barang : <?php echo $p->product_id ?></h3><br>
-                        <h3>Nama : <?php echo $p->product_name ?></h3><br>
+                        <h4 style="color: grey ;">ID Barang : <?php echo $p->product_id ?></h4><br>
+                        <br>
                         <h3>Deskripsi Barang</h3>
                         <h4><?php echo $p->product_description ?></h4><br><br>
                         <?php
-
+                        $satuan = mysqli_query($conn, "SELECT * FROM data_unit WHERE unit_id = '" . $p->unit_id . "' ");
+                        while ($fa_satuan = mysqli_fetch_array($satuan)) {
                         ?>
-                        <h4>Stok Barang : <?php echo $p->stock ?> </h4>
+                            <h3>Stok Barang : <?php echo $p->stock, " ", $fa_satuan['unit_name'] ?> </h3>
+                        <?php
+                        }
+                        ?>
                         <h3>Edit Jumlah</h3>
                         <input type="number" name="jumlah" class="input-control" value="<?php echo $fetch_keranjang->quantity ?>" min="1" max="<?php echo $p->stock ?>">
                         <input type="submit" name="submit" value="Ubah Jumlah Pesanan" class="btn">

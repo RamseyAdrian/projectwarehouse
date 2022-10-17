@@ -83,10 +83,16 @@ $fo = mysqli_fetch_object($qd);
                 </div>
                 <div class="col-2">
                     <form action="" method="POST">
-                        <h3><?php echo $p->product_name ?></h3>
+                        <h2><?php echo $p->product_name ?></h2><br>
                         <h4>RP. <?php echo number_format($p->product_price)  ?></h4>
-                        <?php $qty = $p->stock; ?>
-                        <h4>Stok Barang : <?php echo $qty ?> </h4>
+                        <?php $qty = $p->stock;
+                        $satuan = mysqli_query($conn, "SELECT * FROM data_unit WHERE unit_id = '" . $p->unit_id . "' ");
+                        while ($fa_satuan = mysqli_fetch_array($satuan)) {
+                        ?>
+                            <h4>Stok Barang : <?php echo $qty, " ", $fa_satuan['unit_name'] ?> </h4>
+                        <?php
+                        }
+                        ?>
                         <p>Deskripsi : <br>
                             <?php echo $p->product_description ?>
                         </p>
@@ -100,6 +106,7 @@ $fo = mysqli_fetch_object($qd);
                         $idkantor = $_SESSION['a_global']->office_id;
                         $idbarang = $p->product_id;
                         $idkategori = $p->category_id;
+                        $idsatuan = $p->unit_id;
                         $jumlah = $_POST['qty'];
                         $insert = true;
 
@@ -120,6 +127,7 @@ $fo = mysqli_fetch_object($qd);
                                 '" . $idkantor . "',
                                 '" . $idbarang . "',
                                 '" . $idkategori . "',
+                                '" . $idsatuan . "',
                                 '" . $jumlah . "',
                                 NOW(),
                                 NOW()
