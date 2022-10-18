@@ -229,7 +229,8 @@ $fo = mysqli_fetch_object($qd);
 
             </div>
             <p class="copyright">Ombudsman RI © 2022</p>
-            <p class="copyright">Made By Divisi HTI & Team RJN</p>
+            <p class="copyright">Made By Divisi HTI & <a href="dev-team.php">Team RJN</a></p>
+            <i class="fa-regular fa-cart-shopping"></i>
         </div>
     </footer>
 </div>

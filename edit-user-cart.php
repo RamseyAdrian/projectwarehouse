@@ -36,6 +36,8 @@ $user_office = $_SESSION['a_global']->office_id;
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert-dev.js"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
 </head>
 
 <body>
@@ -55,7 +57,7 @@ $user_office = $_SESSION['a_global']->office_id;
                 ?>
                 <li><a href="user-home.php">Home</a></li>
                 <li><a href="user-category-product.php">Kategori</a></li>
-                <li><a href="user-cart.php"><img style="width:16px ;" src="img/cart.png" alt="">(<?php echo $isi; ?>)</a></li>
+                <li><a href="user-cart.php"><i class="fa fa-shopping-cart" aria-hidden="true" style="width:16px;"></i>(<?php echo $isi ?>)</a></li>
                 <li><a href="user-order.php">Transaksi</a></li>
                 <li><a href="user-profile.php">Profil Saya</a></li>
                 <li><a href="logout.php">Log out</a></li>

@@ -26,6 +26,7 @@ $d = mysqli_fetch_object($query);
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Quicksand&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 
 <body>
@@ -45,7 +46,7 @@ $d = mysqli_fetch_object($query);
                 ?>
                 <li><a href="user-home.php">Home</a></li>
                 <li><a href="user-category-product.php">Kategori</a></li>
-                <li><a href="user-cart.php"><img style="width:16px ;" src="img/cart.png" alt="">(<?php echo $isi; ?>)</a></li>
+                <li><a href="user-cart.php"><i class="fa fa-shopping-cart" aria-hidden="true" style="width:16px;"></i>(<?php echo $isi ?>)</a></li>
                 <li><a href="user-order.php">Transaksi</a></li>
                 <li><a href="user-profile.php">Profil Saya</a></li>
                 <li><a href="logout.php">Log out</a></li>

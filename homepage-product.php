@@ -93,6 +93,8 @@ $fo = mysqli_fetch_object($qd);
                 ORDER BY product_id ");
                 if (mysqli_num_rows($produk) > 0) {
                     while ($p = mysqli_fetch_array($produk)) {
+                        $namasatuan = mysqli_query($conn, "SELECT * FROM data_unit WHERE unit_id = '" . $p['unit_id'] . "' ");
+                        $fa_satuan = mysqli_fetch_array($namasatuan);
                 ?>
                         <a href="product-detail.php?id=<?php echo $p['product_id'] ?>">
                             <div class="col-4">
@@ -113,7 +115,7 @@ $fo = mysqli_fetch_object($qd);
                                 } else {
                                 ?>
                                     <center>
-                                        <p class="nama">Sisa Stok : <?php echo $p['stock'] ?></p>
+                                        <p class="nama">Sisa Stok : <?php echo $p['stock'], " ", $fa_satuan['unit_name'] ?></p>
                                     </center>
                                 <?php
                                 }

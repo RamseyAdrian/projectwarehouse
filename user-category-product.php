@@ -35,7 +35,7 @@ $user_id = $_SESSION['a_global']->user_id;
     <script src="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css" />
     <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
-    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <style>
         table {
             border-collapse: collapse;
@@ -100,7 +100,7 @@ $user_id = $_SESSION['a_global']->user_id;
                 ?>
                 <li><a href="user-home.php">Home</a></li>
                 <li><a href="user-category-product.php">Kategori</a></li>
-                <li><a href="user-cart.php"><img style="width:16px ;" src="img/cart.png" alt="">(<?php echo $isi; ?>)</a></li>
+                <li><a href="user-cart.php"><i class="fa fa-shopping-cart" aria-hidden="true" style="width:16px;"></i>(<?php echo $isi ?>)</a></li>
                 <li><a href="user-order.php">Transaksi</a></li>
                 <li><a href="user-profile.php">Profil Saya</a></li>
                 <li><a href="logout.php">Log out</a></li>
@@ -158,22 +158,22 @@ $user_id = $_SESSION['a_global']->user_id;
             $pagLink = "";
 
             if ($page >= 2) {
-                echo "<a href='category-product.php?page=" . ($page - 1) . "'>  Prev </a>";
+                echo "<a href='user-category-product.php?page=" . ($page - 1) . "'>  Prev </a>";
             }
 
             for ($i = 1; $i <= $total_pages; $i++) {
                 if ($i == $page) {
-                    $pagLink .= "<a class = 'active' href='category-product.php?page="
+                    $pagLink .= "<a class = 'active' href='user-category-product.php?page="
                         . $i . "'>" . $i . " </a>";
                 } else {
-                    $pagLink .= "<a href='category-product.php?page=" . $i . "'>   
+                    $pagLink .= "<a href='user-category-product.php?page=" . $i . "'>   
                                         " . $i . " </a>";
                 }
             };
             echo $pagLink;
 
             if ($page < $total_pages) {
-                echo "<a href='category-product.php?page=" . ($page + 1) . "'>  Next </a>";
+                echo "<a href='user-category-product.php?page=" . ($page + 1) . "'>  Next </a>";
             }
             ?>
         </div><br><br><br><br>
@@ -185,7 +185,7 @@ $user_id = $_SESSION['a_global']->user_id;
         function go2Page() {
             var page = document.getElementById("page").value;
             page = ((page > <?php echo $total_pages; ?>) ? <?php echo $total_pages; ?> : ((page < 1) ? 1 : page));
-            window.location.href = 'category-product.php?page=' + page;
+            window.location.href = 'user-category-product.php?page=' + page;
         }
     </script>
 

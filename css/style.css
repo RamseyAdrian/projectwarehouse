@@ -345,9 +345,11 @@ a {
 /*------------------------------------Footer----------------------------*/
 
 .footer-dark {
-    padding:50px 0;
-    color:#f0f9ff;
-    background-color:#282d32;
+    width: 100%;
+    line-height: 40px;
+    background: #282d32;
+    color: #f0f9ff;
+    bottom: 0px;
   }
   
   .footer-dark h3 {
