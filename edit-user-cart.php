@@ -17,6 +17,7 @@ if (mysqli_num_rows($keranjang) == 0) {
 }
 $p = mysqli_fetch_object($produk);
 $idkategori = $p->category_id;
+$user_office = $_SESSION['a_global']->office_id;
 
 ?>
 <!DOCTYPE html>
@@ -41,11 +42,21 @@ $idkategori = $p->category_id;
     <!-- header -->
     <header>
         <div class="container">
-            <h1><a href="dashboard.php">KP Ombudsman</a></h1>
-            <ul>
-                <li><a href="user-homepage-product.php">Produk</a></li>
-                <li><a href="user-cart.php">Keranjang</a></li>
-                <li><a href="user-order.php">Pesanan</a></li>
+            <h1><img style="width: 80px ; margin-bottom :-10px ;" src="img/logo-ombudsman2.png" alt=""><a href="user-home.php"> Gudang Ombudsman</a></h1>
+            <ul style="margin-top: 20px ;">
+                <?php
+                $isi = 0;
+                $keranjang2 = mysqli_query($conn, "SELECT * FROM data_cart WHERE user_id = '" . $iduser . "' AND office_id = '" . $user_office . "' ");
+                if (mysqli_num_rows($keranjang2) > 0) {
+                    while ($fetch_keranjang2 = mysqli_fetch_array($keranjang2)) {
+                        $isi++;
+                    }
+                }
+                ?>
+                <li><a href="user-home.php">Home</a></li>
+                <li><a href="user-category-product.php">Kategori</a></li>
+                <li><a href="user-cart.php"><img style="width:16px ;" src="img/cart.png" alt="">(<?php echo $isi; ?>)</a></li>
+                <li><a href="user-order.php">Transaksi</a></li>
                 <li><a href="user-profile.php">Profil Saya</a></li>
                 <li><a href="logout.php">Log out</a></li>
             </ul>

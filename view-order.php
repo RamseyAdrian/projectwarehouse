@@ -12,7 +12,8 @@ $trans = mysqli_query($conn, "SELECT * FROM data_transaction LEFT JOIN data_prod
 if (mysqli_num_rows($trans) == 0) {
     echo '<script>window.location="user-order.php"</script>';
 }
-
+$user_office = $_SESSION['a_global']->office_id;
+$user_id = $_SESSION['a_global']->user_id;
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -36,11 +37,21 @@ if (mysqli_num_rows($trans) == 0) {
     <!-- header -->
     <header>
         <div class="container">
-            <h1><a href="user-home.php">KP Ombudsman</a></h1>
-            <ul>
-                <li><a href="user-homepage-product.php">Produk</a></li>
-                <li><a href="user-cart.php">Keranjang</a></li>
-                <li><a href="user-order.php">Pesanan</a></li>
+            <h1><img style="width: 80px ; margin-bottom :-10px ;" src="img/logo-ombudsman2.png" alt=""><a href="user-home.php"> Gudang Ombudsman</a></h1>
+            <ul style="margin-top: 20px ;">
+                <?php
+                $isi = 0;
+                $keranjang = mysqli_query($conn, "SELECT * FROM data_cart WHERE user_id = '" . $user_id . "' AND office_id = '" . $user_office . "' ");
+                if (mysqli_num_rows($keranjang) > 0) {
+                    while ($fetch_keranjang = mysqli_fetch_array($keranjang)) {
+                        $isi++;
+                    }
+                }
+                ?>
+                <li><a href="user-home.php">Home</a></li>
+                <li><a href="user-category-product.php">Kategori</a></li>
+                <li><a href="user-cart.php"><img style="width:16px ;" src="img/cart.png" alt="">(<?php echo $isi; ?>)</a></li>
+                <li><a href="user-order.php">Transaksi</a></li>
                 <li><a href="user-profile.php">Profil Saya</a></li>
                 <li><a href="logout.php">Log out</a></li>
             </ul>
@@ -59,30 +70,34 @@ if (mysqli_num_rows($trans) == 0) {
             </style>
 
             <div class="box">
-                <form action="" method="POST" enctype="multipart/form-data">
-                    <?php
-                    $no = 1;
-                    if (mysqli_num_rows($trans) > 0) {
-                        while ($fo_trans = mysqli_fetch_object($trans)) {
-                    ?>
-                            <h1>Produk ke <?php echo $no ?></h1><br>
-                            <h2 id="h2produk"><?php echo $fo_trans->product_name ?></h2><br><br>
-                            <img src="produk/<?php echo $fo_trans->product_image ?>" width="100px">
+                <?php
+                $no = 1;
+                if (mysqli_num_rows($trans) > 0) {
+                    while ($fo_trans = mysqli_fetch_object($trans)) {
+                ?>
+                        <div class="order" style="border: 1px solid black ">
+                            <center>
+                                <h1>Produk ke <?php echo $no ?></h1><br>
+                                <h2 id="h2produk"><?php echo $fo_trans->product_name ?></h2><br><br>
+                                <img src="produk/<?php echo $fo_trans->product_image ?>" width="100px">
+                                <br><br>
+                                <h3>Jumlah Pesanan</h3>
+                                <h3 style="color: red ;"><?php echo $fo_trans->quantity, " ", $fo_trans->unit_name ?></h3>
+                            </center>
                             <br><br>
-                            <h4>Jumlah Pesanan</h4>
-                            <input type="text" name="quantity" class="input-control" value="<?php echo $fo_trans->quantity ?>" readonly>
-                            <h4>Waktu Pesanan Dibuat</h4>
-                            <input type="text" name="waktu" class="input-control" value="<?php echo $fo_trans->created ?>" readonly>
-
-
-                            <br><br><br><br>
-                    <?php
-                            $no++;
-                        }
+                        </div>
+                        <br><br>
+                <?php
+                        $no++;
                     }
-                    ?>
-                </form>
-
+                }
+                $trans2 = mysqli_query($conn, "SELECT * FROM data_transaction LEFT JOIN data_product USING (product_id) WHERE cart_id = '" . $_GET['id'] . "' ");
+                $fo_trans2 = mysqli_fetch_object($trans2);
+                ?>
+                <center>
+                    <h3>Waktu Pesanan Dibuat</h3><br>
+                    <h3 style="color: red ;"><?php echo $fo_trans2->created ?></h3>
+                </center>
             </div>
         </div>
     </div>
