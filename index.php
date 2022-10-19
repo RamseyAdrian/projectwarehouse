@@ -181,11 +181,6 @@ $fo = mysqli_fetch_object($qd);
             }
             ?>
         </div><br><br><br><br>
-
-        <!-- <div class="inline">
-            <input id="page" type="number" min="1" max="<?php echo $total_pages ?>" placeholder="<?php echo $page . "/" . $total_pages; ?>" required>
-            <button onclick="go2Page();">Go</button>
-        </div> -->
     </center>
 
 
@@ -229,7 +224,7 @@ $fo = mysqli_fetch_object($qd);
 
             </div>
             <p class="copyright">Ombudsman RI © 2022</p>
-            <p class="copyright">Made By Divisi HTI & <a href="dev-team.php">Team RJN</a></p>
+            <p class="copyright">Made By Divisi HTI & <a href="dev-team.php" target="-blank">Team RJN</a></p>
             <i class="fa-regular fa-cart-shopping"></i>
         </div>
     </footer>
