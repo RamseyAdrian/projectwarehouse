@@ -117,11 +117,20 @@ $idkantoradmin = $_SESSION['a_global']->office_id;
                                 <img src="produk/<?php echo $fo_trans->product_image ?>" width="100px">
                                 <br><br>
                                 <h3>Jumlah Pesanan</h3>
-                                <input type="text" name="quantity" class="input-control" value="<?php echo $fo_trans->quantity ?>" readonly>
-                                <h3>Waktu Pesanan Dibuat</h3>
-                                <input type="text" name="waktu" class="input-control" value="<?php echo $fo_trans->created ?>" readonly>
-                                <h3>Ketersediaan Barang</h3>
-                                <h4>Stock : <?php echo $fo_trans->stock ?></h4>
+                                <?php
+                                $satuan = mysqli_query($conn, "SELECT * FROM data_unit WHERE unit_id = '" . $fo_trans->unit_id . "' ");
+                                while ($fa_satuan = mysqli_fetch_array($satuan)) {
+                                ?>
+                                    <h3 style="color: red ;"><?php echo $fo_trans->quantity, " ", $fa_satuan['unit_name'] ?></h3><br>
+                                    <h3>Waktu Pesanan Dibuat</h3>
+                                    <h3 style="color: red ;"><?php echo $fo_trans->created ?></h3><br>
+                                    <h3>Ketersediaan Barang</h3>
+                                    <h4>Stock : <?php echo $fo_trans->stock, " ", $fa_satuan['unit_name'] ?></h4>
+                                <?php
+                                }
+                                ?>
+                                <br>
+
                                 <?php
                                 if ($fo_trans->stock >= $fo_trans->quantity) {
                                     $stock_ready++;

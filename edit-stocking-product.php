@@ -155,11 +155,10 @@ $kantor_admin = $_SESSION['a_global']->office_id;
                             title: "Berhasil Menambah Stock Barang !",
                             text: "Klik OK Untuk Lanjut.",
                             icon: "success"
-                          },
-                          function(){
-                            window.location="product-data.php"
+                          }).then(function() {
+                            window.location = "product-data.php";
                           });
-                        </script>';
+                          </script>';
                     } else {
                         echo 'gagal' . mysqli_error($conn);
                     }

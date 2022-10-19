@@ -102,7 +102,7 @@ $row_np = mysqli_fetch_array($namaperwakilan);
                                         <div class="form-group">
                                             <h4>Perwakilan</h4>
                                             <input type="tel" name="office" class="form-control" value="<?php echo $row_np['office_name'] ?>" readonly>
-                                        </div>
+                                        </div><br>
                                         <div class="form-group">
                                             <input type="submit" name="submit" value="Pesan Sekarang" class="btn btn-danger btn-block">
                                         </div>

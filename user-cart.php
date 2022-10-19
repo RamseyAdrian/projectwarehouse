@@ -71,6 +71,7 @@ $kantoruser = $_SESSION['a_global']->office_id;
                     border-radius: 5px;
                     text-decoration: none;
                     font-weight: bold;
+                    transition: 0.5s;
                 }
 
                 .box table tbody tr td .abutt:hover {
@@ -144,6 +145,7 @@ $kantoruser = $_SESSION['a_global']->office_id;
             text-decoration: none;
             border-radius: 5px;
             margin-left: 30px;
+            transition: 0.5s;
         }
 
         .section .container #kembali {
@@ -154,6 +156,7 @@ $kantoruser = $_SESSION['a_global']->office_id;
             border: 1px solid;
             padding: 8px;
             border-radius: 5px;
+            transition: 0.5s;
         }
 
         .section .container #checkout:hover {
@@ -171,7 +174,7 @@ $kantoruser = $_SESSION['a_global']->office_id;
             border-radius: 5px;
         }
     </style>
-    <div class="section">
+    <div class="section" style="margin-top: -40px; margin-bottom: 40px; ">
         <div class="container">
             <a id="kembali" href="user-home.php">Kembali Pesan</a>
             <?php

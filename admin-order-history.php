@@ -179,7 +179,7 @@ $fa_data = mysqli_fetch_array($data);
             </footer>
         </div>
         <script>
-            CKEDITOR.replace('deskripsi');
+            CKEDITOR.replace('notes');
         </script>
     <?php
     } else if ($_SESSION['role_login'] == 'super') {
@@ -301,7 +301,7 @@ $fa_data = mysqli_fetch_array($data);
             </footer>
         </div>
         <script>
-            CKEDITOR.replace('deskripsi');
+            CKEDITOR.replace('notes');
         </script>
     <?php
     }
