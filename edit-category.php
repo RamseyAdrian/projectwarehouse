@@ -1,16 +1,18 @@
 <?php
 session_start();
 include 'db.php';
+// Kondisi Supaya User, Admin, & Non User tidak dapat akses page ini
 if ($_SESSION['role_login'] == 'user' || $_SESSION['role_login'] == 'admin') {
-
     echo '<script>window.location="logout.php"</script>';
+} else if ($_SESSION['status_login'] != true) {
+    echo '<script>window.location="login.php"</script>';
 }
 
 $kategori = mysqli_query($conn, "SELECT * FROM data_category WHERE category_id = '" . $_GET['id'] . "' ");
 if (mysqli_num_rows($kategori) == 0) {
     echo '<script>window.location="category-data.php"</script>';
 }
-$k = mysqli_fetch_object($kategori);
+$row_kategori = mysqli_fetch_object($kategori);
 
 ?>
 
@@ -20,17 +22,19 @@ $k = mysqli_fetch_object($kategori);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KP Ombudsman</title>
+    <title>Gudang Ombudsman</title>
+    <!--------------------- CSS ------------------------------------->
     <link rel="stylesheet" type="text/css" href="css/style.css">
+    <!--------------------- Font Used ----------------------------->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Quicksand&display=swap" rel="stylesheet">
+    <!--------------------- Sweet Alert CDN ----------------------------->
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
 </head>
 
 <body>
-    <!-- header -->
+    <!---------------------- Header ----------------------------------->
     <header>
         <div class="container">
             <h1><a href="dashboard.php"><img style="width: 70px ; margin-bottom :-10px ;" src="img/logo-ombudsman2.png" alt=""> Gudang Ombudsman</a></h1>
@@ -49,16 +53,16 @@ $k = mysqli_fetch_object($kategori);
         </div>
     </header>
 
-    <!-- Content -->
+    <!---------------------- Content ----------------------------------->
     <div class="section">
         <div class="container">
             <h3>Edit Data Kategori</h3>
             <div class="box">
                 <form action="" method="POST">
                     <h4>ID Kategori</h4>
-                    <input type="text" name="id" placeholder="ID Kategori" class="input-control" value="<?php echo $k->category_id ?>" readonly>
+                    <input type="text" name="id" placeholder="ID Kategori" class="input-control" value="<?php echo $row_kategori->category_id ?>" readonly>
                     <h4>Nama Kategori</h4>
-                    <input type="text" name="nama" placeholder="Nama Kategori" class="input-control" value="<?php echo $k->category_name ?>" required>
+                    <input type="text" name="nama" placeholder="Nama Kategori" class="input-control" value="<?php echo $row_kategori->category_name ?>" required>
                     <input type="submit" name="submit" value="Submit" class="btn">
                 </form>
                 <?php
@@ -89,7 +93,8 @@ $k = mysqli_fetch_object($kategori);
         </div>
     </div>
 
-    <!-- Footer -->
+    <!---------------------- Footer ----------------------------------->
+
     <div class="footer-dark">
         <footer>
             <div class="container">
@@ -111,15 +116,15 @@ $k = mysqli_fetch_object($kategori);
                     <div class="col-sm-6 col-md-3 item" style="margin-right: 90px ;">
                         <h3>About</h3>
                         <ul>
-                            <li><a href="#">Company</a></li>
-                            <li><a href="#">Team</a></li>
+                            <li><a href="https://ombudsman.go.id/">Ombudsman</a></li>
+                            <li><a href="dev-team.php">Dev Team</a></li>
                         </ul>
                     </div>
                     <br>
-
                 </div>
                 <p class="copyright">Ombudsman RI © 2022</p>
-                <p class="copyright">Made By Divisi HTI & Team RJN</p>
+                <p class="copyright">Made By Divisi HTI & <a href="dev-team.php" target="-blank">Team RJN</a></p>
+                <i class="fa-regular fa-cart-shopping"></i>
             </div>
         </footer>
     </div>

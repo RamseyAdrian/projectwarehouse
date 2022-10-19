@@ -1,8 +1,8 @@
 <?php
 session_start();
 include 'db.php';
+//Kondisi Supaya User & Non User tidak dapat akses page ini
 if ($_SESSION['role_login'] == 'user') {
-
     echo '<script>window.location="logout.php"</script>';
 } else if ($_SESSION['status_login'] != true) {
     echo '<script>window.location="login.php"</script>';
@@ -13,8 +13,6 @@ if (mysqli_num_rows($user) == 0) {
     echo '<script>window.location="user-data.php"</script>';
 }
 $u = mysqli_fetch_object($user);
-
-
 ?>
 
 <!DOCTYPE html>
@@ -23,17 +21,18 @@ $u = mysqli_fetch_object($user);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KP Ombudsman</title>
+    <title>Gudang Ombudsman</title>
+    <!--------------------- CSS ------------------------------------->
     <link rel="stylesheet" type="text/css" href="css/style.css">
+    <!--------------------- Font Used ----------------------------->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Quicksand&display=swap" rel="stylesheet">
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
     <script src="https://www.google.com/jsapi"></script>
+    <!--------------------- Sweet Alert CDN ----------------------------->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.css" rel="stylesheet" />
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert-dev.js"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
@@ -43,14 +42,14 @@ $u = mysqli_fetch_object($user);
     <?php
     if ($_SESSION['role_login'] == 'admin') {
     ?>
-        <!-- header -->
+        <!---------------------- header ----------------------------------->
         <header>
             <div class="container">
                 <h1><a href="dashboard.php">KP Ombudsman</a></h1>
                 <ul>
                     <li><a href="dashboard.php">Dashboard</a></li>
                     <li><a href="profile.php">Profil</a></li>
-                    <li><a href="product-data.php">Data Produk</a></li>
+                    <li><a href="product-data.php">Data Barang</a></li>
                     <li><a href="user-data.php">Data User</a></li>
                     <li><a href="order-table.php">Pesanan</a></li>
                     <li><a href="logout.php">Keluar</a></li>
@@ -58,7 +57,7 @@ $u = mysqli_fetch_object($user);
             </div>
         </header>
 
-        <!-- Content -->
+        <!---------------------- Content ----------------------------------->
         <div class="section">
             <div class="container">
                 <h3>Edit Data User</h3>
@@ -165,7 +164,8 @@ $u = mysqli_fetch_object($user);
             </div>
         </div>
 
-        <!-- Footer -->
+        <!---------------------- Footer ----------------------------------->
+
         <div class="footer-dark">
             <footer>
                 <div class="container">
@@ -187,40 +187,41 @@ $u = mysqli_fetch_object($user);
                         <div class="col-sm-6 col-md-3 item" style="margin-right: 90px ;">
                             <h3>About</h3>
                             <ul>
-                                <li><a href="#">Company</a></li>
-                                <li><a href="#">Team</a></li>
+                                <li><a href="https://ombudsman.go.id/">Ombudsman</a></li>
+                                <li><a href="dev-team.php">Dev Team</a></li>
                             </ul>
                         </div>
                         <br>
-
                     </div>
                     <p class="copyright">Ombudsman RI © 2022</p>
-                    <p class="copyright">Made By Divisi HTI & Team RJN</p>
+                    <p class="copyright">Made By Divisi HTI & <a href="dev-team.php" target="-blank">Team RJN</a></p>
+                    <i class="fa-regular fa-cart-shopping"></i>
                 </div>
             </footer>
         </div>
     <?php
     } else if ($_SESSION['role_login'] == 'super') {
     ?>
-        <!-- header -->
+        <!---------------------- header ----------------------------------->
         <header>
             <div class="container">
-                <h1><a href="dashboard.php">KP Ombudsman</a></h1>
-                <ul>
-                    <li><a href="dashboard.php">Dashboard</a></li>
+                <h1><a href="dashboard.php"><img style="width: 70px ; margin-bottom :-10px ;" src="img/logo-ombudsman2.png" alt=""> Gudang Ombudsman</a></h1>
+                <ul style="margin-top: 20px ;">
+                    <li><a href="dashboard.php">Dashboard </a></li>
                     <li><a href="profile.php">Profil</a></li>
-                    <li><a href="category-data.php">Data Kategori</a></li>
-                    <li><a href="product-data.php">Data Produk</a></li>
+                    <li><a href="category-data.php">Kategori</a></li>
+                    <li><a href="product-data.php">Barang</a></li>
+                    <li><a href="unit-data.php">Satuan</a></li>
                     <li><a href="office-data.php">Perwakilan</a></li>
-                    <li><a href="admin-data.php">Data Admin</a></li>
-                    <li><a href="user-data.php">Data User</a></li>
+                    <li><a href="admin-data.php">Admin</a></li>
+                    <li><a href="user-data.php">User</a></li>
                     <li><a href="order-table.php">Pesanan</a></li>
                     <li><a href="logout.php">Keluar</a></li>
                 </ul>
             </div>
         </header>
 
-        <!-- Content -->
+        <!---------------------- Content ----------------------------------->
         <div class="section">
             <div class="container">
                 <h3>Edit Data User</h3>
@@ -339,7 +340,8 @@ $u = mysqli_fetch_object($user);
             </div>
         </div>
 
-        <!-- Footer -->
+        <!---------------------- Footer ----------------------------------->
+
         <div class="footer-dark">
             <footer>
                 <div class="container">
@@ -361,15 +363,15 @@ $u = mysqli_fetch_object($user);
                         <div class="col-sm-6 col-md-3 item" style="margin-right: 90px ;">
                             <h3>About</h3>
                             <ul>
-                                <li><a href="#">Company</a></li>
-                                <li><a href="#">Team</a></li>
+                                <li><a href="https://ombudsman.go.id/">Ombudsman</a></li>
+                                <li><a href="dev-team.php">Dev Team</a></li>
                             </ul>
                         </div>
                         <br>
-
                     </div>
                     <p class="copyright">Ombudsman RI © 2022</p>
-                    <p class="copyright">Made By Divisi HTI & Team RJN</p>
+                    <p class="copyright">Made By Divisi HTI & <a href="dev-team.php" target="-blank">Team RJN</a></p>
+                    <i class="fa-regular fa-cart-shopping"></i>
                 </div>
             </footer>
         </div>

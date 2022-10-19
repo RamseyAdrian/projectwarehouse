@@ -1,8 +1,8 @@
 <?php
 session_start();
 include 'db.php';
+// Kondisi Supaya User, Admin, & Non User tidak dapat akses page ini
 if ($_SESSION['role_login'] == 'user' || $_SESSION['role_login'] == 'admin') {
-
     echo '<script>window.location="logout.php"</script>';
 } else if ($_SESSION['status_login'] != true) {
     echo '<script>window.location="login.php"</script>';
@@ -12,7 +12,7 @@ $kantor = mysqli_query($conn, "SELECT * FROM data_office WHERE office_id = '" . 
 if (mysqli_num_rows($kantor) == 0) {
     echo '<script>window.location="office-data.php"</script>';
 }
-$k = mysqli_fetch_object($kantor);
+$row_kantor = mysqli_fetch_object($kantor);
 
 ?>
 
@@ -22,7 +22,8 @@ $k = mysqli_fetch_object($kantor);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KP Ombudsman</title>
+    <title>Gudang Ombudsman</title>
+    <!--------------------- CSS ------------------------------------->
     <link rel="stylesheet" type="text/css" href="css/style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -61,19 +62,19 @@ $k = mysqli_fetch_object($kantor);
             <div class="box">
                 <form action="" method="POST">
                     <h4>ID Perwakilan</h4>
-                    <input type="text" name="id" placeholder="ID Kantor" class="input-control" value="<?php echo $k->office_id ?>" required>
+                    <input type="text" name="id" placeholder="ID Kantor" class="input-control" value="<?php echo $row_kantor->office_id ?>" required>
                     <h4>Perwakilan</h4>
-                    <input type="text" name="nama" placeholder="Nama Perwakilan" class="input-control" value="<?php echo $k->office_name ?>" required>
+                    <input type="text" name="nama" placeholder="Nama Perwakilan" class="input-control" value="<?php echo $row_kantor->office_name ?>" required>
                     <h4>Alamat Perwakilan</h4>
-                    <textarea name="alamat" class="input-control" placeholder="Alamat Perwakilan"><?php echo $k->office_address ?></textarea required><br>
+                    <textarea name="alamat" class="input-control" placeholder="Alamat Perwakilan"><?php echo $row_kantor->office_address ?></textarea required><br>
                     <h4>Nomor Telfon</h4>
-                    <input type="text" name="telfon" class="input-control" placeholder="Telfon Perwakilan" value="<?php echo $k->office_telp ?>" required>
+                    <input type="text" name="telfon" class="input-control" placeholder="Telfon Perwakilan" value="<?php echo $row_kantor->office_telp ?>" required>
                     <h4>Fax</h4>
-                    <input type="text" name="fax" class="input-control" placeholder="Fax" value="<?php echo $k->office_fax ?>" required>
+                    <input type="text" name="fax" class="input-control" placeholder="Fax" value="<?php echo $row_kantor->office_fax ?>" required>
                     <h4>Email Perwakilan</h4>
-                    <input type="text" name="email" class="input-control" placeholder="Fax" value="<?php echo $k->office_email ?>" required>
+                    <input type="text" name="email" class="input-control" placeholder="Fax" value="<?php echo $row_kantor->office_email ?>" required>
                     <h4>Kepala Perwakilan</h4>
-                    <input type="text" name="kepala" class="input-control" placeholder="Kepala Perwakilan" value="<?php echo $k->office_head ?>" required>
+                    <input type="text" name="kepala" class="input-control" placeholder="Kepala Perwakilan" value="<?php echo $row_kantor->office_head ?>" required>
                     <input type="submit" name="submit" value="Submit" class="btn">
                 </form>
                 <?php
@@ -98,12 +99,11 @@ $k = mysqli_fetch_object($kantor);
                                            ");
                     if ($update) {
                         echo '<script>Swal.fire({
-                            title: "Berhasil Update Data Perwakilan !",
-                            text: "Klik OK Untuk Lanjut.",
+                            title: "Berhasil Update Data Perwakilan",
+                            text: "Klik OK Untuk Lanjut",
                             icon: "success"
-                          },
-                          function(){
-                            window.location="office-data.php"
+                          }).then(function() {
+                            window.location = "office-data.php";
                           });
                         </script>';
                     } else {
@@ -115,7 +115,8 @@ $k = mysqli_fetch_object($kantor);
         </div>
     </div>
 
-    <!-- Footer -->
+    <!---------------------- Footer ----------------------------------->
+
     <div class="footer-dark">
         <footer>
             <div class="container">
@@ -137,15 +138,15 @@ $k = mysqli_fetch_object($kantor);
                     <div class="col-sm-6 col-md-3 item" style="margin-right: 90px ;">
                         <h3>About</h3>
                         <ul>
-                            <li><a href="#">Company</a></li>
-                            <li><a href="#">Team</a></li>
+                            <li><a href="https://ombudsman.go.id/">Ombudsman</a></li>
+                            <li><a href="dev-team.php">Dev Team</a></li>
                         </ul>
                     </div>
                     <br>
-
                 </div>
                 <p class="copyright">Ombudsman RI © 2022</p>
-                <p class="copyright">Made By Divisi HTI & Team RJN</p>
+                <p class="copyright">Made By Divisi HTI & <a href="dev-team.php" target="-blank">Team RJN</a></p>
+                <i class="fa-regular fa-cart-shopping"></i>
             </div>
         </footer>
     </div>

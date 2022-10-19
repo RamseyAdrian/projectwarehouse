@@ -1,8 +1,8 @@
 <?php
 session_start();
 include 'db.php';
+//Kondisi Supaya User & Non User tidak dapat akses page ini
 if ($_SESSION['role_login'] == 'user') {
-
     echo '<script>window.location="logout.php"</script>';
 } else if ($_SESSION['status_login'] != true) {
     echo '<script>window.location="login.php"</script>';
@@ -16,13 +16,18 @@ $kantor_admin = $_SESSION['a_global']->office_id;
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KP Ombudsman</title>
+    <title>Gudang Ombudsman</title>
+    <!--------------------- CSS ------------------------------------->
     <link rel="stylesheet" type="text/css" href="css/style.css">
+    <!--------------------- Font Used ----------------------------->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Quicksand&display=swap" rel="stylesheet">
+    <!--------------------- CK Editor CDN ----------------------------->
     <script src="https://cdn.ckeditor.com/4.19.1/standard/ckeditor.js"></script>
+    <!--------------------- Sweet Alert CDN ----------------------------->
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!--------------------- Additional CSS ----------------------------->
     <style>
         .box1 {
             margin: 10px 0 -10px 0;
@@ -53,33 +58,39 @@ $kantor_admin = $_SESSION['a_global']->office_id;
     <?php
     if ($_SESSION['role_login'] == 'admin') {
     ?>
-        <!-- header -->
+        <!---------------------- header ----------------------------------->
         <header>
             <div class="container">
                 <h1><a href="dashboard.php"><img style="width: 80px ; margin-bottom :-10px ;" src="img/logo-ombudsman2.png" alt=""> Gudang Ombudsman</a></h1>
                 <ul style="margin-top: 20px ;">
                     <?php
+                    //Deklarasi 2 variabel untuk menampung cart_id dari table data_transaction
                     $idk_1 = "";
                     $idk_2 = "";
+                    //jml_produk digunakan untuk menampung berapa banyak barang yang di-query
                     $jml_produk = 0;
+                    //jml_keranjang digunakan untuk menampung berapa banyak jumlah keranjang yang ada
                     $jml_keranjang = 0;
+                    //query database
                     $keranjang = mysqli_query($conn, "SELECT * FROM data_transaction WHERE office_id = '" . $kantor_admin . "' ORDER BY cart_id");
                     if (mysqli_num_rows($keranjang) > 0) {
                         while ($fetch_keranjang = mysqli_fetch_array($keranjang)) {
                             $jml_produk++;
                             $idk_1 = $fetch_keranjang['cart_id'];
-                            if ($idk_2 == $idk_1) {
+                            if ($idk_2 == $idk_1) { //Kondisi jika barang yang di fetch memiliki cart_id yang sama dengan barang sebelumnya
                                 $jml_keranjang = $jml_keranjang * 1;
-                            } else {
+                            } else { //Jika cart_id barang yang di-fetch berbeda (dengan barang sebelumnya), maka jml_keranjang akan bertambah
                                 $jml_keranjang++;
                             }
+                            //cart_id barang yang di fetch, ditampung di idk_2 untuk looping (pengecekan) selanjutnya
                             $idk_2 = $fetch_keranjang['cart_id'];
                         }
                     }
+                    //Hasilnya (jml_keranjang) akan ditampilkan dibagian navbar (sebelah pesanan)
                     ?>
                     <li><a href="dashboard.php">Dashboard</a></li>
                     <li><a href="profile.php">Profil</a></li>
-                    <li><a href="product-data.php">Data Produk</a></li>
+                    <li><a href="product-data.php">Data Barang</a></li>
                     <li><a href="user-data.php">Data User</a></li>
                     <li><a href="order-table.php">Pesanan (<?php echo $jml_keranjang; ?>)</a></li>
                     <li><a href="logout.php">Keluar</a></li>
@@ -87,10 +98,11 @@ $kantor_admin = $_SESSION['a_global']->office_id;
             </div>
         </header>
 
-        <!-- Content -->
+        <!---------------------- Content ----------------------------------->
+
         <div class="section">
             <div class="container">
-                <h2>Tambah Data Produk</h2>
+                <h2>Tambah Data Barang</h2>
                 <div class="box1">
                     <button><a href="product-data.php" style="text-decoration: none ;">Kembali</a></button><br><br>
                 </div>
@@ -101,16 +113,15 @@ $kantor_admin = $_SESSION['a_global']->office_id;
                             <option value="">--Pilih--</option>
                             <?php
                             $kategori = mysqli_query($conn, "SELECT * FROM data_category ORDER BY category_id DESC");
-                            while ($r = mysqli_fetch_array($kategori)) {
+                            while ($row_kategori = mysqli_fetch_array($kategori)) {
                             ?>
-                                <option value="<?php echo $r['category_id'] ?>"><?php echo $r['category_name'] ?> </option>
+                                <option value="<?php echo $row_kategori['category_id'] ?>"><?php echo $row_kategori['category_name'] ?> </option>
                             <?php } ?>
                         </select>
                         <h4>ID Barang</h4>
-                        <?php $barang_id = rand() ?>
                         <input type="text" name="idbarang" class="input-control" placeholder="ID Produk" required>
                         <h4>Nama Barang</h4>
-                        <input type="text" name="nama" class="input-control" placeholder="Nama Produk" required>
+                        <input type="text" name="nama" class="input-control" placeholder="Nama Barang" required>
                         <h4>Satuan</h4>
 
                         <h4>Harga Barang</h4>
@@ -121,8 +132,6 @@ $kantor_admin = $_SESSION['a_global']->office_id;
                         <textarea name="deskripsi" class="input-control" placeholder="Deskripsi"></textarea><br>
                         <h4>ID Kantor</h4>
                         <input type="text" name="idkantor" class="input-control" readonly>
-                        <h4>Jumlah Stok</h4>
-                        <input type="text" name="stok" class="input-control" placeholder="Jumlah Stock" required>
                         <h4>Status Barang</h4>
                         <select name="status" class="input-control">
                             <option value="">--Pilih--</option>
@@ -130,11 +139,10 @@ $kantor_admin = $_SESSION['a_global']->office_id;
                             <option value="0">Tidak Aktif</option>
                         </select>
                         <input type="submit" name="submit" value="Submit" class="btn">
-
                     </form>
+
                     <?php
                     if (isset($_POST['submit'])) {
-                        // print_r($_FILES['gambar']);
                         //menampung input dari form
                         $idbarang = $_POST['idbarang'];
                         $kategori = $_POST['kategori'];
@@ -142,7 +150,6 @@ $kantor_admin = $_SESSION['a_global']->office_id;
                         $harga = $_POST['harga'];
                         $deskripsi = $_POST['deskripsi'];
                         $status = $_POST['status'];
-                        $stok = $_POST['stok'];
                         $idkantor = $_POST['idkantor'];
 
                         //menampung data file yang diupload
@@ -152,6 +159,7 @@ $kantor_admin = $_SESSION['a_global']->office_id;
                         $type1 = explode('.', $filename);
                         $type2 = $type1[1];
 
+                        //rename file data gambar
                         $newname = 'produk' . time() . '.' . $type2;
 
                         //menampung data format file yang diizinkan
@@ -162,8 +170,6 @@ $kantor_admin = $_SESSION['a_global']->office_id;
                             echo '<script>alert("Format file tidak diizinkan")</script>';
                         } else {
                             move_uploaded_file($tmp_name, './produk/' . $newname);
-                            // echo '<script>alert("Berhasil Upload")</script>';
-
                             $insert = mysqli_query($conn, "INSERT INTO data_product VALUES (
                              '" . $idbarang . "', 
                              '" . $kategori . "',
@@ -173,7 +179,7 @@ $kantor_admin = $_SESSION['a_global']->office_id;
                              '" . $deskripsi . "',
                              '" . $newname . "',
                              '" . $status . "',
-                             '" . $stok . "',
+                             '0',
                              null 
                         ) ");
                             if ($insert) {
@@ -185,25 +191,18 @@ $kantor_admin = $_SESSION['a_global']->office_id;
                                     window.location = "product-data.php";
                                   });
                                 </script>';
-                            }
-                            // else if ($nama = ) {
-
-                            // } 
-
-                            else {
+                            } else {
                                 echo 'gagal' . mysqli_error($conn);
                             }
                         }
-
-                        //proses upload file sekaligus insert ke database
                     }
                     ?>
                 </div>
             </div>
         </div>
 
-        <!-- Footer -->
-        <!-- Footer -->
+        <!---------------------- Footer ----------------------------------->
+
         <div class="footer-dark">
             <footer>
                 <div class="container">
@@ -225,25 +224,29 @@ $kantor_admin = $_SESSION['a_global']->office_id;
                         <div class="col-sm-6 col-md-3 item" style="margin-right: 90px ;">
                             <h3>About</h3>
                             <ul>
-                                <li><a href="#">Company</a></li>
-                                <li><a href="#">Team</a></li>
+                                <li><a href="https://ombudsman.go.id/">Ombudsman</a></li>
+                                <li><a href="dev-team.php">Dev Team</a></li>
                             </ul>
                         </div>
                         <br>
-
                     </div>
                     <p class="copyright">Ombudsman RI © 2022</p>
-                    <p class="copyright">Made By Divisi HTI & Team RJN</p>
+                    <p class="copyright">Made By Divisi HTI & <a href="dev-team.php" target="-blank">Team RJN</a></p>
+                    <i class="fa-regular fa-cart-shopping"></i>
                 </div>
             </footer>
         </div>
+
+        <!--- CK Editor digunakan untuk mengganti display textarea --->
         <script>
             CKEDITOR.replace('deskripsi');
         </script>
+
     <?php
     } else if ($_SESSION['role_login'] == 'super') {
     ?>
-        <!-- header -->
+        <!---------------------- header ----------------------------------->
+
         <header>
             <div class="container">
                 <h1><a href="dashboard.php"><img style="width: 70px ; margin-bottom :-10px ;" src="img/logo-ombudsman2.png" alt=""> Gudang Ombudsman</a></h1>
@@ -262,10 +265,11 @@ $kantor_admin = $_SESSION['a_global']->office_id;
             </div>
         </header>
 
-        <!-- Content -->
+        <!---------------------- Content ----------------------------------->
+
         <div class="section">
             <div class="container">
-                <h2>Tambah Data Produk</h2>
+                <h2>Tambah Data Barang</h2>
                 <div class="box1">
                     <button><a href="product-data.php" style="text-decoration: none ;">Kembali</a></button><br><br>
                 </div>
@@ -288,9 +292,9 @@ $kantor_admin = $_SESSION['a_global']->office_id;
                             <option value="">--Pilih--</option>
                             <?php
                             $kategori = mysqli_query($conn, "SELECT * FROM data_category ORDER BY category_id DESC");
-                            while ($r = mysqli_fetch_array($kategori)) {
+                            while ($row_kategori = mysqli_fetch_array($kategori)) {
                             ?>
-                                <option value="<?php echo $r['category_id'] ?>"><?php echo $r['category_name'] ?> </option>
+                                <option value="<?php echo $row_kategori['category_id'] ?>"><?php echo $row_kategori['category_name'] ?> </option>
                             <?php } ?>
                         </select>
                         <h4>Pilih Satuan</h4>
@@ -307,11 +311,9 @@ $kantor_admin = $_SESSION['a_global']->office_id;
                         </select>
                         <br><br>
                         <h4>ID Barang</h4>
-                        <!--Jika Ingin me-Random ID Barang -->
-                        <?php $barang_id = rand() ?>
-                        <input type="text" name="idbarang" class="input-control" value="<?php echo $barang_id ?>" placeholder="ID Produk" required>
+                        <input type="text" name="idbarang" class="input-control" placeholder="ID Barang" required>
                         <h4>Nama Barang</h4>
-                        <input type="text" name="nama" class="input-control" placeholder="Nama Produk" required>
+                        <input type="text" name="nama" class="input-control" placeholder="Nama Barang" required>
                         <h4>Harga Barang</h4>
                         <input type="text" name="harga" class="input-control" placeholder="Harga">
                         <h4>Gambar Barang</h4>
@@ -329,8 +331,6 @@ $kantor_admin = $_SESSION['a_global']->office_id;
                     </form>
                     <?php
                     if (isset($_POST['submit'])) {
-                        // print_r($_FILES['gambar']);
-                        //menampung input dari form
                         $idbarang = $_POST['idbarang'];
                         $kategori = $_POST['kategori'];
                         $satuan = $_POST['satuan'];
@@ -347,6 +347,7 @@ $kantor_admin = $_SESSION['a_global']->office_id;
                         $type1 = explode('.', $filename);
                         $type2 = $type1[1];
 
+                        // Rename file data gambar
                         $newname = 'produk' . time() . '.' . $type2;
 
                         //menampung data format file yang diizinkan
@@ -357,7 +358,6 @@ $kantor_admin = $_SESSION['a_global']->office_id;
                             echo '<script>alert("Format file tidak diizinkan")</script>';
                         } else {
                             move_uploaded_file($tmp_name, './produk/' . $newname);
-                            // echo '<script>alert("Berhasil Upload")</script>';
 
                             $insert = mysqli_query($conn, "INSERT INTO data_product VALUES (
                              '" . $idbarang . "', 
@@ -381,24 +381,18 @@ $kantor_admin = $_SESSION['a_global']->office_id;
                                     window.location = "product-data.php";
                                   });
                                 </script>';
-                            }
-                            // else if ($nama = ) {
-
-                            // } 
-
-                            else {
+                            } else {
                                 echo 'gagal' . mysqli_error($conn);
                             }
                         }
-
-                        //proses upload file sekaligus insert ke database
                     }
                     ?>
                 </div>
             </div>
         </div>
 
-        <!-- Footer -->
+        <!---------------------- Footer ----------------------------------->
+
         <div class="footer-dark">
             <footer>
                 <div class="container">
@@ -420,26 +414,25 @@ $kantor_admin = $_SESSION['a_global']->office_id;
                         <div class="col-sm-6 col-md-3 item" style="margin-right: 90px ;">
                             <h3>About</h3>
                             <ul>
-                                <li><a href="#">Company</a></li>
-                                <li><a href="#">Team</a></li>
+                                <li><a href="https://ombudsman.go.id/">Ombudsman</a></li>
+                                <li><a href="dev-team.php">Dev Team</a></li>
                             </ul>
                         </div>
                         <br>
-
                     </div>
                     <p class="copyright">Ombudsman RI © 2022</p>
-                    <p class="copyright">Made By Divisi HTI & Team RJN</p>
+                    <p class="copyright">Made By Divisi HTI & <a href="dev-team.php" target="-blank">Team RJN</a></p>
+                    <i class="fa-regular fa-cart-shopping"></i>
                 </div>
             </footer>
         </div>
+
         <script>
             CKEDITOR.replace('deskripsi');
         </script>
     <?php
     }
     ?>
-
-
 </body>
 
 </html>

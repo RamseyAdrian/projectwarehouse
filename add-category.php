@@ -1,12 +1,12 @@
 <?php
 session_start();
 include 'db.php';
+// Kondisi Supaya User, Admin, & Non User tidak dapat akses page ini
 if ($_SESSION['role_login'] == 'user' || $_SESSION['role_login'] == 'admin') {
-
     echo '<script>window.location="logout.php"</script>';
+} else if ($_SESSION['status_login'] != true) {
+    echo '<script>window.location="login.php"</script>';
 }
-
-
 ?>
 
 <!DOCTYPE html>
@@ -15,16 +15,19 @@ if ($_SESSION['role_login'] == 'user' || $_SESSION['role_login'] == 'admin') {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KP Ombudsman</title>
+    <title>Gudang Ombudsman</title>
+    <!--------------------- CSS ------------------------------------->
     <link rel="stylesheet" type="text/css" href="css/style.css">
+    <!--------------------- Font Used ----------------------------->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Quicksand&display=swap" rel="stylesheet">
+    <!--------------------- Sweet Alert CDN ----------------------------->
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body>
-    <!-- header -->
+    <!---------------------- header ----------------------------------->
     <header>
         <div class="container">
             <h1><a href="dashboard.php"><img style="width: 70px ; margin-bottom :-10px ;" src="img/logo-ombudsman2.png" alt=""> Gudang Ombudsman</a></h1>
@@ -43,7 +46,7 @@ if ($_SESSION['role_login'] == 'user' || $_SESSION['role_login'] == 'admin') {
         </div>
     </header>
 
-    <!-- Content -->
+    <!---------------------- Content ----------------------------------->
     <div class="section">
         <div class="container">
             <h2>Tambah Kategori</h2>
@@ -82,7 +85,8 @@ if ($_SESSION['role_login'] == 'user' || $_SESSION['role_login'] == 'admin') {
         </div>
     </div>
 
-    <!-- Footer -->
+    <!---------------------- Footer ----------------------------------->
+
     <div class="footer-dark">
         <footer>
             <div class="container">
@@ -104,15 +108,15 @@ if ($_SESSION['role_login'] == 'user' || $_SESSION['role_login'] == 'admin') {
                     <div class="col-sm-6 col-md-3 item" style="margin-right: 90px ;">
                         <h3>About</h3>
                         <ul>
-                            <li><a href="#">Company</a></li>
-                            <li><a href="#">Team</a></li>
+                            <li><a href="https://ombudsman.go.id/">Ombudsman</a></li>
+                            <li><a href="dev-team.php">Dev Team</a></li>
                         </ul>
                     </div>
                     <br>
-
                 </div>
                 <p class="copyright">Ombudsman RI © 2022</p>
-                <p class="copyright">Made By Divisi HTI & Team RJN</p>
+                <p class="copyright">Made By Divisi HTI & <a href="dev-team.php" target="-blank">Team RJN</a></p>
+                <i class="fa-regular fa-cart-shopping"></i>
             </div>
         </footer>
     </div>

@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login | KP Ombudsman</title>
+    <title>Login | Gudang Ombudsman</title>
     <link rel="stylesheet" type="text/css" href="css/style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -16,19 +16,6 @@
 </head>
 
 <body id="bg-login">
-
-    <!-- header -->
-    <!-- <header>
-        <div class="container">
-            <h1><a href="index.php">KP Ombudsman</a></h1>
-            <ul>
-                <li><a href="index.php">Home Page</a></li>
-            </ul>
-        </div>
-    </header> -->
-
-
-
     <div class="card-container">
         <form id="login-form" method="post">
             <div class="logo-ombudsman">

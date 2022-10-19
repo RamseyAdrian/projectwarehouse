@@ -1,13 +1,12 @@
 <?php
 session_start();
 include 'db.php';
+// Kondisi Supaya Super Admin, Admin, & Non User tidak dapat akses page ini
 if ($_SESSION['role_login'] != 'user') {
-
     echo '<script>window.location="logout.php"</script>';
 } else if ($_SESSION['status_login'] != true) {
     echo '<script>window.location="login.php"</script>';
 }
-
 $iduser = $_SESSION['a_global']->user_id;
 $kantoruser = $_SESSION['a_global']->office_id;
 
@@ -18,7 +17,6 @@ if (mysqli_num_rows($keranjang) == 0) {
 
 $namaperwakilan = mysqli_query($conn, "SELECT * FROM data_office WHERE office_id = '" . $kantoruser . "' ");
 $row_np = mysqli_fetch_array($namaperwakilan);
-
 ?>
 
 <!DOCTYPE html>
@@ -27,23 +25,25 @@ $row_np = mysqli_fetch_array($namaperwakilan);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KP Ombudsman</title>
+    <title>Gudang Ombudsman</title>
+    <!--------------------- CSS ------------------------------------->
     <link rel="stylesheet" type="text/css" href="css/style.css">
+    <!--------------------- Font Used ----------------------------->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Quicksand&display=swap" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.css" rel="stylesheet" />
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <!--------------------- Sweet Alert CDN ----------------------------->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert-dev.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.css" rel="stylesheet" />
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!--------------------- Bootstrap  ----------------------------->
     <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.min.css' />
+    <!--------------------- Font Awesome ----------------------------->
     <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css' />
 </head>
 
 <body>
-
-
-    <!-- Content -->
+    <!---------------------- Content ----------------------------------->
     <div class="section">
         <div class="container">
             <div class="row justify-content-center">
@@ -71,15 +71,12 @@ $row_np = mysqli_fetch_array($namaperwakilan);
                                             <?php
                                             }
                                             ?>
-
-
                                         <?php
                                         }
                                         ?>
                                     </h6>
                                 </div>
                                 <form action="" method="post" id="placeOrder">
-
                                     <div class="form-group">
                                         <h4>Cart ID</h4>
                                         <input type="text" name="cart" class="form-control" value="<?php echo $cart_id ?>" readonly>
