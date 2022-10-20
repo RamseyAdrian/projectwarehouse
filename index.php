@@ -147,7 +147,6 @@ include 'db.php';
             $total_records = $row[0];
 
             echo "</br>";
-            // Number of pages required.   
             $total_pages = ceil($total_records / $per_page_record);
             $pagLink = "";
 

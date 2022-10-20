@@ -1,14 +1,14 @@
 <?php
 session_start();
 include 'db.php';
-$kontak = mysqli_query($conn, "SELECT admin_telp, admin_email, admin_address FROM data_admin WHERE admin_id = 1");
-$a = mysqli_fetch_object($kontak);
+//Kondisi Supaya Non User tidak dapat akses page ini
 if ($_SESSION['role_login'] != 'user') {
-
     echo '<script>window.location="logout.php"</script>';
 } else if ($_SESSION['status_login'] != true) {
     echo '<script>window.location="login.php"</script>';
 }
+$kontak = mysqli_query($conn, "SELECT admin_telp, admin_email, admin_address FROM data_admin WHERE admin_id = 1");
+$a = mysqli_fetch_object($kontak);
 
 $qd = mysqli_query($conn, "SELECT * FROM data_office WHERE office_id = 11");
 $fo = mysqli_fetch_object($qd);
@@ -25,17 +25,16 @@ $user_id = $_SESSION['a_global']->user_id;
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KP Ombudsman</title>
+    <title>Gudang Ombudsman</title>
+    <!--------------------- CSS ------------------------------------->
     <link rel="stylesheet" type="text/css" href="css/style.css">
+    <!--------------------- Font Used ----------------------------->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Quicksand&display=swap" rel="stylesheet">
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css" />
-    <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
+    <!--------------------- Font Awesome ----------------------------->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!--------------------- Additional CSS ----------------------------->
     <style>
         table {
             border-collapse: collapse;
@@ -43,10 +42,8 @@ $user_id = $_SESSION['a_global']->user_id;
 
         .inline {
             display: inline-block;
-            /* float: right; */
             margin: 20px 0px;
         }
-
 
         .pagination {
             display: inline-block;
@@ -74,17 +71,15 @@ $user_id = $_SESSION['a_global']->user_id;
 
 <body>
     <?php
-    $per_page_record = 15;  // Number of entries to show in a page.   
-    // Look for a GET variable page if not found default is 1.        
+    $per_page_record = 15;
     if (isset($_GET["page"])) {
         $page  = $_GET["page"];
     } else {
         $page = 1;
     }
-
     $start_from = ($page - 1) * $per_page_record;
     ?>
-    <!-- header -->
+    <!---------------------- header ----------------------------------->
     <header>
         <div class="container">
             <h1><img style="width: 80px ; margin-bottom :-10px ;" src="img/logo-ombudsman2.png" alt=""><a href="user-home.php"> Gudang Ombudsman</a></h1>
@@ -108,7 +103,7 @@ $user_id = $_SESSION['a_global']->user_id;
         </div>
     </header>
 
-    <!--search-->
+    <!-----------------------search-------------------------------------->
     <div class="search">
         <div class="container">
             <form action="user-category-search.php" method="GET">
@@ -119,7 +114,7 @@ $user_id = $_SESSION['a_global']->user_id;
         </div>
     </div>
 
-    <!--Category-->
+    <!--------------------------Category------------------------------------->
     <div class="section">
         <div class="container">
             <h2>Kategori</h2>
@@ -131,7 +126,6 @@ $user_id = $_SESSION['a_global']->user_id;
                 ?>
                         <a href="user-homepage-product.php?kat=<?php echo $k['category_id'] ?> ">
                             <div class="col-5">
-                                <!-- <img src="img/menu_icon.png" width="50px" style="margin-bottom: 5px;"> -->
                                 <p><?php echo $k['category_name'] ?></p>
                             </div>
                         </a>
@@ -143,7 +137,6 @@ $user_id = $_SESSION['a_global']->user_id;
         </div>
     </div>
 
-
     <center>
         <div class="pagination">
             <?php
@@ -153,7 +146,6 @@ $user_id = $_SESSION['a_global']->user_id;
             $total_records = $row[0];
 
             echo "</br>";
-            // Number of pages required.   
             $total_pages = ceil($total_records / $per_page_record);
             $pagLink = "";
 
@@ -189,7 +181,7 @@ $user_id = $_SESSION['a_global']->user_id;
         }
     </script>
 
-    <!-- Footer -->
+    <!--------------------------- Footer -------------------------------------------------->
     <div class="footer-dark">
         <footer>
             <div class="container">
@@ -211,15 +203,15 @@ $user_id = $_SESSION['a_global']->user_id;
                     <div class="col-sm-6 col-md-3 item" style="margin-right: 90px ;">
                         <h3>About</h3>
                         <ul>
-                            <li><a href="#">Company</a></li>
-                            <li><a href="#">Team</a></li>
+                            <li><a href="https://ombudsman.go.id/">Ombudsman</a></li>
+                            <li><a href="dev-team.php">Dev Team</a></li>
                         </ul>
                     </div>
                     <br>
-
                 </div>
                 <p class="copyright">Ombudsman RI © 2022</p>
-                <p class="copyright">Made By Divisi HTI & Team RJN</p>
+                <p class="copyright">Made By Divisi HTI & <a href="dev-team.php" target="-blank">Team RJN</a></p>
+                <i class="fa-regular fa-cart-shopping"></i>
             </div>
         </footer>
     </div>

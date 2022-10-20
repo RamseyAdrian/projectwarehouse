@@ -6,9 +6,6 @@ $a = mysqli_fetch_object($kontak);
 
 $produk = mysqli_query($conn, "SELECT * FROM data_product WHERE product_id = '" . $_GET['id'] . "' ");
 $p = mysqli_fetch_object($produk);
-
-$qd = mysqli_query($conn, "SELECT * FROM data_office WHERE office_id = 11");
-$fo = mysqli_fetch_object($qd);
 ?>
 
 <!DOCTYPE html>
@@ -17,17 +14,21 @@ $fo = mysqli_fetch_object($qd);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KP Ombudsman</title>
+    <title>Gudang Ombudsman</title>
+    <!--------------------- CSS ------------------------------------->
     <link rel="stylesheet" type="text/css" href="css/style.css">
+    <!--------------------- Font Used ----------------------------->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Quicksand&display=swap" rel="stylesheet">
-    <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
+    <!--------------------- Sweet Alert CDN ----------------------------->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert-dev.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.css" rel="stylesheet" />
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body>
-    <!-- header -->
+    <!---------------------- header ----------------------------------->
     <header>
         <div class="container">
             <h1><img style="width: 80px ; margin-bottom :-10px ;" src="img/logo-ombudsman2.png" alt=""><a href="index.php"> Gudang Ombudsman</a></h1>
@@ -39,7 +40,7 @@ $fo = mysqli_fetch_object($qd);
         </div>
     </header>
 
-    <!--search-->
+    <!-----------------------search-------------------------------------->
     <div class="search">
         <div class="container">
             <form action="produk.php" method="GET">
@@ -49,7 +50,7 @@ $fo = mysqli_fetch_object($qd);
         </div>
     </div>
 
-    <!--Product Detail-->
+    <!--------------------------items------------------------------------->
     <div class="section">
         <div class="container">
             <h3>Detail Produk</h3>
@@ -93,7 +94,7 @@ $fo = mysqli_fetch_object($qd);
         </div>
     </div>
 
-    <!-- Footer -->
+    <!--------------------------- Footer -------------------------------------------------->
     <div class="footer-dark">
         <footer>
             <div class="container">
@@ -115,15 +116,15 @@ $fo = mysqli_fetch_object($qd);
                     <div class="col-sm-6 col-md-3 item" style="margin-right: 90px ;">
                         <h3>About</h3>
                         <ul>
-                            <li><a href="#">Company</a></li>
-                            <li><a href="#">Team</a></li>
+                            <li><a href="https://ombudsman.go.id/">Ombudsman</a></li>
+                            <li><a href="dev-team.php">Dev Team</a></li>
                         </ul>
                     </div>
                     <br>
-
                 </div>
                 <p class="copyright">Ombudsman RI © 2022</p>
-                <p class="copyright">Made By Divisi HTI & Team RJN</p>
+                <p class="copyright">Made By Divisi HTI & <a href="dev-team.php" target="-blank">Team RJN</a></p>
+                <i class="fa-regular fa-cart-shopping"></i>
             </div>
         </footer>
     </div>

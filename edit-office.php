@@ -25,13 +25,16 @@ $row_kantor = mysqli_fetch_object($kantor);
     <title>Gudang Ombudsman</title>
     <!--------------------- CSS ------------------------------------->
     <link rel="stylesheet" type="text/css" href="css/style.css">
+    <!--------------------- Font Used ----------------------------->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Quicksand&display=swap" rel="stylesheet">
+    <!--------------------- Sweet Alert CDN ----------------------------->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.css" rel="stylesheet" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert-dev.js"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!--------------------- CK Editor CDN ----------------------------->
     <script src="https://cdn.ckeditor.com/4.19.1/standard/ckeditor.js"></script>
 </head>
 

@@ -1,8 +1,8 @@
 <?php
 session_start();
 include 'db.php';
+//Kondisi Supaya Non User tidak dapat akses page ini
 if ($_SESSION['role_login'] != 'user') {
-
     echo '<script>window.location="logout.php"</script>';
 } else if ($_SESSION['status_login'] != true) {
     echo '<script>window.location="login.php"</script>';
@@ -10,8 +10,6 @@ if ($_SESSION['role_login'] != 'user') {
 
 $iduser = $_SESSION['a_global']->user_id;
 $kantoruser = $_SESSION['a_global']->office_id;
-
-// header("refresh: 3;");
 ?>
 
 <!DOCTYPE html>
@@ -20,21 +18,77 @@ $kantoruser = $_SESSION['a_global']->office_id;
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KP Ombudsman</title>
+    <title>Gudang Ombudsman</title>
+    <!--------------------- CSS ------------------------------------->
     <link rel="stylesheet" type="text/css" href="css/style.css">
+    <!--------------------- Font Used ----------------------------->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Quicksand&display=swap" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.css" rel="stylesheet" />
+    <!--------------------- jQuery ----------------------------->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <!--------------------- Sweetalert CDN ----------------------------->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.css" rel="stylesheet" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert-dev.js"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!--------------------- Font Awesome ----------------------------->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!--------------------- Additional CSS ----------------------------->
+    <style>
+        .box table tbody tr td .abutt {
+            margin-right: 10px;
+            padding: 2px;
+            border: 1px solid;
+            background-color: white;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: 0.5s;
+        }
+
+        .box table tbody tr td .abutt:hover {
+            color: white;
+            background-color: black;
+        }
+
+        .section .container #checkout {
+            text-decoration: none;
+            border-radius: 5px;
+            margin-left: 30px;
+            transition: 0.5s;
+        }
+
+        .section .container #kembali {
+            text-decoration: none;
+            background-color: white;
+            color: black;
+            font-weight: bold;
+            border: 1px solid;
+            padding: 8px;
+            border-radius: 5px;
+            transition: 0.5s;
+        }
+
+        .section .container #checkout:hover {
+            border: 1px solid red;
+            background-color: white;
+            color: red;
+            border-radius: 5px;
+        }
+
+        .section .container #kembali:hover {
+            border: 1px solid white;
+            background-color: black;
+            color: white;
+            padding: 8px;
+            border-radius: 5px;
+        }
+    </style>
 </head>
 
 <body>
 
-    <!-- header -->
+    <!---------------------- header ----------------------------------->
     <header>
         <div class="container">
             <h1><img style="width: 80px ; margin-bottom :-10px ;" src="img/logo-ombudsman2.png" alt=""><a href="user-home.php"> Gudang Ombudsman</a></h1>
@@ -58,27 +112,10 @@ $kantoruser = $_SESSION['a_global']->office_id;
         </div>
     </header>
 
-    <!-- Content -->
+    <!---------------------- Content ----------------------------------->
     <div class="section">
         <div class="container">
             <h3>Keranjang</h3>
-            <style>
-                .box table tbody tr td .abutt {
-                    margin-right: 10px;
-                    padding: 2px;
-                    border: 1px solid;
-                    background-color: white;
-                    border-radius: 5px;
-                    text-decoration: none;
-                    font-weight: bold;
-                    transition: 0.5s;
-                }
-
-                .box table tbody tr td .abutt:hover {
-                    color: white;
-                    background-color: black;
-                }
-            </style>
             <div class="box">
                 <table border="1" cellspacing="0" class="table">
                     <thead>
@@ -122,15 +159,10 @@ $kantoruser = $_SESSION['a_global']->office_id;
                             <?php
                             }
                             ?>
-
-
                         <?php
                         } else {
                         ?>
-
                             <td colspan="8">Tidak Ada Data</td>
-
-
                         <?php
                         }
                         ?>
@@ -139,41 +171,6 @@ $kantoruser = $_SESSION['a_global']->office_id;
             </div>
         </div>
     </div>
-
-    <style>
-        .section .container #checkout {
-            text-decoration: none;
-            border-radius: 5px;
-            margin-left: 30px;
-            transition: 0.5s;
-        }
-
-        .section .container #kembali {
-            text-decoration: none;
-            background-color: white;
-            color: black;
-            font-weight: bold;
-            border: 1px solid;
-            padding: 8px;
-            border-radius: 5px;
-            transition: 0.5s;
-        }
-
-        .section .container #checkout:hover {
-            border: 1px solid red;
-            background-color: white;
-            color: red;
-            border-radius: 5px;
-        }
-
-        .section .container #kembali:hover {
-            border: 1px solid white;
-            background-color: black;
-            color: white;
-            padding: 8px;
-            border-radius: 5px;
-        }
-    </style>
     <div class="section" style="margin-top: -40px; margin-bottom: 40px; ">
         <div class="container">
             <a id="kembali" href="user-home.php">Kembali Pesan</a>
@@ -187,7 +184,9 @@ $kantoruser = $_SESSION['a_global']->office_id;
             ?>
         </div>
     </div>
-    <!-- Footer -->
+
+    <!---------------------- Footer ----------------------------------->
+
     <div class="footer-dark">
         <footer>
             <div class="container">
@@ -209,15 +208,15 @@ $kantoruser = $_SESSION['a_global']->office_id;
                     <div class="col-sm-6 col-md-3 item" style="margin-right: 90px ;">
                         <h3>About</h3>
                         <ul>
-                            <li><a href="#">Company</a></li>
-                            <li><a href="#">Team</a></li>
+                            <li><a href="https://ombudsman.go.id/">Ombudsman</a></li>
+                            <li><a href="dev-team.php">Dev Team</a></li>
                         </ul>
                     </div>
                     <br>
-
                 </div>
                 <p class="copyright">Ombudsman RI © 2022</p>
-                <p class="copyright">Made By Divisi HTI & Team RJN</p>
+                <p class="copyright">Made By Divisi HTI & <a href="dev-team.php" target="-blank">Team RJN</a></p>
+                <i class="fa-regular fa-cart-shopping"></i>
             </div>
         </footer>
     </div>

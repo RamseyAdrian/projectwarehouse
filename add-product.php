@@ -26,6 +26,8 @@ $kantor_admin = $_SESSION['a_global']->office_id;
     <!--------------------- CK Editor CDN ----------------------------->
     <script src="https://cdn.ckeditor.com/4.19.1/standard/ckeditor.js"></script>
     <!--------------------- Sweet Alert CDN ----------------------------->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert-dev.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.css" rel="stylesheet" />
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <!--------------------- Additional CSS ----------------------------->
     <style>

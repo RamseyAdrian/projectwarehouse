@@ -2,6 +2,7 @@
 session_start();
 error_reporting(0);
 include 'db.php';
+//Kondisi Supaya Non User tidak dapat akses page ini
 if ($_SESSION['role_login'] != 'user') {
     echo '<script>window.location="logout.php"</script>';
 } else if ($_SESSION['status_login'] != true) {
@@ -15,10 +16,6 @@ $a = mysqli_fetch_object($kontak);
 
 $produk = mysqli_query($conn, "SELECT * FROM data_product LEFT JOIN data_category  USING (category_id) WHERE product_id = '" . $_GET['id'] . "' ");
 $p = mysqli_fetch_object($produk);
-
-$qd = mysqli_query($conn, "SELECT * FROM data_office WHERE office_id = 11");
-$fo = mysqli_fetch_object($qd);
-
 ?>
 
 <!DOCTYPE html>
@@ -32,7 +29,6 @@ $fo = mysqli_fetch_object($qd);
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Quicksand&display=swap" rel="stylesheet">
-    <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>

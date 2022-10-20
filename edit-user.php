@@ -13,6 +13,7 @@ if (mysqli_num_rows($user) == 0) {
     echo '<script>window.location="user-data.php"</script>';
 }
 $u = mysqli_fetch_object($user);
+$kantor_admin = $_SESSION['a_global']->office_id;
 ?>
 
 <!DOCTYPE html>
@@ -45,13 +46,38 @@ $u = mysqli_fetch_object($user);
         <!---------------------- header ----------------------------------->
         <header>
             <div class="container">
-                <h1><a href="dashboard.php">KP Ombudsman</a></h1>
-                <ul>
+                <h1><a href="dashboard.php"><img style="width: 80px ; margin-bottom :-10px ;" src="img/logo-ombudsman2.png" alt=""> Gudang Ombudsman</a></h1>
+                <ul style="margin-top: 20px ;">
+                    <?php
+                    //Deklarasi 2 variabel untuk menampung cart_id dari table data_transaction
+                    $idk_1 = "";
+                    $idk_2 = "";
+                    //jml_produk digunakan untuk menampung berapa banyak barang yang di-query
+                    $jml_produk = 0;
+                    //jml_keranjang digunakan untuk menampung berapa banyak jumlah keranjang yang ada
+                    $jml_keranjang = 0;
+                    //query database
+                    $keranjang = mysqli_query($conn, "SELECT * FROM data_transaction WHERE office_id = '" . $kantor_admin . "' ORDER BY cart_id");
+                    if (mysqli_num_rows($keranjang) > 0) {
+                        while ($fetch_keranjang = mysqli_fetch_array($keranjang)) {
+                            $jml_produk++;
+                            $idk_1 = $fetch_keranjang['cart_id'];
+                            if ($idk_2 == $idk_1) { //Kondisi jika barang yang di fetch memiliki cart_id yang sama dengan barang sebelumnya
+                                $jml_keranjang = $jml_keranjang * 1;
+                            } else { //Jika cart_id barang yang di-fetch berbeda (dengan barang sebelumnya), maka jml_keranjang akan bertambah
+                                $jml_keranjang++;
+                            }
+                            //cart_id barang yang di fetch, ditampung di idk_2 untuk looping (pengecekan) selanjutnya
+                            $idk_2 = $fetch_keranjang['cart_id'];
+                        }
+                    }
+                    //Hasilnya (jml_keranjang) akan ditampilkan dibagian navbar (sebelah pesanan)
+                    ?>
                     <li><a href="dashboard.php">Dashboard</a></li>
                     <li><a href="profile.php">Profil</a></li>
                     <li><a href="product-data.php">Data Barang</a></li>
                     <li><a href="user-data.php">Data User</a></li>
-                    <li><a href="order-table.php">Pesanan</a></li>
+                    <li><a href="order-table.php">Pesanan (<?php echo $jml_keranjang; ?>)</a></li>
                     <li><a href="logout.php">Keluar</a></li>
                 </ul>
             </div>
