@@ -1,8 +1,8 @@
 <?php
 session_start();
 include 'db.php';
+//Kondisi Supaya Non User tidak dapat akses page ini
 if ($_SESSION['role_login'] != 'user') {
-
     echo '<script>window.location="logout.php"</script>';
 } else if ($_SESSION['status_login'] != true) {
     echo '<script>window.location="login.php"</script>';
@@ -21,21 +21,34 @@ $user_id = $_SESSION['a_global']->user_id;
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KP Ombudsman</title>
+    <title>Gudang Ombudsman</title>
+    <!--------------------- CSS ------------------------------------->
     <link rel="stylesheet" type="text/css" href="css/style.css">
+    <!--------------------- Font Used ----------------------------->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Quicksand&display=swap" rel="stylesheet">
+    <!--------------------- CK Editor CDN ----------------------------->
     <script src="https://cdn.ckeditor.com/4.19.1/standard/ckeditor.js"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.css" rel="stylesheet" />
+    <!--------------------- jQuery ----------------------------->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <!--------------------- Sweetalert CDN ----------------------------->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.css" rel="stylesheet" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert-dev.js"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!--------------------- Font Awesome ----------------------------->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!--------------------- Additional CSS ----------------------------->
+    <style>
+        #h2produk {
+            color: red;
+            font-weight: bold;
+        }
+    </style>
 </head>
 
 <body>
-    <!-- header -->
+    <!---------------------- header ----------------------------------->
     <header>
         <div class="container">
             <h1><img style="width: 80px ; margin-bottom :-10px ;" src="img/logo-ombudsman2.png" alt=""><a href="user-home.php"> Gudang Ombudsman</a></h1>
@@ -59,17 +72,10 @@ $user_id = $_SESSION['a_global']->user_id;
         </div>
     </header>
 
-    <!-- Content -->
+    <!---------------------- Content ----------------------------------->
     <div class="section">
         <div class="container">
             <h3>Detail Pesanan</h3>
-            <style>
-                #h2produk {
-                    color: red;
-                    font-weight: bold;
-                }
-            </style>
-
             <div class="box">
                 <?php
                 $no = 1;
@@ -103,7 +109,8 @@ $user_id = $_SESSION['a_global']->user_id;
         </div>
     </div>
 
-    <!-- Footer -->
+    <!---------------------- Footer ----------------------------------->
+
     <div class="footer-dark">
         <footer>
             <div class="container">
@@ -125,15 +132,15 @@ $user_id = $_SESSION['a_global']->user_id;
                     <div class="col-sm-6 col-md-3 item" style="margin-right: 90px ;">
                         <h3>About</h3>
                         <ul>
-                            <li><a href="#">Company</a></li>
-                            <li><a href="#">Team</a></li>
+                            <li><a href="https://ombudsman.go.id/">Ombudsman</a></li>
+                            <li><a href="dev-team.php">Dev Team</a></li>
                         </ul>
                     </div>
                     <br>
-
                 </div>
                 <p class="copyright">Ombudsman RI © 2022</p>
-                <p class="copyright">Made By Divisi HTI & Team RJN</p>
+                <p class="copyright">Made By Divisi HTI & <a href="dev-team.php" target="-blank">Team RJN</a></p>
+                <i class="fa-regular fa-cart-shopping"></i>
             </div>
         </footer>
     </div>

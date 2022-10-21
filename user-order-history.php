@@ -125,14 +125,14 @@ $kantoruser = $_SESSION['a_global']->office_id;
                             <th>No</th>
                             <th>ID Pesanan</th>
                             <th>Barang</th>
-                            <th>Status</th>
-                            <th>Waktu Dipesan</th>
+                            <th>Waktu Diproses</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
                         <?php
                         $no = 1;
+                        $where = " AND data_order.office_id = '" . $kantoruser . "' ";
                         $trans = mysqli_query($conn, "SELECT * FROM data_order WHERE data_order.status = 'Berhasil' AND data_order.user_id = '" . $iduser . "' ORDER BY times_updated DESC ");
                         if (mysqli_num_rows($trans) > 0) {
 
@@ -152,10 +152,13 @@ $kantoruser = $_SESSION['a_global']->office_id;
                                         }
                                         ?>
                                     </td>
-                                    <td><?php
-                                        echo $fo_trans['status']
-                                        ?></td>
-                                    <td><?php echo $fo_trans['created'] ?></td>
+                                    <td>
+                                        <?php
+                                        $fetch_trans2 = mysqli_query($conn, "SELECT * FROM transaction_history WHERE transaction_history.cart_id = '" . $idcart . "'");
+                                        $fa_trans2 = mysqli_fetch_array($fetch_trans2);
+                                        echo $fa_trans2['created'];
+                                        ?>
+                                    </td>
                                     <td>
                                         <center>
                                             <button id="buttdetail" class="view"><a href="view-order-history.php?id=<?php echo $fo_trans['cart_id'] ?>">Detail & Cetak Surat</a></button>
@@ -185,14 +188,14 @@ $kantoruser = $_SESSION['a_global']->office_id;
                             <th>No</th>
                             <th>ID Pesanan</th>
                             <th>Barang</th>
-                            <th>Status</th>
-                            <th>Waktu Dipesan</th>
+                            <th>Waktu Diproses</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
                         <?php
                         $no = 1;
+                        $where = " AND data_order.office_id = '" . $kantoruser . "' ";
                         $trans = mysqli_query($conn, "SELECT * FROM data_order WHERE data_order.status = 'Berhasil Sebagian' AND data_order.user_id = '" . $iduser . "' ");
                         if (mysqli_num_rows($trans) > 0) {
 
@@ -212,10 +215,13 @@ $kantoruser = $_SESSION['a_global']->office_id;
                                         }
                                         ?>
                                     </td>
-                                    <td><?php
-                                        echo $fo_trans['status']
-                                        ?></td>
-                                    <td><?php echo $fo_trans['created'] ?></td>
+                                    <td>
+                                        <?php
+                                        $fetch_trans2 = mysqli_query($conn, "SELECT * FROM transaction_history WHERE transaction_history.cart_id = '" . $idcart . "'");
+                                        $fa_trans2 = mysqli_fetch_array($fetch_trans2);
+                                        echo $fa_trans2['created'];
+                                        ?>
+                                    </td>
                                     <td>
                                         <center>
                                             <button id="buttdetail" class="view"><a href="view-order-history.php?id=<?php echo $fo_trans['cart_id'] ?>">Detail & Cetak Surat</a></button>
@@ -245,15 +251,15 @@ $kantoruser = $_SESSION['a_global']->office_id;
                             <th>No</th>
                             <th>ID Pesanan</th>
                             <th>Barang</th>
-                            <th>Status</th>
-                            <th>Waktu Dipesan</th>
+                            <th>Waktu Diproses</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
                         <?php
                         $no = 1;
-                        $trans = mysqli_query($conn, "SELECT * FROM data_order WHERE data_order.status = 'Gagal' AND data_order.user_id = '" . $iduser . "' ");
+                        $where = " AND data_order.office_id = '" . $kantoruser . "' ";
+                        $trans = mysqli_query($conn, "SELECT * FROM data_order WHERE data_order.status = 'Gagal' AND data_order.user_id = '" . $iduser . "' $where ");
                         if (mysqli_num_rows($trans) > 0) {
 
                             while ($fo_trans = mysqli_fetch_array($trans)) {
@@ -272,10 +278,13 @@ $kantoruser = $_SESSION['a_global']->office_id;
                                         }
                                         ?>
                                     </td>
-                                    <td><?php
-                                        echo $fo_trans['status']
-                                        ?></td>
-                                    <td><?php echo $fo_trans['created'] ?></td>
+                                    <td>
+                                        <?php
+                                        $fetch_trans2 = mysqli_query($conn, "SELECT * FROM transaction_history WHERE transaction_history.cart_id = '" . $idcart . "'");
+                                        $fa_trans2 = mysqli_fetch_array($fetch_trans2);
+                                        echo $fa_trans2['created'];
+                                        ?>
+                                    </td>
                                     <td>
                                         <center>
                                             <button id="buttdetail" class="view"><a href="view-order-history.php?id=<?php echo $fo_trans['cart_id'] ?>">Detail</a></button>
