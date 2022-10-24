@@ -13,6 +13,16 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.css" rel="stylesheet" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert-dev.js"></script>
+    <script>
+        function showPass() {
+            var getElement = document.getElementById("pass-field");
+            if (getElement.type === "password") {
+                getElement.type = "text";
+            } else {
+                getElement.type = "password";
+            }
+        }
+    </script>
 </head>
 
 <body id="bg-login">
@@ -38,7 +48,10 @@
                     <label for="psw"><b>Password</b></label>
                 </div>
                 <div class="input-password">
-                    <input type="password" id="login-field" name="psw" required>
+                    <input type="password" id="pass-field" name="psw" required>
+                </div>
+                <div class="text-input">
+                    <input type="checkbox" onclick="showPass()"> Show Password
                 </div>
             </div>
 
@@ -152,5 +165,7 @@
 
     </div>
 </body>
+
+
 
 </html>

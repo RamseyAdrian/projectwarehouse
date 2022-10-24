@@ -139,6 +139,23 @@ body {
     outline: none;
 }
 
+#pass-field {
+    width: 225px;
+    height: 40px;
+
+    display: flex;
+    margin: 0 auto;
+
+    box-sizing: border-box;
+
+    padding-left: 10px;
+
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+
+    outline: none;
+}
+
 /*Header */
 
 header {
@@ -216,12 +233,20 @@ a {
     margin: 10px 0 25px 0;
 }
 
+.box-info {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    padding: 15px;
+    box-sizing: border-box;
+    margin: 10px 0 25px 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
 
-
-.box:after {
-    content: '';
-    display: block;
-    clear: both;
+.box-info-content {
+    background-color: red;
 }
 
 /*Data Kategori*/

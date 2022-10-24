@@ -155,6 +155,8 @@ $kantor_admin = $_SESSION['a_global']->office_id;
                         <input type="file" name="gambar" class="input-control" required>
                         <h4>Deskripsi Barang</h4>
                         <textarea name="deskripsi" class="input-control" placeholder="Deskripsi"></textarea><br>
+                        <h4>Batas Minim Restock (opsional)</h4>
+                        <input type="number" name="batasbarang" class="input-control"><br>
                         <h4>Status Barang</h4>
                         <select name="status" class="input-control">
                             <option value="">--Pilih--</option>
@@ -335,8 +337,6 @@ $kantor_admin = $_SESSION['a_global']->office_id;
                             ?>
                         </select>
                         <br><br>
-                        <h4>ID Barang</h4>
-                        <input type="text" name="idbarang" class="input-control" placeholder="ID Barang" required>
                         <h4>Nama Barang</h4>
                         <input type="text" name="nama" class="input-control" placeholder="Nama Barang" required>
                         <h4>Harga Barang</h4>
@@ -345,6 +345,8 @@ $kantor_admin = $_SESSION['a_global']->office_id;
                         <input type="file" name="gambar" class="input-control" required>
                         <h4>Deskripsi Barang</h4>
                         <textarea name="deskripsi" class="input-control" placeholder="Deskripsi"></textarea><br>
+                        <h4>Batas Minim Restock (opsional)</h4>
+                        <input type="number" name="batasbarang" class="input-control" min="0" max="1000" value="0"><br>
                         <h4>Status Barang</h4>
                         <select name="status" class="input-control">
                             <option value="">--Pilih--</option>
@@ -356,12 +358,13 @@ $kantor_admin = $_SESSION['a_global']->office_id;
                     </form>
                     <?php
                     if (isset($_POST['submit'])) {
-                        $idbarang = $_POST['idbarang'];
+                        $idbarang = rand();
                         $kategori = $_POST['kategori'];
                         $satuan = $_POST['satuan'];
                         $nama = $_POST['nama'];
                         $harga = $_POST['harga'];
                         $deskripsi = $_POST['deskripsi'];
+                        $batas_restock = $_POST['batasbarang'];
                         $status = $_POST['status'];
                         $idkantor = $_POST['idkantor'];
 
@@ -395,6 +398,7 @@ $kantor_admin = $_SESSION['a_global']->office_id;
                              '" . $newname . "',
                              '" . $status . "',
                              '0',
+                             '" . $batas_restock . "',
                              null 
                         ) ");
                             if ($insert) {

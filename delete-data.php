@@ -8,12 +8,12 @@ if (isset($_GET['idk'])) {
 }
 
 if (isset($_GET['idp'])) {
-    $produk = mysqli_query($conn, "SELECT product_image FROM data_product WHERE product_id = '" . $_GET['idp'] . "' ");
+    $produk = mysqli_query($conn, "SELECT product_image FROM data_product WHERE product_id = '" . $_GET['idp'] . "' AND office_id = '" . $_GET['idoffice'] . "' ");
     $p = mysqli_fetch_object($produk);
 
     unlink('./produk/' . $p->product_image);
 
-    $delete = mysqli_query($conn, "DELETE FROM data_product WHERE product_id = '" . $_GET['idp'] . "' ");
+    $delete = mysqli_query($conn, "DELETE FROM data_product WHERE product_id = '" . $_GET['idp'] . "' AND office_id = '" . $_GET['idoffice'] . "' ");
     echo '<script>window.location="product-data.php"</script>';
 }
 

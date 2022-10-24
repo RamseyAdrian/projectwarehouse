@@ -178,7 +178,7 @@ $idkantoradmin = $_SESSION['a_global']->office_id;
                                         <td><?php echo ($row['product_status'] == 0) ? 'Tidak AKtif' : 'Aktif' ?></td>
                                         <td><?php echo ($row['stock']) ?></td>
                                         <td style="text-align:center ;">
-                                            <a class="abutt" href="edit-product.php?id=<?php echo $row['product_id'] ?>&idoffice=<?php echo $idkantoradmin ?>">Edit</a><a class="abutt" href="delete-data.php?idp=<?php echo $row['product_id'] ?>" onclick="return confirm('R U Sure about dat ?') ">Hapus</a>
+                                            <a class="abutt" href="edit-product.php?id=<?php echo $row['product_id'] ?>&idoffice=<?php echo $idkantoradmin ?>">Edit</a><a class="abutt" href="delete-data.php?idp=<?php echo $row['product_id'] ?>&idoffice=<?php echo $idkantoradmin ?>" onclick="return confirm('R U Sure about dat ?') ">Hapus</a>
                                         </td>
                                     </tr>
                                 <?php }
@@ -327,10 +327,10 @@ $idkantoradmin = $_SESSION['a_global']->office_id;
                                             <td>
                                                 <center>
                                                     <button>
-                                                        <a id="buttdetail" href="edit-product.php?id=<?php echo $row['product_id'] ?>">Edit</a>
+                                                        <a id="buttdetail" href="edit-product.php?id=<?php echo $row['product_id'] ?>&idoffice=<?php echo $_POST['perwakilan'] ?>">Edit</a>
                                                     </button>
                                                     <button>
-                                                        <a id="buttdetail" href="delete-data.php?idp=<?php echo $row['product_id'] ?>" onclick="return confirm('Yakin Hapus Barang ?') ">Hapus</a> </button>
+                                                        <a id="buttdetail" href="delete-data.php?idp=<?php echo $row['product_id'] ?>&idoffice=<?php echo $_POST['perwakilan'] ?>" onclick="return confirm('Yakin Hapus Barang ?') ">Hapus</a> </button>
                                                 </center>
 
                                             </td>

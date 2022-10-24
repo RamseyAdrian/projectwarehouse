@@ -163,8 +163,13 @@ $kantoradmin = $_SESSION['a_global']->office_id;
                                             <?php
                                             $fetch_trans = mysqli_query($conn, "SELECT * FROM transaction_history WHERE transaction_history.cart_id = '" . $fo_trans['cart_id'] . "' ");
                                             if (mysqli_num_rows($fetch_trans) > 0) {
+                                                $neff = 0;
                                                 while ($fa_fetch = mysqli_fetch_array($fetch_trans)) {
-                                                    echo $fa_fetch['product_name'], " (", $fa_fetch['quantity'], ") ";
+                                                    echo $fa_fetch['product_name'], " (", $fa_fetch['quantity'], " ", $fa_fetch['unit_name'], ")";
+                                                    $neff++;
+                                                    if ($neff < mysqli_num_rows($fetch_trans)) {
+                                                        print ", ";
+                                                    }
                                                 }
                                             }
                                             ?>
@@ -227,8 +232,13 @@ $kantoradmin = $_SESSION['a_global']->office_id;
                                             <?php
                                             $fetch_trans = mysqli_query($conn, "SELECT * FROM transaction_history WHERE transaction_history.cart_id = '" . $fo_trans['cart_id'] . "' ");
                                             if (mysqli_num_rows($fetch_trans) > 0) {
+                                                $neff = 0;
                                                 while ($fa_fetch = mysqli_fetch_array($fetch_trans)) {
-                                                    echo $fa_fetch['product_name'], " (", $fa_fetch['quantity'], ") ";
+                                                    echo $fa_fetch['product_name'], " (", $fa_fetch['quantity'], " ", $fa_fetch['unit_name'], ")";
+                                                    $neff++;
+                                                    if ($neff < mysqli_num_rows($fetch_trans)) {
+                                                        print ", ";
+                                                    }
                                                 }
                                             }
                                             ?>
@@ -291,8 +301,13 @@ $kantoradmin = $_SESSION['a_global']->office_id;
                                             <?php
                                             $fetch_trans = mysqli_query($conn, "SELECT * FROM transaction_history WHERE transaction_history.cart_id = '" . $fo_trans['cart_id'] . "' ");
                                             if (mysqli_num_rows($fetch_trans) > 0) {
+                                                $neff = 0;
                                                 while ($fa_fetch = mysqli_fetch_array($fetch_trans)) {
-                                                    echo $fa_fetch['product_name'], " (", $fa_fetch['quantity'], ") ";
+                                                    echo $fa_fetch['product_name'], " (", $fa_fetch['quantity'], " ", $fa_fetch['unit_name'], ")";
+                                                    $neff++;
+                                                    if ($neff < mysqli_num_rows($fetch_trans)) {
+                                                        print ", ";
+                                                    }
                                                 }
                                             }
                                             ?>
@@ -404,7 +419,6 @@ $kantoradmin = $_SESSION['a_global']->office_id;
                                 $no = 1;
                                 $trans = mysqli_query($conn, "SELECT * FROM data_order WHERE data_order.status = 'Berhasil' AND data_order.office_id = '" . $_POST['perwakilan'] . "' ORDER BY times_updated DESC ");
                                 if (mysqli_num_rows($trans) > 0) {
-
                                     while ($fo_trans = mysqli_fetch_array($trans)) {
                                 ?>
                                         <tr>
@@ -421,8 +435,13 @@ $kantoradmin = $_SESSION['a_global']->office_id;
                                                 <?php
                                                 $fetch_trans = mysqli_query($conn, "SELECT * FROM transaction_history WHERE transaction_history.cart_id = '" . $fo_trans['cart_id'] . "' ");
                                                 if (mysqli_num_rows($fetch_trans) > 0) {
+                                                    $neff = 0; //nilai effisien
                                                     while ($fa_fetch = mysqli_fetch_array($fetch_trans)) {
-                                                        echo $fa_fetch['product_name'], " (", $fa_fetch['quantity'], ") ";
+                                                        echo $fa_fetch['product_name'], " (", $fa_fetch['quantity'], " ", $fa_fetch['unit_name'], ") ";
+                                                        $neff++;
+                                                        if ($neff < mysqli_num_rows($fetch_trans)) {
+                                                            print ", ";
+                                                        }
                                                     }
                                                 }
                                                 ?>
@@ -484,8 +503,13 @@ $kantoradmin = $_SESSION['a_global']->office_id;
                                                 <?php
                                                 $fetch_trans = mysqli_query($conn, "SELECT * FROM transaction_history WHERE transaction_history.cart_id = '" . $fo_trans['cart_id'] . "' ");
                                                 if (mysqli_num_rows($fetch_trans) > 0) {
+                                                    $neff = 0; //nilai effisien
                                                     while ($fa_fetch = mysqli_fetch_array($fetch_trans)) {
-                                                        echo $fa_fetch['product_name'], " (", $fa_fetch['quantity'], ") ";
+                                                        echo $fa_fetch['product_name'], " (", $fa_fetch['quantity'], " ", $fa_fetch['unit_name'], ") ";
+                                                        $neff++;
+                                                        if ($neff < mysqli_num_rows($fetch_trans)) {
+                                                            print ", ";
+                                                        }
                                                     }
                                                 }
                                                 ?>
@@ -548,8 +572,13 @@ $kantoradmin = $_SESSION['a_global']->office_id;
                                                 <?php
                                                 $fetch_trans = mysqli_query($conn, "SELECT * FROM transaction_history WHERE transaction_history.cart_id = '" . $fo_trans['cart_id'] . "' ");
                                                 if (mysqli_num_rows($fetch_trans) > 0) {
+                                                    $neff = 0; //nilai effisien
                                                     while ($fa_fetch = mysqli_fetch_array($fetch_trans)) {
-                                                        echo $fa_fetch['product_name'], " (", $fa_fetch['quantity'], ") ";
+                                                        echo $fa_fetch['product_name'], " (", $fa_fetch['quantity'], " ", $fa_fetch['unit_name'], ") ";
+                                                        $neff++;
+                                                        if ($neff < mysqli_num_rows($fetch_trans)) {
+                                                            print ", ";
+                                                        }
                                                     }
                                                 }
                                                 ?>

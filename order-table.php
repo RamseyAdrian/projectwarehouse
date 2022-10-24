@@ -153,9 +153,15 @@ $kantoradmin = $_SESSION['a_global']->office_id;
                                         <td>
                                             <?php
                                             $query_trans = mysqli_query($conn, "SELECT * FROM data_transaction WHERE data_transaction.cart_id = '" . $fo_trans['cart_id'] . "' ");
-                                            if (mysqli_num_rows($query_trans) > 0) {
+                                            $jumlah_item = mysqli_num_rows($query_trans);
+                                            if ($jumlah_item > 0) {
+                                                $neff = 0;
                                                 while ($fa_trans = mysqli_fetch_array($query_trans)) {
-                                                    echo $fa_trans['product_name'], "(", $fa_trans['quantity'], ")";
+                                                    echo $fa_trans['product_name'], " (", $fa_trans['quantity'], " ", $fa_trans['unit_name'], ")";
+                                                    $neff++;
+                                                    if ($neff < $jumlah_item) {
+                                                        print ", ";
+                                                    }
                                                 }
                                             }
                                             ?>
@@ -256,8 +262,13 @@ $kantoradmin = $_SESSION['a_global']->office_id;
                                                     <?php
                                                     $query_trans = mysqli_query($conn, "SELECT * FROM data_transaction WHERE data_transaction.cart_id = '" . $fa_order['cart_id'] . "' ");
                                                     if (mysqli_num_rows($query_trans) > 0) {
+                                                        $neff = 0;
                                                         while ($fa_trans = mysqli_fetch_array($query_trans)) {
-                                                            echo $fa_trans['product_name'], "(", $fa_trans['quantity'], ")";
+                                                            echo $fa_trans['product_name'], " (", $fa_trans['quantity'], " ", $fa_trans['unit_name'], ")";
+                                                            $neff++;
+                                                            if ($neff < mysqli_num_rows($query_trans)) {
+                                                                print ", ";
+                                                            }
                                                         }
                                                     }
                                                     ?>

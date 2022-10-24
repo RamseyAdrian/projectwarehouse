@@ -252,7 +252,7 @@ $idkantoradmin = $_SESSION['a_global']->office_id;
                             $perwakilan = mysqli_query($conn, "SELECT * FROM data_office ORDER BY office_id");
                             while ($fa_perwakilan = mysqli_fetch_array($perwakilan)) {
                             ?>
-                                <option value="<?php echo $fa_perwakilan['office_id'] ?>" <?php echo ($fa_perwakilan['office_id'] == $_SESSION['a_global']->office_id) ?
+                                <option value="<?php echo $fa_perwakilan['office_id'] ?>" <?php echo ($fa_perwakilan['office_id'] == $_GET['idoffice']) ?
                                                                                                 'selected' : ''; ?>><?php echo $fa_perwakilan['office_name'] ?> </option>
                             <?php
                             }
@@ -292,6 +292,8 @@ $idkantoradmin = $_SESSION['a_global']->office_id;
                         <br><br>
                         <h4>Deskripsi Barang</h4>
                         <textarea name="deskripsi" class="input-control" placeholder="Deskripsi"><?php echo $p->product_description ?></textarea><br>
+                        <h4>Batas Minim Restock</h4>
+                        <input type="number" class="input-control" name="batasbarang" min="0" max="1000" value="<?php echo $p->stock_point ?>">
                         <h4>Status Barang</h4>
                         <select name="status" class="input-control">
                             <option value="">--Pilih--</option>
@@ -308,6 +310,7 @@ $idkantoradmin = $_SESSION['a_global']->office_id;
                         $nama = $_POST['nama'];
                         $harga = $_POST['harga'];
                         $deskripsi = $_POST['deskripsi'];
+                        $batas_restock = $_POST['batasbarang'];
                         $status = $_POST['status'];
                         $idkantor = $_POST['idkantor'];
 
@@ -331,6 +334,7 @@ $idkantoradmin = $_SESSION['a_global']->office_id;
                             product_name= '" . $nama . "',
                             product_price = '" . $harga . "',
                             product_description = '" . $deskripsi . "',
+                            stock_point = '" . $batas_restock . "',
                             product_status = '" . $status . "'
                             WHERE product_id = '" . $p->product_id . "'
                     ");

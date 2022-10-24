@@ -240,19 +240,11 @@ $admin_office = $_SESSION['a_global']->office_id;
                 </div>
             </footer>
         </div>
+        <!-----------------------------SUPER ADMIN -------------------------------------------->
     <?php
     } else if ($_SESSION['role_login'] == 'super') {
     ?>
 
-        <?php
-        $per_page_record = 20;
-        if (isset($_GET["page"])) {
-            $page  = $_GET["page"];
-        } else {
-            $page = 1;
-        }
-        $start_from = ($page - 1) * $per_page_record;
-        ?>
         <!---------------------- header ----------------------------------->
         <header>
             <div class="container">
@@ -284,29 +276,33 @@ $admin_office = $_SESSION['a_global']->office_id;
                         <thead>
                             <tr>
                                 <th>ID User</th>
+                                <th>Perwakilan</th>
                                 <th>Nama User</th>
-                                <th>Username Akun</th>
                                 <th>Telpon User</th>
                                 <th>Email User</th>
-                                <th>Alamat User</th>
                                 <th>Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
                             <?php
 
-                            $user = mysqli_query($conn, "SELECT * FROM data_user ORDER BY user_id DESC LIMIT $start_from, $per_page_record ");
+                            $user = mysqli_query($conn, "SELECT * FROM data_user ORDER BY office_id ");
                             if (mysqli_num_rows($user) > 0) {
                                 while ($row = mysqli_fetch_array($user)) {
                             ?>
                                     <tr>
 
                                         <td><?php echo $row['user_id'] ?></td>
+                                        <td>
+                                            <?php
+                                            $office_query = mysqli_query($conn, "SELECT * FROM data_office WHERE office_id = '" . $row['office_id'] . "' ");
+                                            $fa_office = mysqli_fetch_array($office_query);
+                                            echo $fa_office['office_name'];
+                                            ?>
+                                        </td>
                                         <td><?php echo $row['user_name'] ?></td>
-                                        <td><?php echo $row['user_username'] ?></td>
                                         <td><?php echo $row['user_telp'] ?></td>
                                         <td><?php echo $row['user_email'] ?></td>
-                                        <td><?php echo $row['user_address'] ?></td>
                                         <td>
                                             <center>
                                                 <button>
@@ -330,49 +326,6 @@ $admin_office = $_SESSION['a_global']->office_id;
                 </div>
             </div>
         </div>
-
-        <center>
-            <div class="pagination">
-                <?php
-                $query = "SELECT COUNT(*) FROM data_user";
-                $rs_result = mysqli_query($conn, $query);
-                $row = mysqli_fetch_row($rs_result);
-                $total_records = $row[0];
-
-                echo "</br>";
-                $total_pages = ceil($total_records / $per_page_record);
-                $pagLink = "";
-
-                if ($page >= 2) {
-                    echo "<a href='user-data.php?page=" . ($page - 1) . "'>  Prev </a>";
-                }
-
-                for ($i = 1; $i <= $total_pages; $i++) {
-                    if ($i == $page) {
-                        $pagLink .= "<a class = 'active' href='user-data.php?page="
-                            . $i . "'>" . $i . " </a>";
-                    } else {
-                        $pagLink .= "<a href='user-data.php?page=" . $i . "'>   
-                                        " . $i . " </a>";
-                    }
-                };
-                echo $pagLink;
-
-                if ($page < $total_pages) {
-                    echo "<a href='user-data.php?page=" . ($page + 1) . "'>  Next </a>";
-                }
-                ?>
-            </div><br><br><br><br>
-        </center>
-
-
-        <script>
-            function go2Page() {
-                var page = document.getElementById("page").value;
-                page = ((page > <?php echo $total_pages; ?>) ? <?php echo $total_pages; ?> : ((page < 1) ? 1 : page));
-                window.location.href = 'user-data.php?page=' + page;
-            }
-        </script>
 
         <!---------------------- Footer ----------------------------------->
 

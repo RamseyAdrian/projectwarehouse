@@ -107,42 +107,23 @@ $kantor_admin = $_SESSION['a_global']->office_id;
                     <h4><?php echo $_SESSION['a_global']->admin_name ?></h4>
                     <h4>Admin ID : <?php echo $_SESSION['a_global']->admin_id ?></h4>
                 </div>
-                <h2>Table & Chart</h2>
+                <h3>Notifikasi</h3>
                 <div class="box">
-                    <div class="chart">
-                        <!-- <div class="pie-chart" id="chartDiv"></div>
-                        <div class="text-center"></div>
-                        <script type="text/javascript">
-                            window.onload = function() {
-                                google.load("visualization", "1.1", {
-                                    packages: ["corechart"],
-                                    callback: 'drawChart'
-                                });
-                            };
-
-                            function drawChart() {
-                                var data = google.visualization.arrayToDataTable([
-                                    ['Country', 'Popularity'],
-                                    <?php
-                                    while ($row = mysqli_fetch_assoc($piequeryrecords)) {
-                                        echo "['" . $row['product_name'] . "', " . $row['stock'] . "],";
-                                    }
-                                    ?>
-                                ]);
-
-                                var options = {
-                                    pieHole: 0.4,
-                                    title: 'Pie Chart Data Produk',
-                                };
-
-                                var chart = new google.visualization.PieChart(document.getElementById('chartDiv'));
-                                chart.draw(data, options);
-                            }
-                        </script> -->
+                    <h2>Ada <?php echo $jml_keranjang ?> Pesanan User !</h2>
+                    <h3>Segera Proses</h3>
+                </div>
+                <h3>Info Kantor Perwakilan</h3>
+                <div class="box-info">
+                    <div class="box-info-content">
+                        <h1>Kotak 1</h1>
                     </div>
-
+                    <div class="box-info-content">
+                        <h1>Kotak 2</h1>
+                    </div>
                 </div>
             </div>
+        </div>
+        </div>
         </div>
         <!--------------------------------------------------------------------------------- SUPER ADMIN ---------------------------------------------------------------------------->
     <?php
