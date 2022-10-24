@@ -164,7 +164,7 @@ $kantoruser = $_SESSION['a_global']->office_id;
                                         $fetch_trans = mysqli_query($conn, "SELECT * FROM data_transaction WHERE data_transaction.cart_id = '" . $idcart . "' ");
                                         if (mysqli_num_rows($fetch_trans) > 0) {
                                             while ($fa_fetch = mysqli_fetch_array($fetch_trans)) {
-                                                echo $fa_fetch['product_name'], "(", $fa_fetch['quantity'], ")";
+                                                echo $fa_fetch['product_name'], "(", $fa_fetch['quantity'], " ", $fa_fetch['unit_name'], ")";
                                             }
                                         }
                                         ?>

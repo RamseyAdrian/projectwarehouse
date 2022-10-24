@@ -110,6 +110,18 @@ $kantor_admin = $_SESSION['a_global']->office_id;
                 </div>
                 <div class="box">
                     <form action="" method="POST" enctype="multipart/form-data">
+                        <h4>Perwakilan</h4>
+                        <select name="idkantor" class="input-control" required>
+                            <option value="">--Pilih Perwakilan--</option>
+                            <?php
+                            $kantor = mysqli_query($conn, "SELECT * FROM data_office ORDER BY office_id ");
+                            while ($row_kantor = mysqli_fetch_array($kantor)) {
+                            ?>
+                                <option value="<?php echo $row_kantor['office_id'] ?>"><?php echo $row_kantor['office_name'] ?></option>
+                            <?php
+                            }
+                            ?>
+                        </select>
                         <h4>Pilih Kategori</h4>
                         <select class="input-control" name="kategori" required>
                             <option value="">--Pilih--</option>
@@ -120,20 +132,29 @@ $kantor_admin = $_SESSION['a_global']->office_id;
                                 <option value="<?php echo $row_kategori['category_id'] ?>"><?php echo $row_kategori['category_name'] ?> </option>
                             <?php } ?>
                         </select>
+                        <h4>Pilih Satuan</h4>
+                        <select name="satuan" class="input-control" required>
+                            <option value="">--Pilih--</option>
+                            <?php
+                            $satuan = mysqli_query($conn, "SELECT * FROM data_unit ORDER BY unit_name");
+                            while ($fa_satuan = mysqli_fetch_array($satuan)) {
+                            ?>
+                                <option value="<?php echo $fa_satuan['unit_id'] ?>"><?php echo $fa_satuan['unit_name'] ?></option>
+                            <?php
+                            }
+                            ?>
+                        </select>
+                        <br><br>
                         <h4>ID Barang</h4>
-                        <input type="text" name="idbarang" class="input-control" placeholder="ID Produk" required>
+                        <input type="text" name="idbarang" class="input-control" placeholder="ID Barang" required>
                         <h4>Nama Barang</h4>
                         <input type="text" name="nama" class="input-control" placeholder="Nama Barang" required>
-                        <h4>Satuan</h4>
-
                         <h4>Harga Barang</h4>
                         <input type="text" name="harga" class="input-control" placeholder="Harga">
                         <h4>Gambar Barang</h4>
                         <input type="file" name="gambar" class="input-control" required>
                         <h4>Deskripsi Barang</h4>
                         <textarea name="deskripsi" class="input-control" placeholder="Deskripsi"></textarea><br>
-                        <h4>ID Kantor</h4>
-                        <input type="text" name="idkantor" class="input-control" readonly>
                         <h4>Status Barang</h4>
                         <select name="status" class="input-control">
                             <option value="">--Pilih--</option>
@@ -148,6 +169,7 @@ $kantor_admin = $_SESSION['a_global']->office_id;
                         //menampung input dari form
                         $idbarang = $_POST['idbarang'];
                         $kategori = $_POST['kategori'];
+                        $satuan = $_POST['satuan'];
                         $nama = $_POST['nama'];
                         $harga = $_POST['harga'];
                         $deskripsi = $_POST['deskripsi'];
@@ -176,6 +198,7 @@ $kantor_admin = $_SESSION['a_global']->office_id;
                              '" . $idbarang . "', 
                              '" . $kategori . "',
                              '" . $idkantor . "',
+                             '" . $satuan . "',
                              '" . $nama . "',
                              '" . $harga . "',
                              '" . $deskripsi . "',

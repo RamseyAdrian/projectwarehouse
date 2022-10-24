@@ -178,12 +178,7 @@ $kantoradmin = $_SESSION['a_global']->office_id;
                                     </tr>
                                 <?php
                                 }
-
-
-
                                 ?>
-
-
                             <?php
                             } else {
                             ?>
@@ -247,12 +242,7 @@ $kantoradmin = $_SESSION['a_global']->office_id;
                                     </tr>
                                 <?php
                                 }
-
-
-
                                 ?>
-
-
                             <?php
                             } else {
                             ?>
@@ -385,7 +375,14 @@ $kantoradmin = $_SESSION['a_global']->office_id;
 
                 <?php
                 if (isset($_POST['submit'])) {
+                    $kantor_query = mysqli_query($conn, "SELECT * FROM data_office WHERE office_id = '" . $_POST['perwakilan'] . "' ");
+                    $fetch_kantor = mysqli_fetch_array($kantor_query);
+                    $nama_kantor = $fetch_kantor['office_name'];
                 ?>
+                    <center>
+                        <h2><?php echo $nama_kantor ?></h2>
+                        <br>
+                    </center>
                     <center>
                         <h3>Pesanan Berhasil</h3>
                     </center>
@@ -396,7 +393,6 @@ $kantoradmin = $_SESSION['a_global']->office_id;
                                 <tr>
                                     <th>No</th>
                                     <th>ID Pesanan</th>
-                                    <th>Perwakilan</th>
                                     <th>Nama Pemesan</th>
                                     <th>Barang</th>
                                     <th>Waktu Pesanan</th>
@@ -414,14 +410,6 @@ $kantoradmin = $_SESSION['a_global']->office_id;
                                         <tr>
                                             <td><?php echo $no++ ?></td>
                                             <td><?php echo $fo_trans['cart_id'] ?></td>
-                                            <td>
-                                                <?php
-                                                $query_office = mysqli_query($conn, "SELECT * FROM data_office WHERE office_id = '" . $fo_trans['office_id'] . "' ");
-                                                while ($fa_query_office = mysqli_fetch_array($query_office)) {
-                                                    echo $fa_query_office['office_name'];
-                                                }
-                                                ?>
-                                            </td>
                                             <?php
                                             $fetch_trans1 = mysqli_query($conn, "SELECT * FROM transaction_history WHERE transaction_history.cart_id = '" . $fo_trans['cart_id'] . "' ");
                                             $fa_fetch1 = mysqli_fetch_array($fetch_trans1)
@@ -448,12 +436,7 @@ $kantoradmin = $_SESSION['a_global']->office_id;
                                         </tr>
                                     <?php
                                     }
-
-
-
                                     ?>
-
-
                                 <?php
                                 } else {
                                 ?>
@@ -474,7 +457,6 @@ $kantoradmin = $_SESSION['a_global']->office_id;
                                 <tr>
                                     <th>No</th>
                                     <th>ID Pesanan</th>
-                                    <th>Perwakilan</th>
                                     <th>Nama Pemesan</th>
                                     <th>Barang</th>
                                     <th>Waktu Pesanan</th>
@@ -486,20 +468,11 @@ $kantoradmin = $_SESSION['a_global']->office_id;
                                 $no = 1;
                                 $trans = mysqli_query($conn, "SELECT * FROM data_order WHERE data_order.status = 'Berhasil Sebagian' AND data_order.office_id = '" . $_POST['perwakilan'] . "' ORDER BY times_updated DESC ");
                                 if (mysqli_num_rows($trans) > 0) {
-
                                     while ($fo_trans = mysqli_fetch_array($trans)) {
                                 ?>
                                         <tr>
                                             <td><?php echo $no++ ?></td>
                                             <td><?php echo $fo_trans['cart_id'] ?></td>
-                                            <td>
-                                                <?php
-                                                $query_office = mysqli_query($conn, "SELECT * FROM data_office WHERE office_id = '" . $fo_trans['office_id'] . "' ");
-                                                while ($fa_query_office = mysqli_fetch_array($query_office)) {
-                                                    echo $fa_query_office['office_name'];
-                                                }
-                                                ?>
-                                            </td>
                                             <?php
                                             $fetch_trans1 = mysqli_query($conn, "SELECT * FROM transaction_history WHERE transaction_history.cart_id = '" . $fo_trans['cart_id'] . "' ");
                                             $fa_fetch1 = mysqli_fetch_array($fetch_trans1)
@@ -526,12 +499,7 @@ $kantoradmin = $_SESSION['a_global']->office_id;
                                         </tr>
                                     <?php
                                     }
-
-
-
                                     ?>
-
-
                                 <?php
                                 } else {
                                 ?>
@@ -552,7 +520,6 @@ $kantoradmin = $_SESSION['a_global']->office_id;
                                 <tr>
                                     <th>No</th>
                                     <th>ID Pesanan</th>
-                                    <th>Perwakilan</th>
                                     <th>Nama Pemesan</th>
                                     <th>Barang</th>
                                     <th>Waktu Pesanan</th>
@@ -570,14 +537,6 @@ $kantoradmin = $_SESSION['a_global']->office_id;
                                         <tr>
                                             <td><?php echo $no++ ?></td>
                                             <td><?php echo $fo_trans['cart_id'] ?></td>
-                                            <td>
-                                                <?php
-                                                $query_office = mysqli_query($conn, "SELECT * FROM data_office WHERE office_id = '" . $fo_trans['office_id'] . "' ");
-                                                while ($fa_query_office = mysqli_fetch_array($query_office)) {
-                                                    echo $fa_query_office['office_name'];
-                                                }
-                                                ?>
-                                            </td>
                                             <?php
                                             $fetch_trans1 = mysqli_query($conn, "SELECT * FROM transaction_history WHERE transaction_history.cart_id = '" . $fo_trans['cart_id'] . "' ");
                                             $fa_fetch1 = mysqli_fetch_array($fetch_trans1)
@@ -604,12 +563,7 @@ $kantoradmin = $_SESSION['a_global']->office_id;
                                         </tr>
                                     <?php
                                     }
-
-
-
                                     ?>
-
-
                                 <?php
                                 } else {
                                 ?>

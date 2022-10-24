@@ -65,6 +65,22 @@ $idkantoradmin = $_SESSION['a_global']->office_id;
             color: white;
             transition-duration: 0.3s;
         }
+
+        .box table tbody tr td .abutt {
+            margin-right: 10px;
+            padding: 2px;
+            border: 1px solid;
+            background-color: white;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: 0.5s;
+        }
+
+        .box table tbody tr td .abutt:hover {
+            color: white;
+            background-color: black;
+        }
     </style>
 
 </head>
@@ -158,11 +174,11 @@ $idkantoradmin = $_SESSION['a_global']->office_id;
                                         <td><?php echo $row['product_id'] ?></td>
                                         <td><?php echo $row['product_name'] ?></td>
                                         <td><?php echo $fa_satuan['unit_name'] ?></td>
-                                        <td><a href="produk/<?php echo $row['product_image'] ?>"> <img src="produk/<?php echo $row['product_image'] ?>" width="50px"></a></td>
+                                        <td> <img src="produk/<?php echo $row['product_image'] ?>" width="50px"></td>
                                         <td><?php echo ($row['product_status'] == 0) ? 'Tidak AKtif' : 'Aktif' ?></td>
                                         <td><?php echo ($row['stock']) ?></td>
-                                        <td>
-                                            <a href="edit-product.php?id=<?php echo $row['product_id'] ?>">Edit</a> || <a href="delete-data.php?idp=<?php echo $row['product_id'] ?>" onclick="return confirm('R U Sure about dat ?') ">Hapus</a>
+                                        <td style="text-align:center ;">
+                                            <a class="abutt" href="edit-product.php?id=<?php echo $row['product_id'] ?>&idoffice=<?php echo $idkantoradmin ?>">Edit</a><a class="abutt" href="delete-data.php?idp=<?php echo $row['product_id'] ?>" onclick="return confirm('R U Sure about dat ?') ">Hapus</a>
                                         </td>
                                     </tr>
                                 <?php }
@@ -260,91 +276,90 @@ $idkantoradmin = $_SESSION['a_global']->office_id;
                         </select>
                         <input type="submit" name="submit" value="Submit" class="btn">
                     </form>
-                    <br>
-                    <?php
-                    if (isset($_POST['submit'])) {
-                    ?>
-                        <div class="box">
-                            <?php
-                            $query_office2 = mysqli_query($conn, "SELECT * FROM data_office WHERE office_id = '" . $_POST['perwakilan'] . "' ");
-                            while ($fa_office2 = mysqli_fetch_array($query_office2)) {
-                            ?>
-                                <center>
-                                    <h2><?php echo $fa_office2['office_name'] ?></h2><br>
-                                </center>
-                            <?php
-                            }
-                            ?>
-                            <table border="1" cellspacing="0" class="table">
-                                <thead>
-                                    <tr>
-                                        <th>No</th>
-                                        <th>Kategori</th>
-                                        <th>ID Barang</th>
-                                        <th>Nama Barang</th>
-                                        <th>Satuan</th>
-                                        <th>Gambar</th>
-                                        <th>Status</th>
-                                        <th>Stock</th>
-                                        <th>Aksi</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php
-                                    $no = 1;
-                                    $produk = mysqli_query($conn, "SELECT * FROM data_product LEFT JOIN data_category  USING (category_id) WHERE office_id = '" . $_POST['perwakilan'] . "' ORDER BY product_name LIMIT 20");
-                                    if (mysqli_num_rows($produk) > 0) {
-                                        while ($row = mysqli_fetch_array($produk)) {
-                                            $idperwakilan = $row['office_id'];
-                                            $namasatuan = mysqli_query($conn, "SELECT * FROM data_unit WHERE unit_id = '" . $row['unit_id'] . "' ");
-                                            $fa_satuan = mysqli_fetch_array($namasatuan);
-                                    ?>
-                                            <tr>
-                                                <td><?php echo $no++ ?></td>
-                                                <td><?php echo $row['category_name'] ?></td>
-                                                <td><?php echo $row['product_id'] ?></td>
-                                                <td><?php echo substr($row['product_name'], 0, 20) ?></td>
-                                                <td><?php echo $fa_satuan['unit_name'] ?></td>
-                                                <td><a href="produk/<?php echo $row['product_image'] ?>"> <img src="produk/<?php echo $row['product_image'] ?>" width="50px"></a></td>
-                                                <td><?php echo ($row['product_status'] == 0) ? 'Tidak AKtif' : 'Aktif' ?></td>
-                                                <td><?php echo ($row['stock']) ?></td>
-                                                <td>
-                                                    <center>
-                                                        <button>
-                                                            <a id="buttdetail" href="edit-product.php?id=<?php echo $row['product_id'] ?>">Edit</a>
-                                                        </button>
-                                                        <button>
-                                                            <a id="buttdetail" href="delete-data.php?idp=<?php echo $row['product_id'] ?>" onclick="return confirm('Yakin Hapus Barang ?') ">Hapus</a> </button>
-                                                    </center>
-
-                                                </td>
-                                            </tr>
-                                        <?php }
-                                    } else { ?>
-                                        <tr>
-                                            <td colspan="8">Tidak Ada Data</td>
-                                        </tr>
-                                    <?php } ?>
-                                </tbody>
-                            </table>
-                        </div>
+                </div>
+                <?php
+                if (isset($_POST['submit'])) {
+                ?>
+                    <div class="box">
                         <?php
-                        $produk2 = mysqli_query($conn, "SELECT * FROM data_product LEFT JOIN data_category  USING (category_id) WHERE office_id = '" . $_POST['perwakilan'] . "' ORDER BY product_name ");
-                        if (mysqli_num_rows($produk2) > 10) {
+                        $query_office2 = mysqli_query($conn, "SELECT * FROM data_office WHERE office_id = '" . $_POST['perwakilan'] . "' ");
+                        while ($fa_office2 = mysqli_fetch_array($query_office2)) {
                         ?>
                             <center>
-                                <button class="btn">
-                                    <a href="more-product.php?id=<?php echo $_POST['perwakilan'] ?>" style="font-size: 15px ; text-decoration :none;">Lihat Lebih Banyak Produk</a>
-                                </button>
+                                <h2><?php echo $fa_office2['office_name'] ?></h2><br>
                             </center>
-                    <?php
+                        <?php
                         }
-                    }
-                    ?>
-                    <?php
+                        ?>
+                        <table border="1" cellspacing="0" class="table">
+                            <thead>
+                                <tr>
+                                    <th>No</th>
+                                    <th>Kategori</th>
+                                    <th>ID Barang</th>
+                                    <th>Nama Barang</th>
+                                    <th>Satuan</th>
+                                    <th>Gambar</th>
+                                    <th>Status</th>
+                                    <th>Stock</th>
+                                    <th>Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php
+                                $no = 1;
+                                $produk = mysqli_query($conn, "SELECT * FROM data_product LEFT JOIN data_category  USING (category_id) WHERE office_id = '" . $_POST['perwakilan'] . "' ORDER BY product_name LIMIT 20");
+                                if (mysqli_num_rows($produk) > 0) {
+                                    while ($row = mysqli_fetch_array($produk)) {
+                                        $idperwakilan = $row['office_id'];
+                                        $namasatuan = mysqli_query($conn, "SELECT * FROM data_unit WHERE unit_id = '" . $row['unit_id'] . "' ");
+                                        $fa_satuan = mysqli_fetch_array($namasatuan);
+                                ?>
+                                        <tr>
+                                            <td><?php echo $no++ ?></td>
+                                            <td><?php echo $row['category_name'] ?></td>
+                                            <td><?php echo $row['product_id'] ?></td>
+                                            <td><?php echo substr($row['product_name'], 0, 20) ?></td>
+                                            <td><?php echo $fa_satuan['unit_name'] ?></td>
+                                            <td> <img src="produk/<?php echo $row['product_image'] ?>" width="50px"></td>
+                                            <td><?php echo ($row['product_status'] == 0) ? 'Tidak AKtif' : 'Aktif' ?></td>
+                                            <td><?php echo ($row['stock']) ?></td>
+                                            <td>
+                                                <center>
+                                                    <button>
+                                                        <a id="buttdetail" href="edit-product.php?id=<?php echo $row['product_id'] ?>">Edit</a>
+                                                    </button>
+                                                    <button>
+                                                        <a id="buttdetail" href="delete-data.php?idp=<?php echo $row['product_id'] ?>" onclick="return confirm('Yakin Hapus Barang ?') ">Hapus</a> </button>
+                                                </center>
 
+                                            </td>
+                                        </tr>
+                                    <?php }
+                                } else { ?>
+                                    <tr>
+                                        <td colspan="8">Tidak Ada Data</td>
+                                    </tr>
+                                <?php } ?>
+                            </tbody>
+                        </table>
+                    </div>
+                    <?php
+                    $produk2 = mysqli_query($conn, "SELECT * FROM data_product LEFT JOIN data_category  USING (category_id) WHERE office_id = '" . $_POST['perwakilan'] . "' ORDER BY product_name ");
+                    if (mysqli_num_rows($produk2) > 20) {
                     ?>
-                </div>
+                        <center>
+                            <button class="btn">
+                                <a href="more-product.php?id=<?php echo $_POST['perwakilan'] ?>" style="font-size: 15px ; text-decoration :none;">Lihat Lebih Banyak Produk</a>
+                            </button>
+                        </center>
+                <?php
+                    }
+                }
+                ?>
+                <?php
+
+                ?>
             </div>
         </div>
 

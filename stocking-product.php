@@ -48,14 +48,19 @@ $idkantoradmin = $_SESSION['a_global']->office_id;
         }
 
         #stocking {
+            margin-right: 10px;
+            padding: 3px;
+            border: 1px solid;
+            background-color: white;
+            border-radius: 5px;
             text-decoration: none;
+            font-weight: bold;
+            transition: 0.5s;
         }
 
         #stocking:hover {
             background-color: black;
             color: white;
-            margin: 4px 2px;
-            border-radius: 5px;
         }
     </style>
 
@@ -119,11 +124,11 @@ $idkantoradmin = $_SESSION['a_global']->office_id;
                             <tr>
                                 <th>No</th>
                                 <th>Kategori</th>
-                                <th>Nama Produk</th>
+                                <th>Nama Barang</th>
                                 <th>Gambar</th>
                                 <th>Status</th>
                                 <th>Stock</th>
-                                <th width="150px">Aksi</th>
+                                <th>Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -141,10 +146,22 @@ $idkantoradmin = $_SESSION['a_global']->office_id;
                                         <td><?php echo $row['category_name'] ?></td>
                                         <td><?php echo $row['product_name'] ?></td>
                                         <td><a href="produk/<?php echo $row['product_image'] ?>"> <img src="produk/<?php echo $row['product_image'] ?>" width="50px"></a></td>
-                                        <td><?php echo ($row['product_status'] == 0) ? 'Tidak AKtif' : 'Aktif' ?></td>
-                                        <td><?php echo ($row['stock']) ?></td>
                                         <td>
-                                            <a id="stocking" href="edit-stocking-product.php?id=<?php echo $row['product_id'] ?>">Stock Produk</a>
+                                            <center><?php echo ($row['product_status'] == 0) ? 'Tidak AKtif' : 'Aktif' ?></center>
+                                        </td>
+                                        <td>
+                                            <center>
+                                                <?php
+                                                $query_unit = mysqli_query($conn, "SELECT * FROM data_unit WHERE unit_id = '" . $row['unit_id'] . "' ");
+                                                $fetch_unit = mysqli_fetch_array($query_unit);
+                                                echo $row['stock'], " ", $fetch_unit['unit_name'];
+                                                ?>
+                                            </center>
+                                        </td>
+                                        <td>
+                                            <center>
+                                                <a id="stocking" href="edit-stocking-product.php?id=<?php echo $row['product_id'] ?>">Stock Barang</a>
+                                            </center>
                                         </td>
                                     </tr>
                                 <?php }
