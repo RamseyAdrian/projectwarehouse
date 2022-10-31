@@ -96,7 +96,7 @@ $kantoradmin = $_SESSION['a_global']->office_id;
                     //jml_keranjang digunakan untuk menampung berapa banyak jumlah keranjang yang ada
                     $jml_keranjang = 0;
                     //query database
-                    $keranjang = mysqli_query($conn, "SELECT * FROM data_transaction WHERE office_id = '" . $kantoradmin . "' ORDER BY cart_id");
+                    $keranjang = mysqli_query($conn, "SELECT * FROM data_transaction WHERE office_id = '" . $kantoradmin . "' AND status = 'Diproses Admin' ORDER BY cart_id");
                     if (mysqli_num_rows($keranjang) > 0) {
                         while ($fetch_keranjang = mysqli_fetch_array($keranjang)) {
                             $jml_produk++;
@@ -127,6 +127,7 @@ $kantoradmin = $_SESSION['a_global']->office_id;
             <div class="container">
                 <h2>Pesanan User</h2>
                 <div class="box1">
+                    <button><a href="pickup-product.php" style="text-decoration: none ;">Pengambilan Barang</a></button><br><br>
                     <button><a href="order-history.php" style="text-decoration: none ;">Riwayat Transaksi</a></button><br><br>
                 </div><br>
                 <div class="box">
@@ -169,7 +170,7 @@ $kantoradmin = $_SESSION['a_global']->office_id;
                                         <td><?php echo $fo_trans['created'] ?></td>
                                         <td>
                                             <center>
-                                                <button id="buttdetail"><a href="edit-order.php?id=<?php echo $fo_trans['cart_id'] ?>">Lihat Detail Pesanan</a></button>
+                                                <button id="buttdetail"><a href="edit-order.php?id=<?php echo $fo_trans['cart_id'] ?>">Proses Pesanan</a></button>
                                             </center>
                                         </td>
                                     </tr>

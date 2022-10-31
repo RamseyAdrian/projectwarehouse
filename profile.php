@@ -54,7 +54,7 @@ $kantor_admin = $_SESSION['a_global']->office_id;
                     //jml_keranjang digunakan untuk menampung berapa banyak jumlah keranjang yang ada
                     $jml_keranjang = 0;
                     //query database
-                    $keranjang = mysqli_query($conn, "SELECT * FROM data_transaction WHERE office_id = '" . $kantor_admin . "' ORDER BY cart_id");
+                    $keranjang = mysqli_query($conn, "SELECT * FROM data_transaction WHERE office_id = '" . $kantor_admin . "' AND status = 'Diproses Admin' ORDER BY cart_id");
                     if (mysqli_num_rows($keranjang) > 0) {
                         while ($fetch_keranjang = mysqli_fetch_array($keranjang)) {
                             $jml_produk++;

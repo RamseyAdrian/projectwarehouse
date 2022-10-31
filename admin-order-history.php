@@ -64,7 +64,7 @@ $fa_data = mysqli_fetch_array($data);
                     //jml_keranjang digunakan untuk menampung berapa banyak jumlah keranjang yang ada
                     $jml_keranjang = 0;
                     //query database
-                    $keranjang = mysqli_query($conn, "SELECT * FROM data_transaction WHERE office_id = '" . $idkantoradmin . "' ORDER BY cart_id");
+                    $keranjang = mysqli_query($conn, "SELECT * FROM data_transaction WHERE office_id = '" . $idkantoradmin . "' AND status = 'Diproses Admin' ORDER BY cart_id");
                     if (mysqli_num_rows($keranjang) > 0) {
                         while ($fetch_keranjang = mysqli_fetch_array($keranjang)) {
                             $jml_produk++;
@@ -106,9 +106,9 @@ $fa_data = mysqli_fetch_array($data);
                                 <h2 id="h2produk"><?php echo $fo_trans->product_name ?></h2><br><br>
                                 <img src="produk/<?php echo $fo_trans->product_image ?>" width="100px">
                                 <br><br>
-                                <h4>Jumlah Pesanan</h4>
-                                <input type="text" name="quantity" class="input-control" value="<?php echo $fo_trans->quantity ?>" readonly>
-                                <br>
+                                <h2>Jumlah Pesanan</h2>
+                                <h2 id="h2produk"><?php echo $fo_trans->quantity, " ", $fo_trans->unit_name ?></h2>
+                                <br><br>
                             <?php
                                 $no++;
                             }
@@ -117,10 +117,13 @@ $fa_data = mysqli_fetch_array($data);
                             ?>
                             <br>
                             <h2>Waktu Pesanan Diproses</h2>
-                            <input type="text" name="waktu" class="input-control" value="<?php echo $fo_trans2->created ?>" readonly>
+                            <h3 id="h2produk"><?php echo $fo_trans2->created ?></h3>
+                            <br>
+                            <h2>Status Pesanan</h2>
+                            <h3 id="h2produk"><?php echo $fo_trans2->status ?></h3>
                             <br>
                             <h2>Catatan Dari Admin</h2>
-                            <input type="text" name="notes" class="input-control" value="<?php echo $fo_trans2->notes ?>" readonly>
+                            <textarea name="notes" class="input-control" readonly><?php echo $fo_trans2->notes ?></textarea><br>
                         <?php
                         }
                         ?>

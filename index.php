@@ -112,7 +112,7 @@ include 'db.php';
                                 if ($fetch_produk['stock'] == 0) {
                                 ?>
                                     <center>
-                                        <p style="color: red ;">Stock Habis, Hubungi Admin untuk Restock</p>
+                                        <p style="color: red ;">Stock Habis</p>
                                     </center>
                                 <?php
                                 } else {

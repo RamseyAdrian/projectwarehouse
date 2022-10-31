@@ -1,6 +1,7 @@
 <?php
 session_start();
 include 'db.php';
+
 //Kondisi Supaya Non User tidak dapat akses page ini
 if ($_SESSION['role_login'] != 'user') {
     echo '<script>window.location="logout.php"</script>';
@@ -63,7 +64,7 @@ $kantoruser = $_SESSION['a_global']->office_id;
 
         #buttdetail {
             font-size: 17px;
-            background-color: yellow;
+            background-color: #fff;
             color: black;
             border-radius: 5px;
             padding: 2px;
@@ -102,7 +103,6 @@ $kantoruser = $_SESSION['a_global']->office_id;
 </head>
 
 <body>
-
     <!---------------------- header ----------------------------------->
     <header>
         <div class="container">
@@ -127,85 +127,57 @@ $kantoruser = $_SESSION['a_global']->office_id;
         </div>
     </header>
 
-    <!---------------------- Content ----------------------------------->
     <div class="section">
         <div class="container">
-            <h2>Pesanan Saya</h2>
+            <h2>Pengambilan Barang</h2>
             <div class="box1">
-                <button><a href="user-pickup-product.php" style="text-decoration: none ;">Pengambilan Barang</a></button><br><br>
-                <button><a href="user-order-history.php" style="text-decoration: none ;">Riwayat Transaksi</a></button><br><br>
+                <button><a href="user-order.php" style="text-decoration: none ;">Data Pesanan</a></button><br><br>
             </div>
-            <br>
             <div class="box">
                 <table border="1" cellspacing="0" class="table">
                     <thead>
                         <tr>
-                            <th>No</th>
-                            <th>ID Pesanan</th>
+                            <th width="5%">No</th>
+                            <th width="20%">ID Pesanan</th>
                             <th>Barang</th>
-                            <th>Status</th>
-                            <th>Waktu Dipesan</th>
-                            <th>Aksi</th>
+                            <th width="20%">Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
                         <?php
                         $no = 1;
-                        $trans = mysqli_query($conn, "SELECT * FROM data_order WHERE data_order.status = 'Diproses Admin' AND data_order.user_id = '" . $iduser . "' ORDER BY created DESC ");
+                        $where_status = "AND data_order.status = 'Akan Diambil' ";
+                        $trans = mysqli_query($conn, "SELECT * FROM data_order WHERE data_order.office_id = '" . $kantoruser . "' AND data_order.user_id = '" . $iduser . "' $where_status ORDER BY times_updated ");
                         if (mysqli_num_rows($trans) > 0) {
-
-                            while ($fo_trans = mysqli_fetch_array($trans)) {
+                            while ($fetch_trans = mysqli_fetch_array($trans)) {
                         ?>
                                 <tr>
                                     <td><?php echo $no++ ?></td>
-                                    <td><?php echo $fo_trans['cart_id'];
-                                        $idcart = $fo_trans['cart_id']; ?></td>
+                                    <td><?php echo $fetch_trans['cart_id'] ?></td>
                                     <td>
                                         <?php
-                                        $fetch_trans = mysqli_query($conn, "SELECT * FROM data_transaction WHERE data_transaction.cart_id = '" . $idcart . "' ");
-                                        if (mysqli_num_rows($fetch_trans) > 0) {
+                                        $trans_2 = mysqli_query($conn, "SELECT * FROM data_transaction WHERE data_transaction.cart_id= '" . $fetch_trans['cart_id'] . "' ");
+                                        $jumlah_item = mysqli_num_rows($trans_2);
+                                        if ($jumlah_item > 0) {
                                             $neff = 0;
-                                            while ($fa_fetch = mysqli_fetch_array($fetch_trans)) {
-                                                echo $fa_fetch['product_name'], "(", $fa_fetch['quantity'], " ", $fa_fetch['unit_name'], ")";
+                                            while ($fetch_trans_2 = mysqli_fetch_array($trans_2)) {
+                                                echo $fetch_trans_2['product_name'], " (", $fetch_trans_2['quantity'], " ", $fetch_trans_2['unit_name'], ")";
                                                 $neff++;
-                                                if ($neff < mysqli_num_rows($fetch_trans)) {
+                                                if ($neff < $jumlah_item) {
                                                     print ", ";
                                                 }
                                             }
                                         }
                                         ?>
                                     </td>
-                                    <td><?php
-                                        echo $fo_trans['status']
-                                        ?></td>
-                                    <td><?php echo $fo_trans['created'] ?></td>
                                     <td>
-                                        <?php
-                                        if ($fo_trans['status'] == 'Diproses Admin') {
-                                        ?>
-                                            <center>
-                                                <button id="buttdetail" class="view"><a href="view-order.php?id=<?php echo $fo_trans['cart_id'] ?>">Lihat Pesanan</a></button>
-                                            </center>
-                                        <?php
-                                        } else if ($fo_trans['status'] == "Berhasil") {
-                                        ?>
-
-                                            <center>
-                                                <button id="buttprint" class="print"><a href="view-order-history.php?id=<?php echo $fo_trans['cart_id'] ?>">Detail & Cetak Surat</a></button>
-                                            </center>
-                                        <?php
-                                        }
-                                        ?>
+                                        <center>
+                                            <button id="buttdetail"><a href="user-pickup-detail.php?id=<?php echo $fetch_trans['cart_id'] ?>">Detail & Print Surat</a></button>
+                                        </center>
                                     </td>
                                 </tr>
-                            <?php
+                        <?php
                             }
-                            ?>
-                        <?php
-                        } else {
-                        ?>
-                            <td colspan="8">Tidak Ada Data</td>
-                        <?php
                         }
                         ?>
                     </tbody>
@@ -213,11 +185,6 @@ $kantoruser = $_SESSION['a_global']->office_id;
             </div>
         </div>
     </div>
-
-    <!---------------------- Footer ----------------------------------->
-
-
-
 </body>
 
 </html>

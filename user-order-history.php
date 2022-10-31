@@ -132,8 +132,8 @@ $kantoruser = $_SESSION['a_global']->office_id;
                     <tbody>
                         <?php
                         $no = 1;
-                        $where = " AND data_order.office_id = '" . $kantoruser . "' ";
-                        $trans = mysqli_query($conn, "SELECT * FROM data_order WHERE data_order.status = 'Berhasil' AND data_order.user_id = '" . $iduser . "' ORDER BY times_updated DESC ");
+                        $where_office = " AND data_order.office_id = '" . $kantoruser . "' ";
+                        $trans = mysqli_query($conn, "SELECT * FROM data_order WHERE data_order.status = 'Berhasil' AND data_order.user_id = '" . $iduser . "' $where_office ORDER BY times_updated DESC ");
                         if (mysqli_num_rows($trans) > 0) {
 
                             while ($fo_trans = mysqli_fetch_array($trans)) {
@@ -146,8 +146,13 @@ $kantoruser = $_SESSION['a_global']->office_id;
                                         <?php
                                         $fetch_trans = mysqli_query($conn, "SELECT * FROM transaction_history WHERE transaction_history.cart_id = '" . $idcart . "' ");
                                         if (mysqli_num_rows($fetch_trans) > 0) {
+                                            $neff = 0;
                                             while ($fa_fetch = mysqli_fetch_array($fetch_trans)) {
                                                 echo $fa_fetch['product_name'], "(", $fa_fetch['quantity'], " ", $fa_fetch['unit_name'], ") ";
+                                                $neff++;
+                                                if ($neff < mysqli_num_rows($fetch_trans)) {
+                                                    print ", ";
+                                                }
                                             }
                                         }
                                         ?>
@@ -209,8 +214,13 @@ $kantoruser = $_SESSION['a_global']->office_id;
                                         <?php
                                         $fetch_trans = mysqli_query($conn, "SELECT * FROM transaction_history WHERE transaction_history.cart_id = '" . $idcart . "' ");
                                         if (mysqli_num_rows($fetch_trans) > 0) {
+                                            $neff = 0;
                                             while ($fa_fetch = mysqli_fetch_array($fetch_trans)) {
-                                                echo $fa_fetch['product_name'], "(", $fa_fetch['quantity'], ")";
+                                                echo $fa_fetch['product_name'], "(", $fa_fetch['quantity'], " ", $fa_fetch['unit_name'], ") ";
+                                                $neff++;
+                                                if ($neff < mysqli_num_rows($fetch_trans)) {
+                                                    print ", ";
+                                                }
                                             }
                                         }
                                         ?>
@@ -272,8 +282,13 @@ $kantoruser = $_SESSION['a_global']->office_id;
                                         <?php
                                         $fetch_trans = mysqli_query($conn, "SELECT * FROM transaction_history WHERE transaction_history.cart_id = '" . $idcart . "' ");
                                         if (mysqli_num_rows($fetch_trans) > 0) {
+                                            $neff = 0;
                                             while ($fa_fetch = mysqli_fetch_array($fetch_trans)) {
-                                                echo $fa_fetch['product_name'], "(", $fa_fetch['quantity'], ") ";
+                                                echo $fa_fetch['product_name'], "(", $fa_fetch['quantity'], " ", $fa_fetch['unit_name'], ") ";
+                                                $neff++;
+                                                if ($neff < mysqli_num_rows($fetch_trans)) {
+                                                    print ", ";
+                                                }
                                             }
                                         }
                                         ?>

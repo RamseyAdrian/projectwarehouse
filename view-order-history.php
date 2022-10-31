@@ -83,47 +83,36 @@ $idkantor = $_SESSION['a_global']->office_id;
                         while ($fo_trans = mysqli_fetch_object($trans)) {
                     ?>
 
-                            <h1>Produk ke <?php echo $no ?></h1><br>
+                            <h1>Barang ke <?php echo $no ?></h1><br>
                             <h2 id="h2produk"><?php echo $fo_trans->product_name ?></h2><br><br>
                             <img src="produk/<?php echo $fo_trans->product_image ?>" width="100px">
                             <br><br>
-                            <h4>Jumlah Pesanan</h4>
-                            <input type="text" name="quantity" class="input-control" value="<?php echo $fo_trans->quantity ?>" readonly>
-
+                            <h2>Jumlah Pesanan</h2>
+                            <h2 id="h2produk"><?php echo $fo_trans->quantity, " ", $fo_trans->unit_name ?></h2>
                             <br>
                         <?php
                             $no++;
                         }
                         $trans2 = mysqli_query($conn, "SELECT * FROM transaction_history LEFT JOIN data_product USING (product_id) WHERE cart_id = '" . $_GET['id'] . "' ");
                         $fo_trans2 = mysqli_fetch_object($trans2);
+                        $id_cart = $fo_trans2->cart_id;
                         ?>
                         <br>
                         <h2>Waktu Pesanan Diproses</h2>
-                        <input type="text" name="waktu" class="input-control" value="<?php echo $fo_trans2->created ?>" readonly>
+                        <h3 id="h2produk"><?php echo $fo_trans2->created ?></h3>
                         <br>
                         <h2>Catatan Dari Admin</h2>
-
                         <input type="text" name="notes" class="input-control" value="<?php echo $fo_trans2->notes ?>" readonly>
+                        <br>
                     <?php
                     }
                     ?>
                     <input type="submit" name="print" class="btn" value="Print Surat Pengambilan Barang">
                 </form>
                 <?php
-                if (isset($_POST['submit'])) {
-
-                    if ($update) {
-                        echo '<script>Swal.fire({
-                            title: "Anda telah mengambil Pesanan !",
-                            text: "Klik OK Untuk Lanjut",
-                            icon: "success"
-                          }).then(function() {
-                            window.location = "user-home.php";
-                          });
-                        </script>';
-                    } else {
-                        echo 'gagal' . mysqli_error($conn);
-                    }
+                if (isset($_POST['print'])) {
+                    $_SESSION['id_cart'] = $id_cart;
+                    echo '<script>window.location="print-order.php"</script>';
                 } else if (isset($_POST['wait'])) {
                     echo '<script>window.location="user-order.php"</script>';
                 }
@@ -167,6 +156,10 @@ $idkantor = $_SESSION['a_global']->office_id;
             </div>
         </footer>
     </div>
+
+    <script>
+        CKEDITOR.replace('notes');
+    </script>
 
 </body>
 

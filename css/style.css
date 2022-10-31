@@ -233,20 +233,12 @@ a {
     margin: 10px 0 25px 0;
 }
 
-.box-info {
-    background-color: #fff;
-    border: 1px solid #ccc;
-    padding: 15px;
-    box-sizing: border-box;
-    margin: 10px 0 25px 0;
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
-    flex-wrap: wrap;
-}
 
-.box-info-content {
-    background-color: red;
+
+.box:after {
+    content: '';
+    display: block;
+    clear: both;
 }
 
 /*Data Kategori*/

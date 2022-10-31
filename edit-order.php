@@ -56,7 +56,7 @@ $idkantoradmin = $_SESSION['a_global']->office_id;
                     //jml_keranjang digunakan untuk menampung berapa banyak jumlah keranjang yang ada
                     $jml_keranjang = 0;
                     //query database
-                    $keranjang = mysqli_query($conn, "SELECT * FROM data_transaction WHERE office_id = '" . $idkantoradmin . "' ORDER BY cart_id");
+                    $keranjang = mysqli_query($conn, "SELECT * FROM data_transaction WHERE office_id = '" . $idkantoradmin . "' AND status = 'Diproses Admin' ORDER BY cart_id");
                     if (mysqli_num_rows($keranjang) > 0) {
                         while ($fetch_keranjang = mysqli_fetch_array($keranjang)) {
                             $jml_produk++;
@@ -174,9 +174,9 @@ $idkantoradmin = $_SESSION['a_global']->office_id;
                         <h2>Status Pemesanan Barang</h2>
                         <select name="status" class="input-control">
                             <option value="" style="font-weight: bold ;">--Pilih--</option>
-                            <option value="Berhasil" style="font-weight: bold ;">Disetujui</option>
-                            <option value="Gagal" style="font-weight: bold ;">Tidak Disetujui</option>
-                            <option value="Berhasil Sebagian" style="font-weight: bold ;">Sebagian Disetujui</option>
+                            <option value="Akan Diambil" style="font-weight: bold ;">Disetujui</option>
+                            <option value="Tidak Disetujui Admin" style="font-weight: bold ;">Tidak Disetujui</option>
+                            <option value="Ambil Sebagian" style="font-weight: bold ;">Sebagian Disetujui</option>
                         </select>
                         <br><br><br>
                         <center>
@@ -189,7 +189,8 @@ $idkantoradmin = $_SESSION['a_global']->office_id;
 
                     <?php
                     if (isset($_POST['submit'])) {
-                        if ($_POST['status'] == "Berhasil" && $stock_ready == mysqli_num_rows($trans)) {
+                        //------------------------------Kondisi Jika Semua Stock Aman & Admin pilih Berhasil------------------------------------------
+                        if ($_POST['status'] == "Akan Diambil" && $stock_ready == mysqli_num_rows($trans)) {
                             $update_data_order = mysqli_query($conn, "UPDATE data_order SET 
                             status = '" . $_POST['status'] . "',
                             items_approved = '" . $stock_ready . "',
@@ -220,37 +221,42 @@ $idkantoradmin = $_SESSION['a_global']->office_id;
                                     $kuantitas = $fo_trans2['quantity'];
                                     $notes = $_POST['notes'];
 
-                                    $stokbarang = $fo_trans2['stock'];
-                                    $stokbarang_after = $stokbarang - $kuantitas;
+                                    //     $stokbarang = $fo_trans2['stock'];
+                                    //     $stokbarang_after = $stokbarang - $kuantitas;
 
-                                    $update_stock = mysqli_query($conn, "UPDATE data_product SET
-                                        stock = '" . $stokbarang_after . "'
-                                        WHERE product_id = '" . $idproduk . "'
-                                 ");
+                                    //     $update_stock = mysqli_query($conn, "UPDATE data_product SET
+                                    //         stock = '" . $stokbarang_after . "'
+                                    //         WHERE product_id = '" . $idproduk . "'
+                                    //  ");
 
-                                    $insert_transaction_history = mysqli_query($conn, "INSERT INTO transaction_history VALUES (
-                                    '" . $orderid . "',
-                                    '" . $keranjang . "',
-                                    '" . $iduser . "',
-                                    '" . $namauser . "',
-                                    '" . $emailuser . "',
-                                    '" . $telpuser . "',
-                                    '" . $idkantor . "',
-                                    '" . $namakantor . "',
-                                    '" . $idproduk . "',
-                                    '" . $namaproduk . "',
-                                    '" . $idkategori . "',
-                                    '" . $namakategori . "',
-                                    '" . $idsatuan . "',
-                                    '" . $namasatuan . "',
-                                    '" . $kuantitas . "',
-                                    NOW(),
-                                    '" . $fo_trans2['red_flag'] . "',
-                                    '" . $_POST['status'] . "',
-                                    '" . $notes . "'
+                                    $update_data_transaction = mysqli_query($conn, "UPDATE data_transaction SET
+                                                status = '" . $_POST['status'] . "'
+                                                WHERE cart_id = '" . $idcart . "'
+                                    ");
 
-                                )");
-                                    $delete_data_transaction = mysqli_query($conn, "DELETE FROM data_transaction WHERE data_transaction.order_id = '" . $orderid . "' ");
+                                    //     $insert_transaction_history = mysqli_query($conn, "INSERT INTO transaction_history VALUES (
+                                    // '" . $orderid . "',
+                                    // '" . $keranjang . "',
+                                    // '" . $iduser . "',
+                                    // '" . $namauser . "',
+                                    // '" . $emailuser . "',
+                                    // '" . $telpuser . "',
+                                    // '" . $idkantor . "',
+                                    // '" . $namakantor . "',
+                                    // '" . $idproduk . "',
+                                    // '" . $namaproduk . "',
+                                    // '" . $idkategori . "',
+                                    // '" . $namakategori . "',
+                                    // '" . $idsatuan . "',
+                                    // '" . $namasatuan . "',
+                                    // '" . $kuantitas . "',
+                                    // NOW(),
+                                    // '" . $fo_trans2['red_flag'] . "',
+                                    // '" . $_POST['status'] . "',
+                                    // '" . $notes . "'
+
+                                    // )");
+                                    // $delete_data_transaction = mysqli_query($conn, "DELETE FROM data_transaction WHERE data_transaction.order_id = '" . $orderid . "' ");
 
                                     echo '<script>Swal.fire({
                                     title: "Pesanan User Berhasil Diproses ",
@@ -262,14 +268,16 @@ $idkantoradmin = $_SESSION['a_global']->office_id;
                                </script>';
                                 }
                             }
-                        } else if ($_POST['status'] == "Berhasil" && $stock_ready < mysqli_num_rows($trans)) {
+                            //------------------------------Kondisi Jika Stock Tidak Aman & Admin pilih Berhasil------------------------------------------
+                        } else if ($_POST['status'] == "Akan Diambil" && $stock_ready < mysqli_num_rows($trans)) {
                             echo '<script>Swal.fire({
                             title: "Stock Tidak Mencukupi!",
                             text: "Pilih Tidak Setuju atau Sebagian Disetujui !",
                             icon : "error"
                        });
                        </script>';
-                        } else if ($_POST['status'] == "Gagal" && $stock_ready == mysqli_num_rows($trans)) {
+                            //------------------------------Kondisi Jika Semua Stock Aman & Admin pilih Gagal------------------------------------------
+                        } else if ($_POST['status'] == "Tidak Disetujui Admin" && $stock_ready == mysqli_num_rows($trans)) {
                             $update_data_order = mysqli_query($conn, "UPDATE data_order SET 
                             status = '" . $_POST['status'] . "',
                             items_approved = '" . $stock_ready . "',
@@ -376,7 +384,8 @@ $idkantoradmin = $_SESSION['a_global']->office_id;
                                </script>';
                                 }
                             }
-                        } else if ($_POST['status'] == "Berhasil Sebagian" && $stock_ready < mysqli_num_rows($trans)) {
+                            //------------------------------Kondisi Jika Ada Stock Tidak Aman & Admin pilih Berhasil Sebagian------------------------------------------
+                        } else if ($_POST['status'] == "Ambil Sebagian" && $stock_ready < mysqli_num_rows($trans)) {
                             $update_data_order = mysqli_query($conn, "UPDATE data_order SET 
                             status = '" . $_POST['status'] . "',
                             items_approved = '" . $stock_ready . "',
@@ -405,40 +414,46 @@ $idkantoradmin = $_SESSION['a_global']->office_id;
                                         $namasatuan = $fa_unit['unit_name'];
                                         $idproduk = $fo_trans2['product_id'];
                                         $namaproduk = $fo_trans2['product_name'];
-                                        $kuantitas = $fo_trans2['quantity'];
+                                        $kuantitas = $fo_trans2['stock'];
                                         $notes = $_POST['notes'];
 
-                                        $stokbarang = $fo_trans2['stock'];
-                                        $stokbarang_after = $stokbarang - $stokbarang;
+                                        //     $stokbarang = $fo_trans2['stock'];
+                                        //     $stokbarang_after = $stokbarang - $stokbarang;
 
-                                        $update_stock = mysqli_query($conn, "UPDATE data_product SET
-                                        stock = '" . $stokbarang_after . "'
-                                        WHERE product_id = '" . $idproduk . "'
+                                        //     $update_stock = mysqli_query($conn, "UPDATE data_product SET
+                                        //     stock = '" . $stokbarang_after . "'
+                                        //     WHERE product_id = '" . $idproduk . "'
+                                        // ");
+
+                                        $update_data_transaction = mysqli_query($conn, "UPDATE data_transaction SET
+                                                status = '" . $_POST['status'] . "',
+                                                quantity = '" . $fo_trans2['stock'] . "'
+                                                WHERE cart_id = '" . $idcart . "'
                                     ");
 
-                                        $insert_transaction_history = mysqli_query($conn, "INSERT INTO transaction_history VALUES (
-                                        '" . $orderid . "',
-                                        '" . $keranjang . "',
-                                        '" . $iduser . "',
-                                        '" . $namauser . "',
-                                        '" . $emailuser . "',
-                                        '" . $telpuser . "',
-                                        '" . $idkantor . "',
-                                        '" . $namakantor . "',
-                                        '" . $idproduk . "',
-                                        '" . $namaproduk . "',
-                                        '" . $idkategori . "',
-                                        '" . $namakategori . "',
-                                        '" . $idsatuan . "',
-                                        '" . $namasatuan . "',
-                                        '" . $kuantitas . "',
-                                        NOW(),
-                                        '" . $fo_trans2['red_flag'] . "',
-                                        '" . $_POST['status'] . "',
-                                        '" . $notes . "'
-    
-                                    )");
-                                        $delete_data_transaction = mysqli_query($conn, "DELETE FROM data_transaction WHERE data_transaction.order_id = '" . $orderid . "' ");
+                                        //     $insert_transaction_history = mysqli_query($conn, "INSERT INTO transaction_history VALUES (
+                                        //     '" . $orderid . "',
+                                        //     '" . $keranjang . "',
+                                        //     '" . $iduser . "',
+                                        //     '" . $namauser . "',
+                                        //     '" . $emailuser . "',
+                                        //     '" . $telpuser . "',
+                                        //     '" . $idkantor . "',
+                                        //     '" . $namakantor . "',
+                                        //     '" . $idproduk . "',
+                                        //     '" . $namaproduk . "',
+                                        //     '" . $idkategori . "',
+                                        //     '" . $namakategori . "',
+                                        //     '" . $idsatuan . "',
+                                        //     '" . $namasatuan . "',
+                                        //     '" . $kuantitas . "',
+                                        //     NOW(),
+                                        //     '" . $fo_trans2['red_flag'] . "',
+                                        //     '" . $_POST['status'] . "',
+                                        //     '" . $notes . "'
+
+                                        // )");
+                                        //     $delete_data_transaction = mysqli_query($conn, "DELETE FROM data_transaction WHERE data_transaction.order_id = '" . $orderid . "' ");
                                     } else if ($fo_trans2['red_flag'] == 'not red') {
                                         $orderid = $fo_trans2['order_id'];
                                         $keranjang = $fo_trans2['cart_id'];
@@ -461,34 +476,39 @@ $idkantoradmin = $_SESSION['a_global']->office_id;
                                         $stokbarang = $fo_trans2['stock'];
                                         $stokbarang_after = $stokbarang - $kuantitas;
 
-                                        $update_stock = mysqli_query($conn, "UPDATE data_product SET
-                                        stock = '" . $stokbarang_after . "'
-                                        WHERE product_id = '" . $idproduk . "'
+                                        //     $update_stock = mysqli_query($conn, "UPDATE data_product SET
+                                        //     stock = '" . $stokbarang_after . "'
+                                        //     WHERE product_id = '" . $idproduk . "'
+                                        // ");
+
+                                        $update_data_transaction = mysqli_query($conn, "UPDATE data_transaction SET
+                                                status = '" . $_POST['status'] . "'
+                                                WHERE cart_id = '" . $idcart . "'
                                     ");
 
-                                        $insert_transaction_history = mysqli_query($conn, "INSERT INTO transaction_history VALUES (
-                                        '" . $orderid . "',
-                                        '" . $keranjang . "',
-                                        '" . $iduser . "',
-                                        '" . $namauser . "',
-                                        '" . $emailuser . "',
-                                        '" . $telpuser . "',
-                                        '" . $idkantor . "',
-                                        '" . $namakantor . "',
-                                        '" . $idproduk . "',
-                                        '" . $namaproduk . "',
-                                        '" . $idkategori . "',
-                                        '" . $namakategori . "',
-                                        '" . $idsatuan . "',
-                                        '" . $namasatuan . "',
-                                        '" . $kuantitas . "',
-                                        NOW(),
-                                        '" . $fo_trans2['red_flag'] . "',
-                                        '" . $_POST['status'] . "',
-                                        '" . $notes . "'
-    
-                                    )");
-                                        $delete_data_transaction = mysqli_query($conn, "DELETE FROM data_transaction WHERE data_transaction.order_id = '" . $orderid . "' ");
+                                        //     $insert_transaction_history = mysqli_query($conn, "INSERT INTO transaction_history VALUES (
+                                        //     '" . $orderid . "',
+                                        //     '" . $keranjang . "',
+                                        //     '" . $iduser . "',
+                                        //     '" . $namauser . "',
+                                        //     '" . $emailuser . "',
+                                        //     '" . $telpuser . "',
+                                        //     '" . $idkantor . "',
+                                        //     '" . $namakantor . "',
+                                        //     '" . $idproduk . "',
+                                        //     '" . $namaproduk . "',
+                                        //     '" . $idkategori . "',
+                                        //     '" . $namakategori . "',
+                                        //     '" . $idsatuan . "',
+                                        //     '" . $namasatuan . "',
+                                        //     '" . $kuantitas . "',
+                                        //     NOW(),
+                                        //     '" . $fo_trans2['red_flag'] . "',
+                                        //     '" . $_POST['status'] . "',
+                                        //     '" . $notes . "'
+
+                                        // )");
+                                        //     $delete_data_transaction = mysqli_query($conn, "DELETE FROM data_transaction WHERE data_transaction.order_id = '" . $orderid . "' ");
                                     }
                                     echo '<script>Swal.fire({
                                     title: "Pesanan User Berhasil Diproses",
@@ -500,7 +520,8 @@ $idkantoradmin = $_SESSION['a_global']->office_id;
                                </script>';
                                 }
                             }
-                        } else if ($_POST['status'] == "Gagal" && $stock_ready < mysqli_num_rows($trans)) {
+                            //------------------------------Kondisi Jika Stock Tidak Aman & Admin pilih Gagal------------------------------------------
+                        } else if ($_POST['status'] == "Tidak Disetujui Admin" && $stock_ready < mysqli_num_rows($trans)) {
                             $update_data_order = mysqli_query($conn, "UPDATE data_order SET 
                             status = '" . $_POST['status'] . "',
                             items_approved = '" . $stock_ready . "',
@@ -599,13 +620,15 @@ $idkantoradmin = $_SESSION['a_global']->office_id;
                                     }
                                 }
                             }
-                        } else if ($_POST['status'] == "Berhasil Sebagian" && $stock_ready == mysqli_num_rows($trans)) {
+                            //------------------------------Kondisi Jika Semua Stock Aman & Admin pilih Berhasil Sebagian------------------------------------------
+                        } else if ($_POST['status'] == "Ambil Sebagian" && $stock_ready == mysqli_num_rows($trans)) {
                             echo '<script>Swal.fire({
                             title: "Semua Stok Aman, Pilih Setuju !",
                             text: "Klik OK Untuk Lanjut",
                             icon : "info"
                        });
                        </script>';
+                            //------------------------------Kondisi Jika Semua Stock Aman & Admin Tidak Memilih Apapun------------------------------------------
                         } else if ($_POST['status'] == "" && $stock_ready == mysqli_num_rows($trans)) {
                             echo '<script>Swal.fire({
                             title: "Status Pemesanan Barang Belum Dipilih !",
@@ -613,6 +636,7 @@ $idkantoradmin = $_SESSION['a_global']->office_id;
                             icon : "warning"
                        });
                        </script>';
+                            //------------------------------Kondisi Jika Semua Stock Aman & Admin Tidak Memilih Apapun------------------------------------------
                         } else if ($_POST['status'] == "" && $stock_ready < mysqli_num_rows($trans)) {
                             echo '<script>Swal.fire({
                             title: "Status Pemesanan Barang Belum Dipilih !",
