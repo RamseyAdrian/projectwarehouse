@@ -110,18 +110,6 @@ $kantor_admin = $_SESSION['a_global']->office_id;
                 </div>
                 <div class="box">
                     <form action="" method="POST" enctype="multipart/form-data">
-                        <h4>Perwakilan</h4>
-                        <select name="idkantor" class="input-control" required>
-                            <option value="">--Pilih Perwakilan--</option>
-                            <?php
-                            $kantor = mysqli_query($conn, "SELECT * FROM data_office ORDER BY office_id ");
-                            while ($row_kantor = mysqli_fetch_array($kantor)) {
-                            ?>
-                                <option value="<?php echo $row_kantor['office_id'] ?>"><?php echo $row_kantor['office_name'] ?></option>
-                            <?php
-                            }
-                            ?>
-                        </select>
                         <h4>Pilih Kategori</h4>
                         <select class="input-control" name="kategori" required>
                             <option value="">--Pilih--</option>
@@ -149,14 +137,14 @@ $kantor_admin = $_SESSION['a_global']->office_id;
                         <input type="text" name="idbarang" class="input-control" placeholder="ID Barang" required>
                         <h4>Nama Barang</h4>
                         <input type="text" name="nama" class="input-control" placeholder="Nama Barang" required>
-                        <h4>Harga Barang</h4>
+                        <h4>Harga Barang (opsional)</h4>
                         <input type="text" name="harga" class="input-control" placeholder="Harga">
                         <h4>Gambar Barang</h4>
                         <input type="file" name="gambar" class="input-control" required>
                         <h4>Deskripsi Barang</h4>
                         <textarea name="deskripsi" class="input-control" placeholder="Deskripsi"></textarea><br>
                         <h4>Batas Minim Restock (opsional)</h4>
-                        <input type="number" name="batasbarang" class="input-control"><br>
+                        <input type="number" name="batasbarang" class="input-control" value="0" min="0"><br>
                         <h4>Status Barang</h4>
                         <select name="status" class="input-control">
                             <option value="">--Pilih--</option>
@@ -176,7 +164,8 @@ $kantor_admin = $_SESSION['a_global']->office_id;
                         $harga = $_POST['harga'];
                         $deskripsi = $_POST['deskripsi'];
                         $status = $_POST['status'];
-                        $idkantor = $_POST['idkantor'];
+                        $idkantor = $kantor_admin;
+                        $restock = $_POST['batasbarang'];
 
                         //menampung data file yang diupload
                         $filename = $_FILES['gambar']['name'];
@@ -207,7 +196,8 @@ $kantor_admin = $_SESSION['a_global']->office_id;
                              '" . $newname . "',
                              '" . $status . "',
                              '0',
-                             null 
+                             '" . $restock . "',
+                             NOW() 
                         ) ");
                             if ($insert) {
                                 echo '<script>Swal.fire({
@@ -339,7 +329,7 @@ $kantor_admin = $_SESSION['a_global']->office_id;
                         <br><br>
                         <h4>Nama Barang</h4>
                         <input type="text" name="nama" class="input-control" placeholder="Nama Barang" required>
-                        <h4>Harga Barang</h4>
+                        <h4>Harga Barang (opsional)</h4>
                         <input type="text" name="harga" class="input-control" placeholder="Harga">
                         <h4>Gambar Barang</h4>
                         <input type="file" name="gambar" class="input-control" required>

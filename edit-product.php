@@ -125,6 +125,8 @@ $idkantoradmin = $_SESSION['a_global']->office_id;
                         <br><br>
                         <h4>Deskripsi Barang</h4>
                         <textarea name="deskripsi" class="input-control" placeholder="Deskripsi"><?php echo $p->product_description ?></textarea><br>
+                        <h4>Batas Minim Restock</h4>
+                        <input type="number" class="input-control" name="batasbarang" min="0" max="1000" value="<?php echo $p->stock_point ?>">
                         <h4>Status Barang</h4>
                         <select name="status" class="input-control">
                             <option value="">--Pilih--</option>
@@ -142,6 +144,7 @@ $idkantoradmin = $_SESSION['a_global']->office_id;
                         $harga = $_POST['harga'];
                         $deskripsi = $_POST['deskripsi'];
                         $status = $_POST['status'];
+                        $batas_restock = $_POST['batasbarang'];
 
                         //menampung data file yang diupload
                         $filename = $_FILES['gambar']['name'];
@@ -163,6 +166,7 @@ $idkantoradmin = $_SESSION['a_global']->office_id;
                             product_name= '" . $nama . "',
                             product_price = '" . $harga . "',
                             product_description = '" . $deskripsi . "',
+                            stock_point = '" . $batas_restock . "',
                             product_status = '" . $status . "'
                             WHERE product_id = '" . $p->product_id . "'
                     ");
@@ -189,6 +193,7 @@ $idkantoradmin = $_SESSION['a_global']->office_id;
                             product_price = '" . $harga . "',
                             product_image = '" . $newname . "',
                             product_description = '" . $deskripsi . "',
+                            stock_point = '" . $batas_restock . "',
                             product_status = '" . $status . "'
                             WHERE product_id = '" . $p->product_id . "'
                     ");

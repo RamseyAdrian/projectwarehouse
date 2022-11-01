@@ -218,7 +218,6 @@ a {
     clear: both;
 }
 
-
 /*Content*/
 
 .section {
@@ -233,12 +232,51 @@ a {
     margin: 10px 0 25px 0;
 }
 
-
-
 .box:after {
     content: '';
     display: block;
     clear: both;
+}
+
+.section .container .box-dash-0 {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 1em;
+}
+
+.section .container .box-new-product-head {
+    display: flex;
+    justify-content: center;
+}
+
+.section .container .box-new-product {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    padding: 15px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.section .container .box-dash-1 {
+    display: flex;
+    flex-direction: row;
+    flex-flow: row wrap;
+    justify-content: space-between;
+}
+
+.section .container .box-dash-1 .box-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.section .container .box-new-product .box .box-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
 }
 
 /*Data Kategori*/

@@ -36,3 +36,8 @@ if (isset($_GET['idc'])) {
     $delete = mysqli_query($conn, "DELETE FROM data_cart WHERE product_id = '" . $_GET['idc'] . "' ");
     echo '<script>window.location="user-cart.php"</script>';
 }
+
+if (isset($_GET['ids'])) {
+    $delete = mysqli_query($conn, "DELETE FROM data_unit WHERE unit_id = '" . $_GET['ids'] . "' ");
+    echo '<script>window.location="unit-data.php"</script>';
+}

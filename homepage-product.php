@@ -104,7 +104,7 @@ include 'db.php';
                                 if ($p['stock'] == 0) {
                                 ?>
                                     <center>
-                                        <p style="color: red ;">Stock Habis, Hubungi Admin untuk Restock</p>
+                                        <p style="color: red ;">Stock Habis</p>
                                     </center>
                                 <?php
                                 } else {

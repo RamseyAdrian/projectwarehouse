@@ -35,6 +35,32 @@ $idkantoradmin = $_SESSION['a_global']->office_id;
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert-dev.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.css" rel="stylesheet" />
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!--------------------- Additional CSS ----------------------------->
+    <style>
+        #h2produk {
+            color: red;
+            font-weight: bold;
+        }
+
+        .section .container .box form #button-restock {
+            background-color: red;
+            color: white;
+            font-weight: bold;
+            padding: 5px;
+            border-radius: 5px;
+            margin-top: 5px;
+            font-size: 15px;
+        }
+
+        .section .container .box form #button-restock:hover {
+            background-color: black;
+            color: white;
+        }
+
+        .section .container .box form #button-restock a {
+            text-decoration: none;
+        }
+    </style>
 </head>
 
 
@@ -87,31 +113,6 @@ $idkantoradmin = $_SESSION['a_global']->office_id;
         <div class="section">
             <div class="container">
                 <h3>Detail Pesanan</h3>
-                <style>
-                    #h2produk {
-                        color: red;
-                        font-weight: bold;
-                    }
-
-                    .section .container .box form #button-restock {
-                        background-color: red;
-                        color: white;
-                        font-weight: bold;
-                        padding: 5px;
-                        border-radius: 5px;
-                        margin-top: 5px;
-                        font-size: 15px;
-                    }
-
-                    .section .container .box form #button-restock:hover {
-                        background-color: black;
-                        color: white;
-                    }
-
-                    .section .container .box form #button-restock a {
-                        text-decoration: none;
-                    }
-                </style>
                 <div class="box">
                     <form action="" method="POST" enctype="multipart/form-data">
                         <?php

@@ -101,22 +101,16 @@ $idkantor = $_SESSION['a_global']->office_id;
                         <h2>Waktu Pesanan Diproses</h2>
                         <h3 id="h2produk"><?php echo $fo_trans2->created ?></h3>
                         <br>
+                        <h2>Status Pesanan</h2>
+                        <h3 id="h2produk"><?php echo $fo_trans2->status ?></h3>
+                        <br>
                         <h2>Catatan Dari Admin</h2>
                         <input type="text" name="notes" class="input-control" value="<?php echo $fo_trans2->notes ?>" readonly>
                         <br>
                     <?php
                     }
                     ?>
-                    <input type="submit" name="print" class="btn" value="Print Surat Pengambilan Barang">
                 </form>
-                <?php
-                if (isset($_POST['print'])) {
-                    $_SESSION['id_cart'] = $id_cart;
-                    echo '<script>window.location="print-order.php"</script>';
-                } else if (isset($_POST['wait'])) {
-                    echo '<script>window.location="user-order.php"</script>';
-                }
-                ?>
             </div>
         </div>
     </div>

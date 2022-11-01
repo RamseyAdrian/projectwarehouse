@@ -142,7 +142,8 @@ $kantoradmin = $_SESSION['a_global']->office_id;
                         <tbody>
                             <?php
                             $no = 1;
-                            $trans = mysqli_query($conn, "SELECT * FROM data_order WHERE data_order.office_id = '" . $kantoradmin . "' AND data_order.status = 'Akan Diambil'  ORDER BY times_updated");
+                            $where_status = "OR data_order.status = 'Ambil Sebagian' ";
+                            $trans = mysqli_query($conn, "SELECT * FROM data_order WHERE data_order.office_id = '" . $kantoradmin . "' AND data_order.status = 'Akan Diambil' $where_status ORDER BY times_updated");
                             if (mysqli_num_rows($trans) > 0) {
                                 while ($fo_trans = mysqli_fetch_array($trans)) {
                             ?>

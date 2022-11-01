@@ -122,18 +122,18 @@ $kantoruser = $_SESSION['a_global']->office_id;
                 <table border="1" cellspacing="0" class="table">
                     <thead>
                         <tr>
-                            <th>No</th>
-                            <th>ID Pesanan</th>
-                            <th>Barang</th>
-                            <th>Waktu Diproses</th>
-                            <th>Aksi</th>
+                            <th width="5%">No</th>
+                            <th width="10%">ID Pesanan</th>
+                            <th width="50%">Barang</th>
+                            <th width="15%">Waktu Diproses</th>
+                            <th width="10%">Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
                         <?php
                         $no = 1;
                         $where_office = " AND data_order.office_id = '" . $kantoruser . "' ";
-                        $trans = mysqli_query($conn, "SELECT * FROM data_order WHERE data_order.status = 'Berhasil' AND data_order.user_id = '" . $iduser . "' $where_office ORDER BY times_updated DESC ");
+                        $trans = mysqli_query($conn, "SELECT * FROM data_order WHERE data_order.status = 'Berhasil Diambil' AND data_order.user_id = '" . $iduser . "' $where_office ORDER BY times_updated DESC ");
                         if (mysqli_num_rows($trans) > 0) {
 
                             while ($fo_trans = mysqli_fetch_array($trans)) {
@@ -166,75 +166,7 @@ $kantoruser = $_SESSION['a_global']->office_id;
                                     </td>
                                     <td>
                                         <center>
-                                            <button id="buttdetail" class="view"><a href="view-order-history.php?id=<?php echo $fo_trans['cart_id'] ?>">Detail & Cetak Surat</a></button>
-                                        </center>
-                                    </td>
-                                </tr>
-                            <?php
-                            }
-                            ?>
-                        <?php
-                        } else {
-                        ?>
-                            <td colspan="8">Tidak Ada Data</td>
-                        <?php
-                        }
-                        ?>
-                    </tbody>
-                </table>
-            </div>
-            <center>
-                <h3>Pesanan Berhasil Sebagian</h3>
-            </center>
-            <div class="box">
-                <table border="1" cellspacing="0" class="table">
-                    <thead>
-                        <tr>
-                            <th>No</th>
-                            <th>ID Pesanan</th>
-                            <th>Barang</th>
-                            <th>Waktu Diproses</th>
-                            <th>Aksi</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php
-                        $no = 1;
-                        $where = " AND data_order.office_id = '" . $kantoruser . "' ";
-                        $trans = mysqli_query($conn, "SELECT * FROM data_order WHERE data_order.status = 'Berhasil Sebagian' AND data_order.user_id = '" . $iduser . "' ");
-                        if (mysqli_num_rows($trans) > 0) {
-
-                            while ($fo_trans = mysqli_fetch_array($trans)) {
-                        ?>
-                                <tr>
-                                    <td><?php echo $no++ ?></td>
-                                    <td><?php echo $fo_trans['cart_id'];
-                                        $idcart = $fo_trans['cart_id']; ?></td>
-                                    <td>
-                                        <?php
-                                        $fetch_trans = mysqli_query($conn, "SELECT * FROM transaction_history WHERE transaction_history.cart_id = '" . $idcart . "' ");
-                                        if (mysqli_num_rows($fetch_trans) > 0) {
-                                            $neff = 0;
-                                            while ($fa_fetch = mysqli_fetch_array($fetch_trans)) {
-                                                echo $fa_fetch['product_name'], "(", $fa_fetch['quantity'], " ", $fa_fetch['unit_name'], ") ";
-                                                $neff++;
-                                                if ($neff < mysqli_num_rows($fetch_trans)) {
-                                                    print ", ";
-                                                }
-                                            }
-                                        }
-                                        ?>
-                                    </td>
-                                    <td>
-                                        <?php
-                                        $fetch_trans2 = mysqli_query($conn, "SELECT * FROM transaction_history WHERE transaction_history.cart_id = '" . $idcart . "'");
-                                        $fa_trans2 = mysqli_fetch_array($fetch_trans2);
-                                        echo $fa_trans2['created'];
-                                        ?>
-                                    </td>
-                                    <td>
-                                        <center>
-                                            <button id="buttdetail" class="view"><a href="view-order-history.php?id=<?php echo $fo_trans['cart_id'] ?>">Detail & Cetak Surat</a></button>
+                                            <button id="buttdetail" class="view"><a href="view-order-history.php?id=<?php echo $fo_trans['cart_id'] ?>">Detail</a></button>
                                         </center>
                                     </td>
                                 </tr>
@@ -258,18 +190,19 @@ $kantoruser = $_SESSION['a_global']->office_id;
                 <table border="1" cellspacing="0" class="table">
                     <thead>
                         <tr>
-                            <th>No</th>
-                            <th>ID Pesanan</th>
-                            <th>Barang</th>
-                            <th>Waktu Diproses</th>
-                            <th>Aksi</th>
+                            <th width="5%">No</th>
+                            <th width="10%">ID Pesanan</th>
+                            <th width="50%">Barang</th>
+                            <th width="15%">Waktu Diproses</th>
+                            <th width="10%">Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
                         <?php
                         $no = 1;
                         $where = " AND data_order.office_id = '" . $kantoruser . "' ";
-                        $trans = mysqli_query($conn, "SELECT * FROM data_order WHERE data_order.status = 'Gagal' AND data_order.user_id = '" . $iduser . "' $where ");
+                        $where_status = "OR data_order.status = 'Tidak Disetujui Admin' ";
+                        $trans = mysqli_query($conn, "SELECT * FROM data_order WHERE data_order.status = 'Gagal Diambil' AND data_order.user_id = '" . $iduser . "' $where $where_status ");
                         if (mysqli_num_rows($trans) > 0) {
 
                             while ($fo_trans = mysqli_fetch_array($trans)) {

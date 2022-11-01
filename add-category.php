@@ -67,8 +67,8 @@ if ($_SESSION['role_login'] == 'user' || $_SESSION['role_login'] == 'admin') {
 
                     $insert = mysqli_query($conn, "INSERT INTO data_category VALUES (
                                             '" . $id . "',
-                                            '" . $nama . "',
-                                            null) ");
+                                            '" . $nama . "'
+                                            ) ");
                     if ($insert) {
                         echo '<script>Swal.fire({
                             title: "Berhasil Tambah Kategori",

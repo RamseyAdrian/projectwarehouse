@@ -159,7 +159,7 @@ $idkantoradmin = $_SESSION['a_global']->office_id;
                         <tbody>
                             <?php
                             $no = 1;
-                            $produk = mysqli_query($conn, "SELECT * FROM data_product LEFT JOIN data_category  USING (category_id) WHERE office_id = '" . $idkantoradmin . "' ORDER BY product_id DESC ");
+                            $produk = mysqli_query($conn, "SELECT * FROM data_product LEFT JOIN data_category  USING (category_id) WHERE office_id = '" . $idkantoradmin . "' ORDER BY product_name ");
                             if (mysqli_num_rows($produk) > 0) {
                                 while ($row = mysqli_fetch_array($produk)) {
                                     $idperwakilan = $row['office_id'];

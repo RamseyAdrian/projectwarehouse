@@ -108,6 +108,22 @@ $admin_office = $_SESSION['a_global']->office_id;
             color: white;
             transition-duration: 0.3s;
         }
+
+        .box table tbody tr td .abutt {
+            margin-right: 10px;
+            padding: 2px;
+            border: 1px solid;
+            background-color: white;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: 0.5s;
+        }
+
+        .box table tbody tr td .abutt:hover {
+            color: white;
+            background-color: black;
+        }
     </style>
 </head>
 
@@ -189,8 +205,8 @@ $admin_office = $_SESSION['a_global']->office_id;
                                         <td><?php echo $row['user_telp'] ?></td>
                                         <td><?php echo $row['user_email'] ?></td>
                                         <td><?php echo $row['user_address'] ?></td>
-                                        <td>
-                                            <a href="edit-user.php?id=<?php echo $row['user_id'] ?>">Edit</a> || <a href="delete-data.php?idu=<?php echo $row['user_id'] ?>" onclick="return confirm('R U Sure about dat ?') ">Hapus</a>
+                                        <td style="text-align:center ;">
+                                            <a class="abutt" href="edit-user.php?id=<?php echo $row['user_id'] ?>">Edit</a><a class="abutt" href="delete-data.php?idu=<?php echo $row['user_id'] ?>" onclick="return confirm('R U Sure about dat ?') ">Hapus</a>
                                         </td>
                                     </tr>
                                 <?php }

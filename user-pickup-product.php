@@ -133,6 +133,7 @@ $kantoruser = $_SESSION['a_global']->office_id;
             <div class="box1">
                 <button><a href="user-order.php" style="text-decoration: none ;">Data Pesanan</a></button><br><br>
             </div>
+            <br>
             <div class="box">
                 <table border="1" cellspacing="0" class="table">
                     <thead>
