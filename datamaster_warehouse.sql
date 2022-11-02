@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 10, 2022 at 02:35 AM
+-- Generation Time: Nov 02, 2022 at 11:10 AM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 8.1.6
 
@@ -57,17 +57,11 @@ CREATE TABLE `data_cart` (
   `office_id` int(15) NOT NULL,
   `product_id` int(20) NOT NULL,
   `category_id` int(11) NOT NULL,
+  `unit_id` int(15) NOT NULL,
   `quantity` int(20) NOT NULL,
   `created` datetime DEFAULT NULL,
   `modified` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `data_cart`
---
-
-INSERT INTO `data_cart` (`user_id`, `office_id`, `product_id`, `category_id`, `quantity`, `created`, `modified`) VALUES
-(20, 11, 2, 1, 1, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -93,7 +87,15 @@ INSERT INTO `data_category` (`category_id`, `category_name`) VALUES
 (7, 'Alat Tulis'),
 (8, 'Buah'),
 (15, 'Sayur'),
-(102, 'Keyboard');
+(102, 'Keyboard'),
+(795262890, 'Berbagai Kertas'),
+(1003224087, 'Alat Tulis Kantor'),
+(1073600112, 'Aksesoris Komputer'),
+(1191287753, 'Tinta'),
+(1449068914, 'Alat Perekat'),
+(1556681427, 'USB/Flashdisk'),
+(1722651780, 'Amplop'),
+(2088256575, 'Barang Cetakan');
 
 -- --------------------------------------------------------
 
@@ -154,6 +156,33 @@ INSERT INTO `data_office` (`office_id`, `office_name`, `office_address`, `office
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `data_order`
+--
+
+CREATE TABLE `data_order` (
+  `cart_id` int(15) NOT NULL,
+  `user_id` int(15) NOT NULL,
+  `office_id` int(15) NOT NULL,
+  `created` datetime NOT NULL,
+  `status` varchar(50) NOT NULL,
+  `items_approved` int(10) DEFAULT NULL,
+  `times_updated` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `data_order`
+--
+
+INSERT INTO `data_order` (`cart_id`, `user_id`, `office_id`, `created`, `status`, `items_approved`, `times_updated`) VALUES
+(1163327406, 234, 11, '2022-11-01 06:50:09', 'Berhasil Diambil', 1, '2022-11-01 07:16:44'),
+(1205612291, 234, 11, '2022-11-02 10:20:20', 'Berhasil Diambil', 2, '2022-11-02 12:23:19'),
+(1331086609, 234, 11, '2022-11-01 07:23:03', 'Tidak Disetujui Admin', 1, '2022-11-01 07:24:57'),
+(1455912358, 234, 11, '2022-11-02 12:24:27', 'Berhasil Diambil', 1, '2022-11-02 12:27:16'),
+(1810798801, 234, 11, '2022-11-02 12:24:43', 'Berhasil Diambil', 2, '2022-11-02 15:37:54');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `data_product`
 --
 
@@ -161,12 +190,14 @@ CREATE TABLE `data_product` (
   `product_id` int(11) NOT NULL,
   `category_id` int(11) NOT NULL,
   `office_id` int(15) NOT NULL,
+  `unit_id` int(11) NOT NULL,
   `product_name` varchar(100) NOT NULL,
   `product_price` int(11) NOT NULL,
   `product_description` text NOT NULL,
   `product_image` varchar(100) NOT NULL,
   `product_status` tinyint(1) NOT NULL,
   `stock` int(15) NOT NULL,
+  `stock_point` int(15) NOT NULL,
   `date_created` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -174,21 +205,41 @@ CREATE TABLE `data_product` (
 -- Dumping data for table `data_product`
 --
 
-INSERT INTO `data_product` (`product_id`, `category_id`, `office_id`, `product_name`, `product_price`, `product_description`, `product_image`, `product_status`, `stock`, `date_created`) VALUES
-(1, 1, 11, 'Acer Predator', 10000000, '<p>Lorem</p>\r\n', 'produk1663293692.jpg', 1, 10, '2022-10-02 03:46:11'),
-(2, 3, 11, 'Headphone ROG', 5000000, '<p>Lorem</p>\r\n', 'produk1663293765.jpg', 1, 13, '2022-10-02 03:46:19'),
-(3, 6, 11, 'Rog Phone', 18000000, '<p>Handphone geming banget</p>\r\n\r\n<p>&nbsp;</p>\r\n', 'produk1663377340.png', 1, 29, '2022-10-02 03:46:29'),
-(4, 6, 11, 'Iphone ', 20000000, '<p>Iphone geming banget</p>\r\n', 'produk1663377374.jpg', 1, 17, '2022-10-02 03:46:54'),
-(5, 4, 2, 'Kemeja Pria', 150000, '<p>Kemeja cowo geming</p>\r\n', 'produk1663377426.jpg', 1, 30, '2022-10-05 16:55:49'),
-(6, 5, 4, 'Kemeja Wanita', 150000, '<p>Kemeja Cewe Geming</p>\r\n', 'produk1663377458.jpg', 1, 30, '2022-10-05 16:55:58'),
-(7, 7, 6, 'Spidol Warna Warni', 10000, '<p>Spidol Snowman</p>\r\n', 'produk1663377502.jpg', 1, 26, '2022-10-05 16:56:13'),
-(8, 7, 5, 'Pulpen Bagus', 12000, '<p>Pulpen pilot geming</p>\r\n', 'produk1663377537.jpg', 1, 40, '2022-10-05 16:56:06'),
-(9, 8, 7, 'Nanas Madu', 15000, '<p>Nanas paling manis di dunia</p>\r\n', 'produk1663377578.jpg', 1, 20, '2022-10-05 16:56:21'),
-(21, 7, 12, 'Spidol 12', 0, '<p>Spidol warna warni</p>\r\n', 'produk1664758412.jpg', 1, 30, '2022-10-03 00:53:32'),
-(44, 15, 11, 'Jagung', 0, '<p>Jagung kuning</p>\r\n', 'produk1664758136.jpg', 1, 12, '2022-10-05 06:01:41'),
-(975, 6, 11, 'Samsung S20 Ultra', 15000000, '<p>Samsung S20 buat geming uye</p>\r\n', 'produk1664704464.png', 1, 30, '2022-10-02 09:54:24'),
-(990, 6, 11, 'Samsung S20 Lite', 12000000, '<p>lorem ipsum dorem lorem</p>\r\n', 'produk1664704256.png', 1, 24, '2022-10-02 09:54:57'),
-(999, 6, 11, 'Samsung S20', 13000000, '<p>Lorem ipsum</p>\r\n', 'produk1664704103.png', 1, 24, '2022-10-03 01:57:29');
+INSERT INTO `data_product` (`product_id`, `category_id`, `office_id`, `unit_id`, `product_name`, `product_price`, `product_description`, `product_image`, `product_status`, `stock`, `stock_point`, `date_created`) VALUES
+(1, 1, 11, 1973793895, 'Acer Predator', 10000000, '<p>Lorem</p>\r\n', 'produk1663293692.jpg', 1, 7, 5, '2022-11-02 08:39:41'),
+(2, 3, 11, 1973793895, 'Headphone ROG', 5000000, '<p>Lorem</p>\r\n', 'produk1663293765.jpg', 1, 6, 5, '2022-11-02 08:37:54'),
+(3, 6, 11, 1973793895, 'Rog Phone', 18000000, '<p>Handphone geming banget</p>\r\n\r\n<p>&nbsp;</p>\r\n', 'produk1663377340.png', 1, 29, 0, '2022-10-31 16:29:10'),
+(4, 6, 11, 1973793895, 'Iphone ', 20000000, '<p>Iphone geming banget</p>\r\n', 'produk1663377374.jpg', 1, 17, 0, '2022-10-31 16:28:52'),
+(6, 5, 4, 1973793895, 'Kemeja Wanita', 150000, '<p>Kemeja Cewe Geming</p>\r\n', 'produk1663377458.jpg', 1, 30, 0, '2022-10-31 19:19:39'),
+(7, 7, 6, 1973793895, 'Spidol Warna Warni', 10000, '<p>Spidol Snowman</p>\r\n', 'produk1663377502.jpg', 1, 26, 0, '2022-10-31 19:19:45'),
+(8, 7, 5, 1973793895, 'Pulpen Bagus', 12000, '<p>Pulpen pilot geming</p>\r\n', 'produk1663377537.jpg', 1, 40, 0, '2022-10-31 19:19:51'),
+(9, 8, 7, 1973793895, 'Nanas Madu', 15000, '<p>Nanas paling manis di dunia</p>\r\n', 'produk1663377578.jpg', 1, 20, 0, '2022-10-31 19:19:57'),
+(21, 7, 12, 1973793895, 'Spidol 12', 0, '<p>Spidol warna warni</p>\r\n', 'produk1664758412.jpg', 1, 30, 0, '2022-10-31 19:20:03'),
+(44, 15, 11, 362289108, 'Jagung', 0, '<p>Jagung kuning</p>\r\n', 'produk1664758136.jpg', 1, 12, 0, '2022-10-31 16:29:00'),
+(975, 6, 11, 362289108, 'Samsung S20 Ultra', 15000000, '<p>Samsung S20 buat geming uye</p>\r\n', 'produk1664704464.png', 1, 30, 0, '2022-10-31 16:29:30'),
+(990, 6, 11, 362289108, 'Samsung S20 Lite', 12000000, '<p>lorem ipsum dorem lorem</p>\r\n', 'produk1664704256.png', 1, 24, 0, '2022-10-31 16:29:23'),
+(999, 6, 11, 362289108, 'Samsung S20', 13000000, '<p>Lorem ipsum</p>\r\n', 'produk1664704103.png', 1, 24, 0, '2022-10-31 16:29:17'),
+(1100121, 1, 11, 1711668626, 'Legion 5 Pro', 18000000, '<p>Legion 5 Pro&nbsp;</p>\r\n', 'produk1667259304.jpeg', 1, 7, 6, '2022-10-31 16:38:56'),
+(1312424, 7, 11, 1973793895, 'Buku Tulis', 0, '', 'produk1667268671.jpeg', 1, 8, 6, '2022-11-02 06:32:37'),
+(112687898, 1449068914, 11, 1222535816, 'Lakban Putih', 0, '', 'produk1667360212.jpeg', 1, 7, 5, '2022-11-02 06:32:55'),
+(343578320, 1, 11, 226197290, 'Legion 7 Pro', 0, '<p>Legion 7 Pro</p>\r\n', 'produk1667264406.jpeg', 1, 8, 7, '2022-11-02 06:34:49'),
+(413634779, 1449068914, 11, 1973793895, 'Lakban Hitam', 0, '', 'produk1667360270.jpeg', 1, 5, 4, '2022-11-02 06:37:01'),
+(494196003, 15, 17, 1865191190, 'Sayur Kol', 0, '', 'produk1667269310.jpg', 1, 0, 12, '2022-10-31 19:21:50'),
+(495728242, 6, 11, 226197290, 'Xiaomi Blackshark', 0, '', 'produk1667360329.jpeg', 1, 7, 5, '2022-11-02 06:36:06'),
+(877418278, 795262890, 11, 164930724, 'Kertas Folio', 0, '', 'produk1667360063.png', 1, 8, 4, '2022-11-02 06:36:40'),
+(973071678, 1003224087, 11, 1973793895, 'Kalkulator', 0, '<p>Kalkulator uye</p>\r\n', 'produk1667379019.jpeg', 1, 7, 5, '2022-11-02 08:50:35'),
+(1039066942, 1003224087, 11, 1973793895, 'Gunting', 0, '', 'produk1667360102.jpeg', 1, 0, 4, '2022-11-02 03:35:02'),
+(1332968871, 7, 12, 164930724, 'Kertas HVS', 0, '', 'produk1667268060.png', 1, 0, 5, '2022-10-31 19:01:00'),
+(1342997879, 1073600112, 11, 226197290, 'Keyboard Wireless', 0, '', 'produk1667359995.jpeg', 1, 0, 5, '2022-11-02 03:33:15'),
+(1354934101, 1191287753, 11, 226197290, 'Tinta Cartridge Hitam', 0, '', 'produk1667269352.jpeg', 1, 0, 3, '2022-10-31 19:22:32'),
+(1372845152, 1556681427, 6, 226197290, 'Flashdisk 16GB', 0, '', 'produk1667269241.jpg', 1, 0, 5, '2022-10-31 19:20:41'),
+(1601988398, 1722651780, 14, 1007087517, 'Amplop Kecil', 0, '', 'produk1667269277.jpeg', 1, 0, 11, '2022-10-31 19:21:17'),
+(1621134896, 1449068914, 11, 1170976619, 'Lem Fox', 0, '', 'produk1667360157.jpeg', 1, 0, 3, '2022-11-02 04:14:21'),
+(1705632047, 1722651780, 11, 165324393, 'Amplop Putih', 0, '', 'produk1667360020.jpeg', 1, 0, 2, '2022-11-02 03:33:40'),
+(1852198471, 5, 16, 1865191190, 'Kemeja Wanita', 0, '', 'produk1667268264.jpg', 1, 0, 12, '2022-10-31 19:04:24'),
+(1871276211, 1, 2, 1973793895, 'Legion 5', 0, '<p>Legion 5 Biasa</p>\r\n', 'produk1667264342.jpg', 1, 0, 5, '2022-10-31 17:59:02'),
+(2125807336, 7, 11, 1973793895, 'Buku Folio', 0, '', 'produk1667359638.jpeg', 1, 9, 7, '2022-11-02 06:35:03'),
+(2144384152, 1556681427, 11, 226197290, 'Flashdisk 32 GB', 0, '<p>Flashdisk 32 GB</p>\r\n', 'produk1667359595.jpg', 1, 0, 8, '2022-11-02 03:26:35');
 
 -- --------------------------------------------------------
 
@@ -223,6 +274,7 @@ INSERT INTO `data_superadmin` (`super_admin_id`, `office_id`, `super_name`, `sup
 
 CREATE TABLE `data_transaction` (
   `order_id` int(255) NOT NULL,
+  `cart_id` int(15) NOT NULL,
   `user_id` int(20) NOT NULL,
   `user_name` varchar(50) NOT NULL,
   `user_email` varchar(50) NOT NULL,
@@ -233,21 +285,43 @@ CREATE TABLE `data_transaction` (
   `product_name` varchar(100) NOT NULL,
   `category_id` int(20) NOT NULL,
   `category_name` varchar(50) NOT NULL,
+  `unit_id` int(15) NOT NULL,
+  `unit_name` varchar(50) NOT NULL,
   `quantity` int(20) NOT NULL,
   `created` datetime DEFAULT NULL,
-  `status` tinyint(1) NOT NULL,
+  `red_flag` varchar(50) DEFAULT NULL,
+  `status` varchar(50) NOT NULL,
   `notes` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+-- --------------------------------------------------------
+
 --
--- Dumping data for table `data_transaction`
+-- Table structure for table `data_unit`
 --
 
-INSERT INTO `data_transaction` (`order_id`, `user_id`, `user_name`, `user_email`, `user_telp`, `office_id`, `office_name`, `product_id`, `product_name`, `category_id`, `category_name`, `quantity`, `created`, `status`, `notes`) VALUES
-(770725727, 150, 'Jakarta', 'jakarta@email.com', '02112345678', 11, 'Perwakilan Jakarta Raya', 4, 'Iphone ', 6, 'Smartphone', 5, '2022-10-10 06:14:35', 2, 'Stock tidak ada'),
-(774496623, 150, 'Jakarta', 'jakarta@email.com', '02112345678', 11, 'Perwakilan Jakarta Raya', 2, 'Headphone ROG', 3, 'Headphone', 1, '2022-10-10 06:14:35', 1, 'Langsung ambil'),
-(1513518791, 14, 'Sumut', 'sumut@email.com', '0218371279', 2, 'Perwakilan Sumatera Utara', 5, 'Kemeja Pria', 4, 'Pakaian Pria', 1, '2022-10-09 22:41:44', 0, ''),
-(1791860284, 150, 'Jakarta', 'jakarta@email.com', '02112345678', 11, 'Perwakilan Jakarta Raya', 1, 'Acer Predator', 1, 'Laptop', 2, '2022-10-10 06:14:35', 0, NULL);
+CREATE TABLE `data_unit` (
+  `unit_id` int(15) NOT NULL,
+  `unit_name` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `data_unit`
+--
+
+INSERT INTO `data_unit` (`unit_id`, `unit_name`) VALUES
+(164930724, 'Rim'),
+(165324393, 'Lembar'),
+(226197290, 'Unit'),
+(362289108, 'Box'),
+(578006496, 'Kodi'),
+(1007087517, 'Box Kecil'),
+(1170976619, 'Rol'),
+(1222535816, 'Set'),
+(1648533409, 'Pack'),
+(1711668626, 'Box Besar'),
+(1865191190, 'Lusin'),
+(1973793895, 'Buah');
 
 -- --------------------------------------------------------
 
@@ -280,6 +354,87 @@ INSERT INTO `data_user` (`user_id`, `office_id`, `user_location`, `user_name`, `
 (150, 11, 'Jakarta', 'Jakarta', 'jakarta', '629ab14fab772d78a58eea752bdfc0dc', '02112345678', 'jakarta@email.com', 'DKI Jakarta'),
 (234, 11, 'Jakarta', 'User', 'user', 'ee11cbb19052e40b07aac0ca060c23ee', '02107381979', 'user@email.com', 'Jalan Setiabudi');
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `stocking_item`
+--
+
+CREATE TABLE `stocking_item` (
+  `stocking_id` int(15) NOT NULL,
+  `product_id` int(15) NOT NULL,
+  `product_name` varchar(50) NOT NULL,
+  `category_id` int(15) NOT NULL,
+  `category_name` varchar(50) NOT NULL,
+  `unit_id` int(15) NOT NULL,
+  `unit_name` varchar(50) NOT NULL,
+  `stocking_before` int(15) NOT NULL,
+  `stocking_after` int(15) NOT NULL,
+  `admin_id` int(15) NOT NULL,
+  `admin_name` varchar(50) NOT NULL,
+  `office_id` int(15) NOT NULL,
+  `office_name` varchar(50) NOT NULL,
+  `modified` datetime NOT NULL,
+  `quantity` int(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `stocking_item`
+--
+
+INSERT INTO `stocking_item` (`stocking_id`, `product_id`, `product_name`, `category_id`, `category_name`, `unit_id`, `unit_name`, `stocking_before`, `stocking_after`, `admin_id`, `admin_name`, `office_id`, `office_name`, `modified`, `quantity`) VALUES
+(129575688, 1100121, 'Legion 5 Pro', 1, 'Laptop', 1711668626, 'Box Besar', 0, 7, 99, 'Admin', 11, 'Perwakilan Jakarta Raya', '2022-11-01 06:38:56', 7),
+(217763497, 112687898, 'Lakban Putih', 1449068914, 'Alat Perekat', 1222535816, 'Set', 0, 7, 99, 'Admin', 11, 'Perwakilan Jakarta Raya', '2022-11-02 13:32:55', 7),
+(519886335, 1, 'Acer Predator', 1, 'Laptop', 1973793895, 'Buah', 0, 7, 99, 'Admin', 11, 'Perwakilan Jakarta Raya', '2022-11-02 15:39:41', 7),
+(1144711616, 343578320, 'Legion 7 Pro', 1, 'Laptop', 226197290, 'Unit', 0, 8, 99, 'Admin', 11, 'Perwakilan Jakarta Raya', '2022-11-02 13:34:49', 8),
+(1194492583, 1312424, 'Buku Tulis', 7, 'Alat Tulis', 1973793895, 'Buah', 0, 8, 99, 'Admin', 11, 'Perwakilan Jakarta Raya', '2022-11-02 13:32:37', 8),
+(1373004334, 495728242, 'Xiaomi Blackshark', 6, 'Smartphone', 226197290, 'Unit', 0, 7, 99, 'Admin', 11, 'Perwakilan Jakarta Raya', '2022-11-02 13:36:06', 7),
+(1634281027, 877418278, 'Kertas Folio', 795262890, 'Berbagai Kertas', 164930724, 'Rim', 0, 8, 99, 'Admin', 11, 'Perwakilan Jakarta Raya', '2022-11-02 13:36:40', 8),
+(1710969313, 973071678, 'Kalkulator', 1003224087, 'Alat Tulis Kantor', 1973793895, 'Buah', 0, 7, 99, 'Admin', 11, 'Perwakilan Jakarta Raya', '2022-11-02 15:50:35', 7),
+(1894600463, 2125807336, 'Buku Folio', 7, 'Alat Tulis', 1973793895, 'Buah', 0, 9, 99, 'Admin', 11, 'Perwakilan Jakarta Raya', '2022-11-02 13:35:03', 9),
+(1990107067, 413634779, 'Lakban Hitam', 1449068914, 'Alat Perekat', 1973793895, 'Buah', 0, 5, 99, 'Admin', 11, 'Perwakilan Jakarta Raya', '2022-11-02 13:37:01', 5);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `transaction_history`
+--
+
+CREATE TABLE `transaction_history` (
+  `order_id` int(15) NOT NULL,
+  `cart_id` int(15) NOT NULL,
+  `user_id` int(15) NOT NULL,
+  `user_name` varchar(50) NOT NULL,
+  `user_email` varchar(50) NOT NULL,
+  `user_telp` int(20) NOT NULL,
+  `office_id` int(15) NOT NULL,
+  `office_name` varchar(50) NOT NULL,
+  `product_id` int(15) NOT NULL,
+  `product_name` varchar(50) NOT NULL,
+  `category_id` int(15) NOT NULL,
+  `category_name` varchar(50) NOT NULL,
+  `unit_id` int(15) NOT NULL,
+  `unit_name` varchar(50) NOT NULL,
+  `quantity` int(15) NOT NULL,
+  `created` datetime NOT NULL,
+  `red_flag` varchar(20) NOT NULL,
+  `status` varchar(50) NOT NULL,
+  `notes` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `transaction_history`
+--
+
+INSERT INTO `transaction_history` (`order_id`, `cart_id`, `user_id`, `user_name`, `user_email`, `user_telp`, `office_id`, `office_name`, `product_id`, `product_name`, `category_id`, `category_name`, `unit_id`, `unit_name`, `quantity`, `created`, `red_flag`, `status`, `notes`) VALUES
+(115310661, 1331086609, 234, 'User', 'user@email.com', 2107381979, 11, 'Perwakilan Jakarta Raya', 2, 'Headphone ROG', 3, 'Headphone', 1973793895, 'Buah', 2, '2022-11-01 07:24:57', 'not red', 'Tidak Disetujui Admin', ''),
+(154379271, 1455912358, 234, 'User', 'user@email.com', 2107381979, 11, 'Perwakilan Jakarta Raya', 1, 'Acer Predator', 1, 'Laptop', 1973793895, 'Buah', 4, '2022-11-02 12:27:16', 'not red', 'Berhasil Diambil', ''),
+(382312388, 1163327406, 234, 'User', 'user@email.com', 2107381979, 11, 'Perwakilan Jakarta Raya', 1, 'Acer Predator', 1, 'Laptop', 1973793895, 'Buah', 1, '2022-11-01 07:16:44', 'not red', 'Berhasil Diambil', ''),
+(490762911, 1205612291, 234, 'User', 'user@email.com', 2107381979, 11, 'Perwakilan Jakarta Raya', 2, 'Headphone ROG', 3, 'Headphone', 1973793895, 'Buah', 3, '2022-11-02 12:23:19', 'not red', 'Berhasil Diambil', ''),
+(1144172775, 1205612291, 234, 'User', 'user@email.com', 2107381979, 11, 'Perwakilan Jakarta Raya', 1, 'Acer Predator', 1, 'Laptop', 1973793895, 'Buah', 3, '2022-11-02 12:23:19', 'not red', 'Berhasil Diambil', ''),
+(1405404201, 1810798801, 234, 'User', 'user@email.com', 2107381979, 11, 'Perwakilan Jakarta Raya', 2, 'Headphone ROG', 3, 'Headphone', 1973793895, 'Buah', 4, '2022-11-02 15:37:54', 'not red', 'Berhasil Diambil', ''),
+(2004257938, 1810798801, 234, 'User', 'user@email.com', 2107381979, 11, 'Perwakilan Jakarta Raya', 1, 'Acer Predator', 1, 'Laptop', 1973793895, 'Buah', 2, '2022-11-02 15:37:54', 'not red', 'Berhasil Diambil', '');
+
 --
 -- Indexes for dumped tables
 --
@@ -298,7 +453,8 @@ ALTER TABLE `data_cart`
   ADD KEY `user_id` (`user_id`),
   ADD KEY `office_id` (`office_id`),
   ADD KEY `category_id` (`category_id`),
-  ADD KEY `product_id` (`product_id`);
+  ADD KEY `product_id` (`product_id`),
+  ADD KEY `unit_id` (`unit_id`);
 
 --
 -- Indexes for table `data_category`
@@ -313,12 +469,21 @@ ALTER TABLE `data_office`
   ADD PRIMARY KEY (`office_id`);
 
 --
+-- Indexes for table `data_order`
+--
+ALTER TABLE `data_order`
+  ADD PRIMARY KEY (`cart_id`),
+  ADD KEY `user_id` (`user_id`),
+  ADD KEY `office_id` (`office_id`);
+
+--
 -- Indexes for table `data_product`
 --
 ALTER TABLE `data_product`
   ADD PRIMARY KEY (`product_id`),
   ADD KEY `category_id` (`category_id`),
-  ADD KEY `office_id` (`office_id`);
+  ADD KEY `office_id` (`office_id`),
+  ADD KEY `unit_id` (`unit_id`);
 
 --
 -- Indexes for table `data_superadmin`
@@ -335,7 +500,15 @@ ALTER TABLE `data_transaction`
   ADD KEY `user_id` (`user_id`),
   ADD KEY `office_id` (`office_id`),
   ADD KEY `product_id` (`product_id`),
-  ADD KEY `category_id` (`category_id`);
+  ADD KEY `category_id` (`category_id`),
+  ADD KEY `unit_id` (`unit_id`),
+  ADD KEY `cart_id` (`cart_id`);
+
+--
+-- Indexes for table `data_unit`
+--
+ALTER TABLE `data_unit`
+  ADD PRIMARY KEY (`unit_id`);
 
 --
 -- Indexes for table `data_user`
@@ -345,14 +518,31 @@ ALTER TABLE `data_user`
   ADD KEY `office_id` (`office_id`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- Indexes for table `stocking_item`
 --
+ALTER TABLE `stocking_item`
+  ADD PRIMARY KEY (`stocking_id`),
+  ADD KEY `admin_id` (`admin_id`),
+  ADD KEY `office_id` (`office_id`),
+  ADD KEY `unit_id` (`unit_id`),
+  ADD KEY `category_id` (`category_id`),
+  ADD KEY `product_id` (`product_id`);
 
 --
--- AUTO_INCREMENT for table `data_admin`
+-- Indexes for table `transaction_history`
 --
-ALTER TABLE `data_admin`
-  MODIFY `admin_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=246;
+ALTER TABLE `transaction_history`
+  ADD PRIMARY KEY (`order_id`),
+  ADD KEY `cart_id` (`cart_id`),
+  ADD KEY `user_id` (`user_id`),
+  ADD KEY `office_id` (`office_id`),
+  ADD KEY `product_id` (`product_id`),
+  ADD KEY `category_id` (`category_id`),
+  ADD KEY `unit_id` (`unit_id`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
 
 --
 -- AUTO_INCREMENT for table `data_user`
