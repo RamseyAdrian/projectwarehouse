@@ -133,8 +133,6 @@ $kantor_admin = $_SESSION['a_global']->office_id;
                             ?>
                         </select>
                         <br><br>
-                        <h4>ID Barang</h4>
-                        <input type="text" name="idbarang" class="input-control" placeholder="ID Barang" required>
                         <h4>Nama Barang</h4>
                         <input type="text" name="nama" class="input-control" placeholder="Nama Barang" required>
                         <h4>Harga Barang (opsional)</h4>
@@ -146,7 +144,7 @@ $kantor_admin = $_SESSION['a_global']->office_id;
                         <h4>Batas Minim Restock (opsional)</h4>
                         <input type="number" name="batasbarang" class="input-control" value="0" min="0"><br>
                         <h4>Status Barang</h4>
-                        <select name="status" class="input-control">
+                        <select name="status" class="input-control" required>
                             <option value="">--Pilih--</option>
                             <option value="1">Aktif</option>
                             <option value="0">Tidak Aktif</option>
@@ -157,7 +155,7 @@ $kantor_admin = $_SESSION['a_global']->office_id;
                     <?php
                     if (isset($_POST['submit'])) {
                         //menampung input dari form
-                        $idbarang = $_POST['idbarang'];
+                        $idbarang = rand();
                         $kategori = $_POST['kategori'];
                         $satuan = $_POST['satuan'];
                         $nama = $_POST['nama'];
@@ -338,7 +336,7 @@ $kantor_admin = $_SESSION['a_global']->office_id;
                         <h4>Batas Minim Restock (opsional)</h4>
                         <input type="number" name="batasbarang" class="input-control" min="0" max="1000" value="0"><br>
                         <h4>Status Barang</h4>
-                        <select name="status" class="input-control">
+                        <select name="status" class="input-control" required>
                             <option value="">--Pilih--</option>
                             <option value="1">Aktif</option>
                             <option value="0">Tidak Aktif</option>

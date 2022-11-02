@@ -128,9 +128,6 @@ $fa_data = mysqli_fetch_array($data);
                         }
                         ?>
                         <br>
-                        <h2>Status Pemesanan Barang</h2>
-                        <input type="text" class="input-control" name="status" value="<?php echo $fa_data['status'] ?>" readonly>
-                        <br><br>
                         <center>
                             <input type="submit" name="submit" class="btn" value="Kembali">
                         </center>

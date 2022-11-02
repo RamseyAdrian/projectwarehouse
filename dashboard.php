@@ -126,7 +126,7 @@ $_SESSION['jumlah_pesanan'] = $jml_keranjang;
                         <?php
                         if ($jml_keranjang == 0) {
                         ?>
-                            <h2 style="color:green ;">Belum Ada Pesanan User</h2>
+                            <h2 style="color:green ;">Belum Ada Pesanan </h2>
                             <h3>Pastikan Semua Stock Aman Ya ! <br> Supaya Transaksi Barang Lancar</h3>
                         <?php
                         } else {
@@ -411,7 +411,10 @@ $_SESSION['jumlah_pesanan'] = $jml_keranjang;
 
         <div class="section">
             <div class="container">
-                <h3>Dashboard</h3>
+                <div class="box-dash-0">
+                    <i class="fa fa-area-chart fa-2x" aria-hidden="true"></i>
+                    <h2 style="font-weight:bolder;">Dashboard</h2>
+                </div>
                 <?php
                 $idperwakilan = $_SESSION['a_global']->office_id;
                 $namaperwakilan = mysqli_query($conn, "SELECT * FROM data_office WHERE office_id = '" . $idperwakilan . "' ");

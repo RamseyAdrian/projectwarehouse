@@ -103,40 +103,43 @@ $kantor_admin = $_SESSION['a_global']->office_id;
         <!---------------------- Content ----------------------------------->
         <div class="section">
             <div class="container">
-                <h3>List Barang yang Perlu Restock</h3>
+                <h2>List Barang yang Perlu Restock</h2>
                 <br>
-                <table border="1" cellspacing="0" class="table">
-                    <thead>
-                        <tr>
-                            <th width="25%">Perwakilan</th>
-                            <th width="12%">ID Barang</th>
-                            <th>Kategori</th>
-                            <th>Nama Barang</th>
-                            <th>Stock</th>
-                            <th>Batas</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php
-                        $leftjoin_office = "LEFT JOIN data_office USING (office_id)";
-                        $stock_query = mysqli_query($conn, "SELECT * FROM data_product LEFT JOIN data_category USING (category_id) LEFT JOIN data_unit USING (unit_id) $leftjoin_office WHERE stock_point >= stock ");
-                        if (mysqli_num_rows($stock_query)) {
-                            while ($fetch_stock = mysqli_fetch_array($stock_query)) {
-                        ?>
-                                <tr>
-                                    <td><?php echo $fetch_stock['office_name'] ?></td>
-                                    <td><?php echo $fetch_stock['product_id'] ?></td>
-                                    <td><?php echo $fetch_stock['category_name'] ?></td>
-                                    <td><?php echo $fetch_stock['product_name'] ?></td>
-                                    <td><?php echo $fetch_stock['stock'] ?></td>
-                                    <td><?php echo $fetch_stock['stock_point'] ?></td>
-                                </tr>
-                        <?php
+                <div class="box">
+                    <table border="1" cellspacing="0" class="table">
+                        <thead>
+                            <tr>
+                                <th width="25%">Perwakilan</th>
+                                <th width="12%">ID Barang</th>
+                                <th>Kategori</th>
+                                <th>Nama Barang</th>
+                                <th>Stock</th>
+                                <th>Batas</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                            $leftjoin_office = "LEFT JOIN data_office USING (office_id)";
+                            $stock_query = mysqli_query($conn, "SELECT * FROM data_product LEFT JOIN data_category USING (category_id) LEFT JOIN data_unit USING (unit_id) $leftjoin_office WHERE stock_point >= stock ");
+                            if (mysqli_num_rows($stock_query)) {
+                                while ($fetch_stock = mysqli_fetch_array($stock_query)) {
+                            ?>
+                                    <tr>
+                                        <td><?php echo $fetch_stock['office_name'] ?></td>
+                                        <td><?php echo $fetch_stock['product_id'] ?></td>
+                                        <td><?php echo $fetch_stock['category_name'] ?></td>
+                                        <td><?php echo $fetch_stock['product_name'] ?></td>
+                                        <td><?php echo $fetch_stock['stock'] ?></td>
+                                        <td><?php echo $fetch_stock['stock_point'] ?></td>
+                                    </tr>
+                            <?php
+                                }
                             }
-                        }
-                        ?>
-                    </tbody>
-                </table>
+                            ?>
+                        </tbody>
+                    </table>
+                </div>
+
             </div>
         </div>
     <?php

@@ -48,6 +48,7 @@ body {
 .btn{
     padding: 8px 15px;
     box-sizing: border-box;
+    border-radius: 10px;
     width: 100%;
     background-color: #c70039;
     color: #fff;
@@ -226,6 +227,7 @@ a {
 
 .box {
     background-color: #fff;
+    border-radius: 10px;
     border: 1px solid #ccc;
     padding: 15px;
     box-sizing: border-box;
@@ -253,6 +255,7 @@ a {
 .section .container .box-new-product {
     background-color: #fff;
     border: 1px solid #ccc;
+    border-radius: 10px;
     padding: 15px;
     box-sizing: border-box;
     display: flex;
@@ -277,6 +280,29 @@ a {
     display: flex;
     align-items: center;
     justify-content: space-evenly;
+}
+
+/*choose-pickup-detail.php*/
+.section .container a .container-items {
+    background-color: #fff;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    padding: 15px;
+    box-sizing: border-box;
+    margin: 10px 0 25px 0;
+    transition: 0.3s;
+}
+
+.section .container a .container-items:hover {
+    box-shadow: 0 0 40px rgba(33,33,33,.2); 
+    border: 1px solid grey;
+}
+
+.section .container a .container-items form {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 3em;
 }
 
 /*Data Kategori*/
@@ -315,6 +341,12 @@ a {
     color: #fff;
     border: none;
     cursor: pointer;
+}
+
+.section .container .search input[type=text]{
+    margin-left: 2em;
+    background-color: #fff;
+    border: 1px solid #000;
 }
 
 .col-5 {

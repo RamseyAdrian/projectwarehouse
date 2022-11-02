@@ -776,11 +776,20 @@ $idkantoradmin = $_SESSION['a_global']->office_id;
                                 <img src="produk/<?php echo $fo_trans->product_image ?>" width="100px">
                                 <br><br>
                                 <h3>Jumlah Pesanan</h3>
-                                <input type="text" name="quantity" class="input-control" value="<?php echo $fo_trans->quantity ?>" readonly>
-                                <h3>Waktu Pesanan Dibuat</h3>
-                                <input type="text" name="waktu" class="input-control" value="<?php echo $fo_trans->created ?>" readonly>
-                                <h3>Ketersediaan Barang</h3>
-                                <h4>Stock : <?php echo $fo_trans->stock ?></h4>
+                                <?php
+                                $satuan = mysqli_query($conn, "SELECT * FROM data_unit WHERE unit_id = '" . $fo_trans->unit_id . "' ");
+                                while ($fa_satuan = mysqli_fetch_array($satuan)) {
+                                ?>
+                                    <h3 style="color: red ;"><?php echo $fo_trans->quantity, " ", $fa_satuan['unit_name'] ?></h3><br>
+                                    <h3>Waktu Pesanan Dibuat</h3>
+                                    <h3 style="color: red ;"><?php echo $fo_trans->created ?></h3><br>
+                                    <h3>Ketersediaan Barang</h3>
+                                    <h4>Stock : <?php echo $fo_trans->stock, " ", $fa_satuan['unit_name'] ?></h4>
+                                <?php
+                                }
+                                ?>
+                                <br>
+
                                 <?php
                                 if ($fo_trans->stock >= $fo_trans->quantity) {
                                     $stock_ready++;
@@ -822,41 +831,7 @@ $idkantoradmin = $_SESSION['a_global']->office_id;
             </div>
         </div>
 
-        <!---------------------- Footer ----------------------------------->
 
-        <div class="footer-dark">
-            <footer>
-                <div class="container">
-                    <div class="row" style="display: flex ;">
-                        <div class="col-md-6 item text" style="margin-right: 90px ;">
-                            <h3>Ombudsman RI</h3>
-                            <p>Kantor Pusat <br>
-                                Jl. HR. Rasuna Said Kav. C-19 Kuningan, Jakarta Selatan 12920</p>
-                        </div>
-                        <div class="col-sm-6 col-md-3 item" style="margin-right: 90px ;">
-                            <h3>Kontak</h3>
-                            <ul>
-                                <li><a href="#">No Telfon : (021) 2251 3737</a></li>
-                                <li><a href="#">Fax : (021) 5296 0907 / 5296 0908</a></li>
-                                <li><a href="#">Email : humas@ombudsman.go.id</a></li>
-                            </ul>
-                        </div>
-                        <br>
-                        <div class="col-sm-6 col-md-3 item" style="margin-right: 90px ;">
-                            <h3>About</h3>
-                            <ul>
-                                <li><a href="https://ombudsman.go.id/">Ombudsman</a></li>
-                                <li><a href="dev-team.php">Dev Team</a></li>
-                            </ul>
-                        </div>
-                        <br>
-                    </div>
-                    <p class="copyright">Ombudsman RI © 2022</p>
-                    <p class="copyright">Made By Divisi HTI & <a href="dev-team.php" target="-blank">Team RJN</a></p>
-                    <i class="fa-regular fa-cart-shopping"></i>
-                </div>
-            </footer>
-        </div>
 
         <script>
             CKEDITOR.replace('notes');

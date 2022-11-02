@@ -102,7 +102,8 @@ $kantor_admin = $_SESSION['a_global']->office_id;
             <h3>Tambah Stock Barang</h3>
             <div class="box">
                 <form action="" method="POST" enctype="multipart/form-data">
-                    <h2><?php echo $p->product_name ?></h2>
+                    <h2><?php echo $p->product_name ?></h2><br>
+                    <h3 style="color:red ;">Batas Restock : <?php echo $p->stock_point ?></h3>
                     <h3>Sisa Stock : <?php echo $p->stock ?></h3><br>
                     <h4>Jumlah Stok Tambahan</h4>
                     <input type="number" name="stock" class="input-control" value="1" min="1" max="1000">

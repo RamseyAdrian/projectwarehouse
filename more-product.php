@@ -114,6 +114,13 @@ $p = mysqli_fetch_object($produk);
                 <button><a href="product-data.php" style="text-decoration: none ; font-weight:bold;">Kembali</a></button><br><br>
             </div>
             <br>
+            <!-----------------------search-------------------------------------->
+            <div class="search">
+                <form action="search-product.php" method="GET">
+                    <input type="text" name="search" placeholder="cari produk">
+                    <input type="submit" name="cari" value="Cari">
+                </form>
+            </div>
             <div class="box">
 
                 <table border="1" cellspacing="0" class="table">

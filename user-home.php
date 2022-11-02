@@ -126,7 +126,7 @@ $user_id = $_SESSION['a_global']->user_id;
         <div class="container">
             <div class="box">
                 <?php
-                $produk = mysqli_query($conn, "SELECT * FROM data_product LEFT JOIN data_office USING (office_id) WHERE product_status=1 AND office_id = '" . $user_office . "' ORDER BY product_id LIMIT $start_from, $per_page_record ");
+                $produk = mysqli_query($conn, "SELECT * FROM data_product LEFT JOIN data_office USING (office_id) WHERE product_status=1 AND office_id = '" . $user_office . "' ORDER BY product_name LIMIT $start_from, $per_page_record ");
                 if (mysqli_num_rows($produk) > 0) {
                     while ($p = mysqli_fetch_array($produk)) {
                         $namasatuan = mysqli_query($conn, "SELECT * FROM data_unit WHERE unit_id = '" . $p['unit_id'] . "' ");

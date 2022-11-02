@@ -110,7 +110,7 @@ include 'db.php';
                                 } else {
                                 ?>
                                     <center>
-                                        <p class="nama">Sisa Stok : <?php echo $p['stock'], " ", $fa_satuan['unit_name'] ?></p>
+                                        <p class="nama">Sisa Stock : <?php echo $p['stock'], " ", $fa_satuan['unit_name'] ?></p>
                                     </center>
                                 <?php
                                 }

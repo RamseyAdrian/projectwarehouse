@@ -106,226 +106,49 @@ $idkantoradmin = $_SESSION['a_global']->office_id;
                     <li><a href="logout.php">Keluar</a></li>
                 </ul>
             </div>
+
         </header>
 
         <!---------------------- Content ----------------------------------->
 
         <div class="section">
             <div class="container">
-                <h2>Proses Pengambilan Barang</h2>
-                <div class="box">
-                    <form action="" method="POST" enctype="multipart/form-data">
-                        <?php
-                        $barang_aman = 0;
-                        $no = 1;
-                        $jumlah_barang = mysqli_num_rows($trans);
-                        if ($jumlah_barang > 0) {
-                            while ($fo_trans = mysqli_fetch_object($trans)) {
-
-                        ?>
-                                <h1>Barang ke <?php echo $no ?></h1><br>
-                                <h2 id="h2produk"><?php echo $fo_trans->product_name ?></h2><br><br>
-                                <img src="produk/<?php echo $fo_trans->product_image ?>" width="100px">
-                                <br><br>
-                                <h3>Jumlah Pesanan</h3>
-                                <?php
-                                $satuan = mysqli_query($conn, "SELECT * FROM data_unit WHERE unit_id = '" . $fo_trans->unit_id . "' ");
-                                while ($fa_satuan = mysqli_fetch_array($satuan)) {
-                                ?>
-                                    <h3 style="color: red ;"><?php echo $fo_trans->quantity, " ", $fa_satuan['unit_name'] ?></h3><br>
+                <h2>Pilih Barang</h2>
+                <?php
+                $no = 1;
+                while ($fo_trans = mysqli_fetch_object($trans)) {
+                ?>
+                    <a href="edit-pickup-detail.php?id=<?php echo $fo_trans->order_id ?>" style="text-decoration:none ;">
+                        <div class="container-items">
+                            <form action="" method="POST">
+                                <div class="items-img">
+                                    <img src="produk/<?php echo $fo_trans->product_image ?>" width="150px">
+                                </div>
+                                <div class="items-content">
+                                    <h2 id="h2produk"><?php echo $fo_trans->product_name ?></h2><br>
+                                    <h3>Jumlah Pesanan</h3>
                                     <?php
-                                    $barang = mysqli_query($conn, "SELECT * FROM data_product WHERE product_id = '" . $fo_trans->product_id . "' AND office_id = '" . $fo_trans->office_id . "' ");
-                                    $fetch_barang = mysqli_fetch_array($barang);
-                                    if ($fetch_barang['stock'] >= $fo_trans->quantity) {
-                                        $barang_aman++;
+                                    $satuan = mysqli_query($conn, "SELECT * FROM data_unit WHERE unit_id = '" . $fo_trans->unit_id . "' ");
+                                    while ($fa_satuan = mysqli_fetch_array($satuan)) {
                                     ?>
-                                        <h3>Sisa Stock <h3 style="color:red;"><?php echo $fetch_barang['stock'], " ", $fa_satuan['unit_name'] ?></h3>
-                                        </h3>
-                                    <?php
-                                    } else {
-                                    ?>
-                                        <h3>Sisa Stock <h3 style="color:green;"><?php echo $fetch_barang['stock'], " ", $fa_satuan['unit_name'] ?></h3>
-
+                                        <h3 style="color: red ;"><?php echo $fo_trans->quantity, " ", $fa_satuan['unit_name'] ?></h3><br>
                                         <?php
-                                    }
+                                        $barang = mysqli_query($conn, "SELECT * FROM data_product WHERE product_id = '" . $fo_trans->product_id . "' AND office_id = '" . $fo_trans->office_id . "' ");
+                                        $fetch_barang = mysqli_fetch_array($barang);
                                         ?>
-
+                                        <h3>Sisa Stock : <?php echo $fetch_barang['stock'], " ", $fa_satuan['unit_name'] ?></h3>
                                     <?php
-                                }
+                                    }
                                     ?>
-                                    <?php
-                                    ?>
-                                    <br>
-                            <?php
-                                $no++;
-                            }
-                        }
-                            ?>
+                                </div>
+                            </form>
+                        </div>
+                    </a>
 
-                            <h3>Ada Stock Barang yang tidak aman ?</h3>
-                            <button id="button-restock"><a href="choose-pickup-detail.php?id=<?php echo $idcart ?>">Edit Disini</a></button>
-                            <center>
-                                <br>
-                                <input type="submit" name="gagal" class="input-control" value="Gagal Diambil" style="cursor: pointer ;">
-                            </center>
-                            <center>
-                                <input type="submit" name="berhasil" class="btn" value="Berhasil Diambil">
-                            </center>
-                    </form>
+                <?php
+                }
 
-                    <?php
-                    if (isset($_POST['berhasil']) && $barang_aman == $jumlah_barang) {
-                        $update_data_order = mysqli_query($conn, "UPDATE data_order SET 
-                            status = 'Berhasil Diambil',
-                            times_updated = NOW()
-                            WHERE cart_id = '" . $idcart . "'
-                        ");
-
-                        $trans2 = mysqli_query($conn, "SELECT * FROM data_transaction LEFT JOIN data_product USING (product_id) WHERE cart_id = '" . $idcart . "' ");
-
-                        if (mysqli_num_rows($trans2) > 0) {
-                            while ($fo_trans2 = mysqli_fetch_array($trans2)) {
-                                $unit = mysqli_query($conn, "SELECT * FROM data_unit WHERE unit_id = '" . $fo_trans2['unit_id'] . "' ");
-                                $fa_unit = mysqli_fetch_array($unit);
-
-                                $orderid = $fo_trans2['order_id'];
-                                $keranjang = $fo_trans2['cart_id'];
-                                $iduser = $fo_trans2['user_id'];
-                                $namauser = $fo_trans2['user_name'];
-                                $emailuser = $fo_trans2['user_email'];
-                                $telpuser = $fo_trans2['user_telp'];
-                                $namakantor = $fo_trans2['office_name'];
-                                $idkantor = $fo_trans2['office_id'];
-                                $productname = $fo_trans2['product_name'];
-                                $idkategori = $fo_trans2['category_id'];
-                                $namakategori = $fo_trans2['category_name'];
-                                $idsatuan = $fo_trans2['unit_id'];
-                                $namasatuan = $fa_unit['unit_name'];
-                                $idproduk = $fo_trans2['product_id'];
-                                $namaproduk = $fo_trans2['product_name'];
-                                $kuantitas = $fo_trans2['quantity'];
-                                $notes = $fo_trans2['notes'];
-                                $status = 'Berhasil Diambil';
-
-                                $stokbarang = $fo_trans2['stock'];
-                                $stokbarang_after = $stokbarang - $kuantitas;
-
-                                $update_stock = mysqli_query($conn, "UPDATE data_product SET
-                                    stock = '" . $stokbarang_after . "'
-                                    WHERE product_id = '" . $idproduk . "'
-                             ");
-
-                                $insert_transaction_history = mysqli_query($conn, "INSERT INTO transaction_history VALUES (
-                                        '" . $orderid . "',
-                                        '" . $keranjang . "',
-                                        '" . $iduser . "',
-                                        '" . $namauser . "',
-                                        '" . $emailuser . "',
-                                        '" . $telpuser . "',
-                                        '" . $idkantor . "',
-                                        '" . $namakantor . "',
-                                        '" . $idproduk . "',
-                                        '" . $namaproduk . "',
-                                        '" . $idkategori . "',
-                                        '" . $namakategori . "',
-                                        '" . $idsatuan . "',
-                                        '" . $namasatuan . "',
-                                        '" . $kuantitas . "',
-                                        NOW(),
-                                        '" . $fo_trans2['red_flag'] . "',
-                                        '" . $status . "',
-                                        '" . $notes . "'
-                                )");
-
-                                $delete_data_transaction = mysqli_query($conn, "DELETE FROM data_transaction WHERE data_transaction.order_id = '" . $orderid . "' ");
-
-                                echo '<script>Swal.fire({
-                                    title: "User Berhasil Mengambil Barang ",
-                                    text: "Klik OK Untuk Lanjut",
-                                    icon : "success"
-                               }).then(function() {
-                                    window.location = "pickup-product.php";
-                               });
-                               </script>';
-                            }
-                        }
-                    } else if (isset($_POST['gagal'])) {
-                        $update_data_order = mysqli_query($conn, "UPDATE data_order SET 
-                            status = 'Gagal Diambil',
-                            times_updated = NOW()
-                            WHERE cart_id = '" . $idcart . "'
-                        ");
-
-                        $trans2 = mysqli_query($conn, "SELECT * FROM data_transaction LEFT JOIN data_product USING (product_id) WHERE cart_id = '" . $idcart . "' ");
-
-                        if (mysqli_num_rows($trans2) > 0) {
-                            while ($fo_trans2 = mysqli_fetch_array($trans2)) {
-                                $unit = mysqli_query($conn, "SELECT * FROM data_unit WHERE unit_id = '" . $fo_trans2['unit_id'] . "' ");
-                                $fa_unit = mysqli_fetch_array($unit);
-
-                                $orderid = $fo_trans2['order_id'];
-                                $keranjang = $fo_trans2['cart_id'];
-                                $iduser = $fo_trans2['user_id'];
-                                $namauser = $fo_trans2['user_name'];
-                                $emailuser = $fo_trans2['user_email'];
-                                $telpuser = $fo_trans2['user_telp'];
-                                $namakantor = $fo_trans2['office_name'];
-                                $idkantor = $fo_trans2['office_id'];
-                                $productname = $fo_trans2['product_name'];
-                                $idkategori = $fo_trans2['category_id'];
-                                $namakategori = $fo_trans2['category_name'];
-                                $idsatuan = $fo_trans2['unit_id'];
-                                $namasatuan = $fa_unit['unit_name'];
-                                $idproduk = $fo_trans2['product_id'];
-                                $namaproduk = $fo_trans2['product_name'];
-                                $kuantitas = $fo_trans2['quantity'];
-                                $notes = $fo_trans2['notes'];
-                                $status = 'Gagal Diambil';
-
-                                $insert_transaction_history = mysqli_query($conn, "INSERT INTO transaction_history VALUES (
-                                        '" . $orderid . "',
-                                        '" . $keranjang . "',
-                                        '" . $iduser . "',
-                                        '" . $namauser . "',
-                                        '" . $emailuser . "',
-                                        '" . $telpuser . "',
-                                        '" . $idkantor . "',
-                                        '" . $namakantor . "',
-                                        '" . $idproduk . "',
-                                        '" . $namaproduk . "',
-                                        '" . $idkategori . "',
-                                        '" . $namakategori . "',
-                                        '" . $idsatuan . "',
-                                        '" . $namasatuan . "',
-                                        '" . $kuantitas . "',
-                                        NOW(),
-                                        '" . $fo_trans2['red_flag'] . "',
-                                        '" . $status . "',
-                                        '" . $notes . "'
-                                )");
-
-                                $delete_data_transaction = mysqli_query($conn, "DELETE FROM data_transaction WHERE data_transaction.order_id = '" . $orderid . "' ");
-
-                                echo '<script>Swal.fire({
-                                    title: "User Gagal Mengambil Barang ",
-                                    text: "Klik OK Untuk Lanjut",
-                                    icon : "success"
-                               }).then(function() {
-                                    window.location = "pickup-product.php";
-                               });
-                               </script>';
-                            }
-                        }
-                    } else if (isset($_POST['berhasil']) && $barang_aman < $jumlah_barang) {
-                        echo '<script>Swal.fire({
-                            title: "Ada Barang yang Kurang Stocknya ",
-                            text: "Silahkan Ubah Jumlah Barang atau Tolak Pengambilan",
-                            icon : "warning"
-                       });
-                       </script>';
-                    }
-                    ?>
-                </div>
+                ?>
             </div>
         </div>
 
