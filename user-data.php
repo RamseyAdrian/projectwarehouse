@@ -221,41 +221,7 @@ $admin_office = $_SESSION['a_global']->office_id;
             </div>
         </div>
 
-        <!---------------------- Footer ----------------------------------->
 
-        <div class="footer-dark">
-            <footer>
-                <div class="container">
-                    <div class="row" style="display: flex ;">
-                        <div class="col-md-6 item text" style="margin-right: 90px ;">
-                            <h3>Ombudsman RI</h3>
-                            <p>Kantor Pusat <br>
-                                Jl. HR. Rasuna Said Kav. C-19 Kuningan, Jakarta Selatan 12920</p>
-                        </div>
-                        <div class="col-sm-6 col-md-3 item" style="margin-right: 90px ;">
-                            <h3>Kontak</h3>
-                            <ul>
-                                <li><a href="#">No Telfon : (021) 2251 3737</a></li>
-                                <li><a href="#">Fax : (021) 5296 0907 / 5296 0908</a></li>
-                                <li><a href="#">Email : humas@ombudsman.go.id</a></li>
-                            </ul>
-                        </div>
-                        <br>
-                        <div class="col-sm-6 col-md-3 item" style="margin-right: 90px ;">
-                            <h3>About</h3>
-                            <ul>
-                                <li><a href="https://ombudsman.go.id/">Ombudsman</a></li>
-                                <li><a href="dev-team.php">Dev Team</a></li>
-                            </ul>
-                        </div>
-                        <br>
-                    </div>
-                    <p class="copyright">Ombudsman RI © 2022</p>
-                    <p class="copyright">Made By Divisi HTI & <a href="dev-team.php" target="-blank">Team RJN</a></p>
-                    <i class="fa-regular fa-cart-shopping"></i>
-                </div>
-            </footer>
-        </div>
         <!-----------------------------SUPER ADMIN -------------------------------------------->
     <?php
     } else if ($_SESSION['role_login'] == 'super') {
@@ -301,7 +267,6 @@ $admin_office = $_SESSION['a_global']->office_id;
                         </thead>
                         <tbody>
                             <?php
-
                             $user = mysqli_query($conn, "SELECT * FROM data_user ORDER BY office_id ");
                             if (mysqli_num_rows($user) > 0) {
                                 while ($row = mysqli_fetch_array($user)) {
@@ -328,7 +293,6 @@ $admin_office = $_SESSION['a_global']->office_id;
                                                     <a id="buttdetail" href="delete-data.php?idu=<?php echo $row['user_id'] ?>" onclick="return confirm('Yakin Hapus User ?') ">Hapus</a>
                                                 </button>
                                             </center>
-
                                         </td>
                                     </tr>
                                 <?php }
@@ -343,41 +307,7 @@ $admin_office = $_SESSION['a_global']->office_id;
             </div>
         </div>
 
-        <!---------------------- Footer ----------------------------------->
 
-        <div class="footer-dark">
-            <footer>
-                <div class="container">
-                    <div class="row" style="display: flex ;">
-                        <div class="col-md-6 item text" style="margin-right: 90px ;">
-                            <h3>Ombudsman RI</h3>
-                            <p>Kantor Pusat <br>
-                                Jl. HR. Rasuna Said Kav. C-19 Kuningan, Jakarta Selatan 12920</p>
-                        </div>
-                        <div class="col-sm-6 col-md-3 item" style="margin-right: 90px ;">
-                            <h3>Kontak</h3>
-                            <ul>
-                                <li><a href="#">No Telfon : (021) 2251 3737</a></li>
-                                <li><a href="#">Fax : (021) 5296 0907 / 5296 0908</a></li>
-                                <li><a href="#">Email : humas@ombudsman.go.id</a></li>
-                            </ul>
-                        </div>
-                        <br>
-                        <div class="col-sm-6 col-md-3 item" style="margin-right: 90px ;">
-                            <h3>About</h3>
-                            <ul>
-                                <li><a href="https://ombudsman.go.id/">Ombudsman</a></li>
-                                <li><a href="dev-team.php">Dev Team</a></li>
-                            </ul>
-                        </div>
-                        <br>
-                    </div>
-                    <p class="copyright">Ombudsman RI © 2022</p>
-                    <p class="copyright">Made By Divisi HTI & <a href="dev-team.php" target="-blank">Team RJN</a></p>
-                    <i class="fa-regular fa-cart-shopping"></i>
-                </div>
-            </footer>
-        </div>
     <?php
     }
     ?>

@@ -17,6 +17,8 @@ include 'db.php';
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Quicksand&display=swap" rel="stylesheet">
+    <!--------------------- Font Awesome ----------------------------->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <!--------------------- Additional CSS ----------------------------->
     <style>
         table {
@@ -67,33 +69,38 @@ include 'db.php';
     <!---------------------- header ----------------------------------->
 
     <header>
-        <div class="container">
+        <div class="container" id="navLinks">
             <h1><img style="width: 80px ; margin-bottom :-10px ;" src="img/logo-ombudsman2.png" alt=""><a href="index.php"> Gudang Ombudsman</a></h1>
+            <!-- <i class="fa fa-times fa-2x" onclick="hideMenu()"></i> -->
             <ul style="margin-top: 20px ;">
                 <li><a href="index.php">Home</a></li>
                 <li><a href="category-product.php">Kategori</a></li>
                 <li><a href="login.php">Login</a></li>
             </ul>
         </div>
+        <!-- <i class="fa fa-bars fa-2x" onclick="showMenu()"></i> -->
     </header>
 
     <!-----------------------search-------------------------------------->
 
-    <div class="search">
-        <div class="container">
-            <form action="homepage-product.php" method="GET">
-                <input type="text" name="search" placeholder="cari produk">
-                <input type="submit" name="cari" value="Cari">
-            </form>
+    <div class="section">
+        <div class="search">
+            <div class="container">
+                <form action="homepage-product.php" method="GET">
+                    <input type="text" name="search" placeholder="cari produk">
+                    <input type="submit" name="cari" value="Cari">
+                </form>
 
+            </div>
         </div>
     </div>
+
 
     <!--------------------------items------------------------------------->
 
     <div class="section">
         <div class="container">
-            <div class="box">
+            <div class="box-items">
                 <?php
                 $produk = mysqli_query($conn, "SELECT * FROM data_product LEFT JOIN data_office USING (office_id) WHERE product_status=1 ORDER BY product_id LIMIT $start_from, $per_page_record ");
                 if (mysqli_num_rows($produk) > 0) {
@@ -218,5 +225,17 @@ include 'db.php';
     </footer>
 </div>
 
+<!-----Javascript for Toggle Menu------>
+<script>
+    var navLinks = document.getElementById("navLinks");
+
+    function showMenu() {
+        navLinks.style.right = "0";
+    }
+
+    function hideMenu() {
+        navLinks.style.right = "-200px";
+    }
+</script>
 
 </html>

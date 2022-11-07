@@ -248,7 +248,7 @@ $_SESSION['jumlah_pesanan'] = $jml_keranjang;
                                         </td>
                                         <td>
                                             <center>
-                                                <button id="buttdetail"><a href="pickup-detail.php?id=<?php echo $fo_trans['cart_id'] ?>">Proses Pengambilan</a></button>
+                                                <button id="buttdetail"><a href="pickup-detail.php?id=<?php echo $fo_trans['cart_id'] ?>">Proses</a></button>
                                             </center>
                                         </td>
                                     </tr>
@@ -420,9 +420,17 @@ $_SESSION['jumlah_pesanan'] = $jml_keranjang;
                 $namaperwakilan = mysqli_query($conn, "SELECT * FROM data_office WHERE office_id = '" . $idperwakilan . "' ");
                 $row_np = mysqli_fetch_array($namaperwakilan);
                 ?>
-                <div class="box">
-                    <h2>Super Admin Ombudsman RI</h2>
-                    <h4><?php echo $_SESSION['a_global']->super_name ?></h4>
+                <div class="box-dash-0">
+                    <div class="box" style="width : 80% ;">
+                        <h1>Super Admin Ombudsman RI</h1><br>
+                        <h2><?php echo $_SESSION['a_global']->super_name ?></h2>
+                    </div>
+                    <a href="in-out-product.php" style="text-decoration: none ;">
+                        <div id="box-inout">
+                            <h2 style="color: red ;">Riwayat Keluar Masuk Barang</h2>
+                            <h3>Klik Untuk Lihat Lebih Lanjut</h3>
+                        </div>
+                    </a>
                 </div>
                 <div class="box-dash-1">
                     <div class="box">
@@ -606,13 +614,14 @@ $_SESSION['jumlah_pesanan'] = $jml_keranjang;
                         <center>
                             <br>
                             <button class="btn">
-                                <a href="more-restock-product.php" style="font-size: 15px ; text-decoration :none;">Lihat Lebih Banyak Produk</a>
+                                <a href="more-restock-product.php" style="font-size: 15px ; text-decoration :none;">Lihat Lebih Banyak</a>
                             </button>
                         </center>
                     <?php
                     }
                     ?>
                 </div>
+
             </div>
         </div>
 
@@ -620,42 +629,6 @@ $_SESSION['jumlah_pesanan'] = $jml_keranjang;
     <?php
     }
     ?>
-
-    <!---------------------- Footer ----------------------------------->
-
-    <!-- <div class="footer-dark">
-        <footer>
-            <div class="container">
-                <div class="row" style="display: flex ;">
-                    <div class="col-md-6 item text" style="margin-right: 90px ;">
-                        <h3>Ombudsman RI</h3>
-                        <p>Kantor Pusat <br>
-                            Jl. HR. Rasuna Said Kav. C-19 Kuningan, Jakarta Selatan 12920</p>
-                    </div>
-                    <div class="col-sm-6 col-md-3 item" style="margin-right: 90px ;">
-                        <h3>Kontak</h3>
-                        <ul>
-                            <li><a href="#">No Telfon : (021) 2251 3737</a></li>
-                            <li><a href="#">Fax : (021) 5296 0907 / 5296 0908</a></li>
-                            <li><a href="#">Email : humas@ombudsman.go.id</a></li>
-                        </ul>
-                    </div>
-                    <br>
-                    <div class="col-sm-6 col-md-3 item" style="margin-right: 90px ;">
-                        <h3>About</h3>
-                        <ul>
-                            <li><a href="https://ombudsman.go.id/">Ombudsman</a></li>
-                            <li><a href="dev-team.php">Dev Team</a></li>
-                        </ul>
-                    </div>
-                    <br>
-                </div>
-                <p class="copyright">Ombudsman RI © 2022</p>
-                <p class="copyright">Made By Divisi HTI & <a href="dev-team.php" target="-blank">Team RJN</a></p>
-                <i class="fa-regular fa-cart-shopping"></i>
-            </div>
-        </footer>
-    </div> -->
 
 </body>
 

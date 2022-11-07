@@ -102,6 +102,7 @@ $user_id = $_SESSION['a_global']->user_id;
             </ul>
         </div>
     </header>
+    <br>
 
     <!-----------------------search-------------------------------------->
     <div class="search">

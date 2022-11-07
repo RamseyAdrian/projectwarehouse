@@ -8,7 +8,7 @@ body {
     background: url("../img/background-login.png");
 }
 
-/* Login */
+/*-------------------------- Login -------------------------------------*/
 
 #bg-login{
     display: flex;
@@ -156,6 +156,13 @@ body {
 
     outline: none;
 }
+/*---------------------------------------------------------------------*/
+
+/*input number */
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button {
+  opacity: 1;
+}
 
 /*Header */
 
@@ -179,12 +186,14 @@ header ul li {
     display: inline-block;
 }
 
+/*--------------------------------------*/
+
 header ul li a {
     padding: 20px 0 20px 15px;
     display: inline-block;
     text-decoration: none;
     font-weight: bold;
-    
+    transition: 0.2s;
 }
 
 header ul li a:hover {
@@ -232,12 +241,43 @@ a {
     padding: 15px;
     box-sizing: border-box;
     margin: 10px 0 25px 0;
+    overflow-x: auto;
 }
 
 .box:after {
     content: '';
     display: block;
     clear: both;
+}
+
+.box-items {
+    background-color: #fff;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    padding: 15px;
+    box-sizing: border-box;
+    margin: 10px 0 25px 0;
+}
+
+.box-items::after {
+    content: '';
+    display: block;
+    clear: both;
+}
+
+#box-inout {
+    background-color: #fff;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    padding: 15px;
+    box-sizing: border-box;
+    margin: 10px 0 25px 0;
+    transition: 0.3s;
+}
+
+#box-inout:hover {
+    box-shadow: 0 0 40px rgba(33,33,33,.2); 
+    border: 3px solid red;
 }
 
 .section .container .box-dash-0 {
@@ -295,7 +335,7 @@ a {
 
 .section .container a .container-items:hover {
     box-shadow: 0 0 40px rgba(33,33,33,.2); 
-    border: 1px solid grey;
+    border: 3px solid red;
 }
 
 .section .container a .container-items form {
@@ -305,7 +345,17 @@ a {
     gap: 3em;
 }
 
-/*Data Kategori*/
+/*----------------Category--------------------*/
+.section .container .box a .col-5 {
+    font-style: italic;
+    font-weight: bold;
+}
+
+.section .container .box a .col-5:hover {
+    color:red;
+}
+
+/*Data Tabel*/
 
 .table {
     width: 100%;
@@ -316,8 +366,20 @@ a {
     height: 30px;
 }
 
+.table tr:nth-child(even) {background-color: #f2f2f2;}
+.table tbody tr:hover {background-color: #ddd;}
+.table td, .table th {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
 .table tr td {
     padding: 5px 10px;
+}
+
+thead {
+    background-color: #c70039;
+    color: #fff;
 }
 
 /* Footer */
@@ -328,6 +390,8 @@ a {
     padding: 15px 0;
     background-color: #fff;
     border: 1px solid #ccc;
+    width: 80%;
+    margin: 0 auto;
 }
 
 .search input[type=text]{
@@ -352,10 +416,11 @@ a {
 .col-5 {
     width: 20%;
     height: 100px;
+    margin-right: 1em;
     text-align: center;
     float : left ;
     padding: 10px;
-    box-sizing: border-box;
+    box-sizing: border-box;                                    
 }
 
 .col-4 {
@@ -419,6 +484,12 @@ a {
     font-size: 14px;
 }
 
+.col-2 input[type=number]::-webkit-inner-spin-button,
+.col-2 input[type=number]::-webkit-outer-spin-button {
+    opacity: 2;
+}
+
+
 /*--------------------------------Change Picture Button --------------------------*/
 
 .chg-pic {
@@ -464,6 +535,22 @@ a {
     opacity:0.8;
   }
   
+
+@media (max-width:767px) {
+    .section .container .box-items {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .section .container .box-items .col-4 {
+        width: 100%;
+    }
+
+    .col-5 {
+        margin-right: 2em;
+    }
+}
+
   @media (max-width:767px) {
     .footer-dark .item:not(.social) {
       text-align:center;

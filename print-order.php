@@ -63,6 +63,12 @@ while ($fetch_trans_2 = mysqli_fetch_array($trans2)) {
 
 $html .= '</table>';
 
+if ($fetch_trans['notes'] == null) {
+    $html .= '<p>Catatan Dari Admin : <br>Tidak ada catatan </p>';
+} else {
+    $html .= '<p>Catatan Dari Admin : ' . $fetch_trans['notes'] . '</p>';
+}
+
 // Print text using writeHTMLCell()
 $pdf->writeHTMLCell(0, 0, '', '', $html, 0, 1, 0, true, '', true);
 

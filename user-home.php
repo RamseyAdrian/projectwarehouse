@@ -37,6 +37,7 @@ $user_id = $_SESSION['a_global']->user_id;
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert-dev.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.css" rel="stylesheet" />
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!--------------------- Font Awesome ----------------------------->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <!--------------------- Additional CSS ----------------------------->
     <style>
@@ -108,7 +109,7 @@ $user_id = $_SESSION['a_global']->user_id;
             </ul>
         </div>
     </header>
-
+    <br>
 
 
     <!-----------------------search-------------------------------------->
@@ -124,7 +125,7 @@ $user_id = $_SESSION['a_global']->user_id;
     <!--------------------------items------------------------------------->
     <div class="section">
         <div class="container">
-            <div class="box">
+            <div class="box-items">
                 <?php
                 $produk = mysqli_query($conn, "SELECT * FROM data_product LEFT JOIN data_office USING (office_id) WHERE product_status=1 AND office_id = '" . $user_office . "' ORDER BY product_name LIMIT $start_from, $per_page_record ");
                 if (mysqli_num_rows($produk) > 0) {

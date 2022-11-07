@@ -122,7 +122,7 @@ $iduser = $_SESSION['a_global']->user_id;
     <div class="section">
         <div class="container">
             <h3>Produk</h3>
-            <div class="box">
+            <div class="box-items">
                 <?php
                 if ($_GET['search'] != '' || $_GET['kat'] != '') {
                     $where = "AND product_name LIKE '%" . $_GET['search'] . "%' AND category_id LIKE '%" . $_GET['kat'] . "%' ";

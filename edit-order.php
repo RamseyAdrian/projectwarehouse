@@ -169,6 +169,9 @@ $idkantoradmin = $_SESSION['a_global']->office_id;
                             }
                         }
                         ?>
+                        <h3>Jumlah pesanan ingin diubah ?</h3>
+                        <button id="button-restock"><a href="choose-edit-product.php?id=<?php echo $idcart ?>">Edit Disini</a></button>
+                        <br><br>
                         <h3>Catatan Dari Admin</h3>
                         <textarea name="notes" class="input-control"></textarea><br>
                         <br>

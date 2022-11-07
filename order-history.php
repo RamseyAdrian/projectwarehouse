@@ -350,7 +350,7 @@ $kantoradmin = $_SESSION['a_global']->office_id;
                             <tbody>
                                 <?php
                                 $no = 1;
-                                $trans = mysqli_query($conn, "SELECT * FROM data_order WHERE data_order.status = 'Berhasil' AND data_order.office_id = '" . $_POST['perwakilan'] . "' ORDER BY times_updated DESC ");
+                                $trans = mysqli_query($conn, "SELECT * FROM data_order WHERE data_order.status = 'Berhasil Diambil' AND data_order.office_id = '" . $_POST['perwakilan'] . "' ORDER BY times_updated DESC LIMIT 1");
                                 if (mysqli_num_rows($trans) > 0) {
                                     while ($fo_trans = mysqli_fetch_array($trans)) {
                                 ?>
@@ -392,12 +392,21 @@ $kantoradmin = $_SESSION['a_global']->office_id;
                                 <?php
                                 } else {
                                 ?>
-                                    <td colspan="8">Tidak Ada Data</td>
+                                    <td colspan="8" style="text-align: center ;">Tidak Ada Data</td>
                                 <?php
                                 }
                                 ?>
                             </tbody>
                         </table>
+                        <?php
+                        $order_query = mysqli_query($conn, "SELECT * FROM data_order WHERE data_order.status = 'Berhasil Diambil' AND data_order.office_id = '" . $_POST['perwakilan'] . "' ");
+                        if (mysqli_num_rows($order_query) > 1) {
+                        ?>
+                            <br>
+                            <a href="more-success-history.php"><button class="btn">Lihat Lebih Banyak</button></a>
+                        <?php
+                        }
+                        ?>
                     </div>
                     <h3>Pesanan Gagal</h3>
                     </center>
@@ -417,7 +426,9 @@ $kantoradmin = $_SESSION['a_global']->office_id;
                             <tbody>
                                 <?php
                                 $no = 1;
-                                $trans = mysqli_query($conn, "SELECT * FROM data_order WHERE data_order.status = 'Gagal' AND data_order.office_id = '" . $_POST['perwakilan'] . "' ORDER BY times_updated DESC ");
+                                $where = "AND data_order.office_id = '" . $_POST['perwakilan'] . "' ";
+                                $where_status = "OR data_order.status = 'Tidak Disetujui Admin' ";
+                                $trans = mysqli_query($conn, "SELECT * FROM data_order WHERE data_order.status = 'Gagal Diambil'  $where $where_status ORDER BY times_updated DESC LIMIT 10");
                                 if (mysqli_num_rows($trans) > 0) {
 
                                     while ($fo_trans = mysqli_fetch_array($trans)) {
@@ -460,12 +471,21 @@ $kantoradmin = $_SESSION['a_global']->office_id;
                                 <?php
                                 } else {
                                 ?>
-                                    <td colspan="8">Tidak Ada Data</td>
+                                    <td colspan="8" style="text-align: center ;">Tidak Ada Data</td>
                                 <?php
                                 }
                                 ?>
                             </tbody>
                         </table>
+                        <?php
+                        $order_query = mysqli_query($conn, "SELECT * FROM data_order WHERE data_order.status = 'Gagal Diambil' $where $where_status LIMIT 10");
+                        if (mysqli_num_rows($order_query) > 1) {
+                        ?>
+                            <br>
+                            <a href="more-failed-history.php"><button class="btn">Lihat Lebih Banyak</button></a>
+                        <?php
+                        }
+                        ?>
                     </div>
                 <?php
                 }
@@ -478,41 +498,6 @@ $kantoradmin = $_SESSION['a_global']->office_id;
     }
     ?>
 
-    <!---------------------- Footer ----------------------------------->
-
-    <div class="footer-dark">
-        <footer>
-            <div class="container">
-                <div class="row" style="display: flex ;">
-                    <div class="col-md-6 item text" style="margin-right: 90px ;">
-                        <h3>Ombudsman RI</h3>
-                        <p>Kantor Pusat <br>
-                            Jl. HR. Rasuna Said Kav. C-19 Kuningan, Jakarta Selatan 12920</p>
-                    </div>
-                    <div class="col-sm-6 col-md-3 item" style="margin-right: 90px ;">
-                        <h3>Kontak</h3>
-                        <ul>
-                            <li><a href="#">No Telfon : (021) 2251 3737</a></li>
-                            <li><a href="#">Fax : (021) 5296 0907 / 5296 0908</a></li>
-                            <li><a href="#">Email : humas@ombudsman.go.id</a></li>
-                        </ul>
-                    </div>
-                    <br>
-                    <div class="col-sm-6 col-md-3 item" style="margin-right: 90px ;">
-                        <h3>About</h3>
-                        <ul>
-                            <li><a href="https://ombudsman.go.id/">Ombudsman</a></li>
-                            <li><a href="dev-team.php">Dev Team</a></li>
-                        </ul>
-                    </div>
-                    <br>
-                </div>
-                <p class="copyright">Ombudsman RI © 2022</p>
-                <p class="copyright">Made By Divisi HTI & <a href="dev-team.php" target="-blank">Team RJN</a></p>
-                <i class="fa-regular fa-cart-shopping"></i>
-            </div>
-        </footer>
-    </div>
 
 </body>
 

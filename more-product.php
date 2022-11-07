@@ -13,7 +13,7 @@ if (mysqli_num_rows($produk) == 0) {
     echo '<script>window.location="product-data.php"</script>';
 }
 $p = mysqli_fetch_object($produk);
-
+$_SESSION['search_office'] = $_GET['id'];
 ?>
 
 <!DOCTYPE html>
@@ -121,8 +121,9 @@ $p = mysqli_fetch_object($produk);
                     <input type="submit" name="cari" value="Cari">
                 </form>
             </div>
-            <div class="box">
 
+            <!-----------------------Data Table-------------------------------------->
+            <div class="box">
                 <table border="1" cellspacing="0" class="table">
                     <thead>
                         <tr>

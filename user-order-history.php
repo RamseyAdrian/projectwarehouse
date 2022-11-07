@@ -133,9 +133,8 @@ $kantoruser = $_SESSION['a_global']->office_id;
                         <?php
                         $no = 1;
                         $where_office = " AND data_order.office_id = '" . $kantoruser . "' ";
-                        $trans = mysqli_query($conn, "SELECT * FROM data_order WHERE data_order.status = 'Berhasil Diambil' AND data_order.user_id = '" . $iduser . "' $where_office ORDER BY times_updated DESC ");
+                        $trans = mysqli_query($conn, "SELECT * FROM data_order WHERE data_order.status = 'Berhasil Diambil' AND data_order.user_id = '" . $iduser . "' $where_office ORDER BY times_updated DESC LIMIT 10");
                         if (mysqli_num_rows($trans) > 0) {
-
                             while ($fo_trans = mysqli_fetch_array($trans)) {
                         ?>
                                 <tr>
@@ -176,12 +175,21 @@ $kantoruser = $_SESSION['a_global']->office_id;
                         <?php
                         } else {
                         ?>
-                            <td colspan="8">Tidak Ada Data</td>
+                            <td colspan="8" style="text-align: center ;">Tidak Ada Data</td>
                         <?php
                         }
                         ?>
                     </tbody>
                 </table>
+                <?php
+                $trans2 = mysqli_query($conn, "SELECT * FROM data_order WHERE data_order.status = 'Berhasil Diambil' AND data_order.user_id = '" . $iduser . "' $where_office");
+                if (mysqli_num_rows($trans2) > 10) {
+                ?>
+                    <br>
+                    <a href="more-success-history.php"><button class="btn">Lihat Lebih Banyak</button></a>
+                <?php
+                }
+                ?>
             </div>
             <center>
                 <h3>Pesanan Gagal</h3>
@@ -202,7 +210,7 @@ $kantoruser = $_SESSION['a_global']->office_id;
                         $no = 1;
                         $where = " AND data_order.office_id = '" . $kantoruser . "' ";
                         $where_status = "OR data_order.status = 'Tidak Disetujui Admin' ";
-                        $trans = mysqli_query($conn, "SELECT * FROM data_order WHERE data_order.status = 'Gagal Diambil' AND data_order.user_id = '" . $iduser . "' $where $where_status ");
+                        $trans = mysqli_query($conn, "SELECT * FROM data_order WHERE data_order.status = 'Gagal Diambil' AND data_order.user_id = '" . $iduser . "' $where $where_status LIMIT 10 ");
                         if (mysqli_num_rows($trans) > 0) {
 
                             while ($fo_trans = mysqli_fetch_array($trans)) {
@@ -251,45 +259,20 @@ $kantoruser = $_SESSION['a_global']->office_id;
                         ?>
                     </tbody>
                 </table>
+                <?php
+                $trans2 = mysqli_query($conn, "SELECT * FROM data_order WHERE data_order.status = 'Gagal Diambil' AND data_order.user_id = '" . $iduser . "' $where $where_status ORDER BY times_updated DESC LIMIT 10");
+                if (mysqli_num_rows($trans2) > 10) {
+                ?>
+                    <br>
+                    <a href="more-failed-history.php"><button class="btn">Lihat Lebih Banyak</button></a>
+                <?php
+                }
+                ?>
             </div>
         </div>
     </div>
 
-    <!---------------------- Footer ----------------------------------->
 
-    <div class="footer-dark">
-        <footer>
-            <div class="container">
-                <div class="row" style="display: flex ;">
-                    <div class="col-md-6 item text" style="margin-right: 90px ;">
-                        <h3>Ombudsman RI</h3>
-                        <p>Kantor Pusat <br>
-                            Jl. HR. Rasuna Said Kav. C-19 Kuningan, Jakarta Selatan 12920</p>
-                    </div>
-                    <div class="col-sm-6 col-md-3 item" style="margin-right: 90px ;">
-                        <h3>Kontak</h3>
-                        <ul>
-                            <li><a href="#">No Telfon : (021) 2251 3737</a></li>
-                            <li><a href="#">Fax : (021) 5296 0907 / 5296 0908</a></li>
-                            <li><a href="#">Email : humas@ombudsman.go.id</a></li>
-                        </ul>
-                    </div>
-                    <br>
-                    <div class="col-sm-6 col-md-3 item" style="margin-right: 90px ;">
-                        <h3>About</h3>
-                        <ul>
-                            <li><a href="https://ombudsman.go.id/">Ombudsman</a></li>
-                            <li><a href="dev-team.php">Dev Team</a></li>
-                        </ul>
-                    </div>
-                    <br>
-                </div>
-                <p class="copyright">Ombudsman RI © 2022</p>
-                <p class="copyright">Made By Divisi HTI & <a href="dev-team.php" target="-blank">Team RJN</a></p>
-                <i class="fa-regular fa-cart-shopping"></i>
-            </div>
-        </footer>
-    </div>
 
 </body>
 

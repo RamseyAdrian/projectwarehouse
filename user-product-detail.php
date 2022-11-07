@@ -57,8 +57,7 @@ $p = mysqli_fetch_object($produk);
             </ul>
         </div>
     </header>
-
-
+    <br>
 
     <!--search-->
     <div class="search">
@@ -141,8 +140,6 @@ $p = mysqli_fetch_object($produk);
                             echo '<script>Swal.fire({
                                 title: "Barang Sudah di Keranjang !",
                                 icon : "info"
-                           }).then(function() {
-                                window.location = "user-cart.php";
                            });
                            </script>';
                         } else {
