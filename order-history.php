@@ -323,6 +323,7 @@ $kantoradmin = $_SESSION['a_global']->office_id;
 
                 <?php
                 if (isset($_POST['submit'])) {
+                    $perwakilan = $_POST['perwakilan'];
                     $kantor_query = mysqli_query($conn, "SELECT * FROM data_office WHERE office_id = '" . $_POST['perwakilan'] . "' ");
                     $fetch_kantor = mysqli_fetch_array($kantor_query);
                     $nama_kantor = $fetch_kantor['office_name'];
@@ -350,7 +351,7 @@ $kantoradmin = $_SESSION['a_global']->office_id;
                             <tbody>
                                 <?php
                                 $no = 1;
-                                $trans = mysqli_query($conn, "SELECT * FROM data_order WHERE data_order.status = 'Berhasil Diambil' AND data_order.office_id = '" . $_POST['perwakilan'] . "' ORDER BY times_updated DESC LIMIT 1");
+                                $trans = mysqli_query($conn, "SELECT * FROM data_order WHERE data_order.status = 'Berhasil Diambil' AND data_order.office_id = '" . $perwakilan . "' ORDER BY times_updated DESC LIMIT 10");
                                 if (mysqli_num_rows($trans) > 0) {
                                     while ($fo_trans = mysqli_fetch_array($trans)) {
                                 ?>
@@ -399,8 +400,9 @@ $kantoradmin = $_SESSION['a_global']->office_id;
                             </tbody>
                         </table>
                         <?php
-                        $order_query = mysqli_query($conn, "SELECT * FROM data_order WHERE data_order.status = 'Berhasil Diambil' AND data_order.office_id = '" . $_POST['perwakilan'] . "' ");
-                        if (mysqli_num_rows($order_query) > 1) {
+                        $order_query = mysqli_query($conn, "SELECT * FROM data_order WHERE data_order.status = 'Berhasil Diambil' AND data_order.office_id = '" . $perwakilan . "' ");
+                        if (mysqli_num_rows($order_query) > 10) {
+                            $_SESSION['history'] = $_POST['perwakilan'];
                         ?>
                             <br>
                             <a href="more-success-history.php"><button class="btn">Lihat Lebih Banyak</button></a>
@@ -426,9 +428,8 @@ $kantoradmin = $_SESSION['a_global']->office_id;
                             <tbody>
                                 <?php
                                 $no = 1;
-                                $where = "AND data_order.office_id = '" . $_POST['perwakilan'] . "' ";
-                                $where_status = "OR data_order.status = 'Tidak Disetujui Admin' ";
-                                $trans = mysqli_query($conn, "SELECT * FROM data_order WHERE data_order.status = 'Gagal Diambil'  $where $where_status ORDER BY times_updated DESC LIMIT 10");
+                                $where = "AND data_order.office_id = '" . $perwakilan . "' ";
+                                $trans = mysqli_query($conn, "SELECT * FROM data_order WHERE data_order.status = 'Gagal Diambil' OR data_order.status = 'Tidak Disetujui Admin' $where ORDER BY times_updated DESC LIMIT 10");
                                 if (mysqli_num_rows($trans) > 0) {
 
                                     while ($fo_trans = mysqli_fetch_array($trans)) {
@@ -478,8 +479,9 @@ $kantoradmin = $_SESSION['a_global']->office_id;
                             </tbody>
                         </table>
                         <?php
-                        $order_query = mysqli_query($conn, "SELECT * FROM data_order WHERE data_order.status = 'Gagal Diambil' $where $where_status LIMIT 10");
-                        if (mysqli_num_rows($order_query) > 1) {
+                        $order_query = mysqli_query($conn, "SELECT * FROM data_order WHERE data_order.status = 'Gagal Diambil' OR data_order.status = 'Tidak Disetujui Admin' $where");
+                        if (mysqli_num_rows($order_query) > 10) {
+                            $_SESSION['history'] = $_POST['perwakilan'];
                         ?>
                             <br>
                             <a href="more-failed-history.php"><button class="btn">Lihat Lebih Banyak</button></a>
