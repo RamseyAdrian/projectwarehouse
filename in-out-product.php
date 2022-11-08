@@ -181,7 +181,7 @@ $kantor_admin = $_SESSION['a_global']->office_id;
                                 }
                             } else {
                                 ?>
-                                <td colspan="7">Tidak Ada Data</td>
+                                <td colspan="8" style="text-align: center ;">Tidak Ada Data</td>
                             <?php
                             }
                             ?>
@@ -277,7 +277,8 @@ $kantor_admin = $_SESSION['a_global']->office_id;
                                             <td><?php echo $fetch_barang['unit_name'] ?></td>
                                             <td><?php echo $fetch_barang['initial_stock'] ?></td>
                                             <?php
-                                            $query_stocking = mysqli_query($conn, "SELECT * FROM stocking_item WHERE product_id = '" . $fetch_barang['product_id'] . "' AND office_id = $kantor_admin ");
+                                            $reset = "AND reset_status = '0' ";
+                                            $query_stocking = mysqli_query($conn, "SELECT * FROM stocking_item WHERE product_id = '" . $fetch_barang['product_id'] . "' AND office_id = '" . $_POST['perwakilan'] . "' $reset ");
                                             if (mysqli_num_rows($query_stocking) > 0) {
                                                 $masuk = 0;
                                                 while ($fetch_stocking = mysqli_fetch_array($query_stocking)) {
@@ -291,7 +292,8 @@ $kantor_admin = $_SESSION['a_global']->office_id;
                                                 <td>0</td>
                                             <?php
                                             }
-                                            $query_trans = mysqli_query($conn, "SELECT * FROM transaction_history WHERE office_id = '" . $kantor_admin . "' AND product_id = '" . $fetch_barang['product_id'] . "' ");
+                                            $reset2 = "AND reset_status = '0' ";
+                                            $query_trans = mysqli_query($conn, "SELECT * FROM transaction_history WHERE office_id = '" . $_POST['perwakilan'] . "' AND product_id = '" . $fetch_barang['product_id'] . "' $reset2 ");
                                             if (mysqli_num_rows($query_trans) > 0) {
                                                 $keluar = 0;
                                                 while ($fetch_trans = mysqli_fetch_array($query_trans)) {
@@ -312,7 +314,7 @@ $kantor_admin = $_SESSION['a_global']->office_id;
                                     }
                                 } else {
                                     ?>
-                                    <td colspan="7">Tidak Ada Data</td>
+                                    <td colspan="8" style="text-align: center ;">Tidak Ada Data</td>
                                 <?php
                                 }
                                 ?>

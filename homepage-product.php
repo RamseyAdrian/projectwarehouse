@@ -64,6 +64,7 @@ include 'db.php';
             </ul>
         </div>
     </header>
+    <br>
 
     <!-----------------------search-------------------------------------->
     <div class="search">

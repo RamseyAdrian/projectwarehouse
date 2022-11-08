@@ -168,7 +168,7 @@ $user_id = $_SESSION['a_global']->user_id;
     <center>
         <div class="pagination">
             <?php
-            $query = "SELECT COUNT(*) FROM data_product";
+            $query = "SELECT COUNT(*) FROM data_product WHERE office_id = '" . $user_office . "' ";
             $rs_result = mysqli_query($conn, $query);
             $row = mysqli_fetch_row($rs_result);
             $total_records = $row[0];

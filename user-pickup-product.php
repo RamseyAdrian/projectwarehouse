@@ -177,8 +177,14 @@ $kantoruser = $_SESSION['a_global']->office_id;
                                         </center>
                                     </td>
                                 </tr>
-                        <?php
+                            <?php
                             }
+                        } else {
+                            ?>
+                            <tr>
+                                <td colspan="4" style="text-align:center ;">Tidak Ada Data</td>
+                            </tr>
+                        <?php
                         }
                         ?>
                     </tbody>

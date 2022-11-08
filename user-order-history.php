@@ -63,7 +63,7 @@ $kantoruser = $_SESSION['a_global']->office_id;
 
         #buttdetail {
             font-size: 17px;
-            background-color: lime;
+            background-color: #fff;
             color: black;
             border-radius: 5px;
             padding: 2px;
