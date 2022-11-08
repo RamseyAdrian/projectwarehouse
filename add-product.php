@@ -195,6 +195,7 @@ $kantor_admin = $_SESSION['a_global']->office_id;
                              '" . $status . "',
                              '0',
                              '" . $restock . "',
+                             '0',
                              NOW() 
                         ) ");
                             if ($insert) {
@@ -387,6 +388,7 @@ $kantor_admin = $_SESSION['a_global']->office_id;
                              '" . $status . "',
                              '0',
                              '" . $batas_restock . "',
+                             '0',
                              null 
                         ) ");
                             if ($insert) {

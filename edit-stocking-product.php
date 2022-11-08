@@ -156,7 +156,8 @@ $kantor_admin = $_SESSION['a_global']->office_id;
                         '" . $office_id . "',
                         '" . $office_name . "',
                         NOW(),
-                        '" . $qty . "'
+                        '" . $qty . "',
+                        '0'
                     )");
 
                     if ($update && $insert) {

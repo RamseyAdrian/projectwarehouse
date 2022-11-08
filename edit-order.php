@@ -184,10 +184,10 @@ $idkantoradmin = $_SESSION['a_global']->office_id;
                         </select>
                         <br><br><br>
                         <center>
-                            <input style="cursor: pointer ;" type="submit" name="kembali" class="input-control" value="Kembali">
+                            <input type="submit" name="submit" class="btn" value="Submit">
                         </center>
                         <center>
-                            <input type="submit" name="submit" class="btn" value="Submit">
+                            <input style="cursor: pointer ;" type="submit" name="kembali" class="input-control" value="Kembali">
                         </center>
                     </form>
 

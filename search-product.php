@@ -130,36 +130,79 @@ $idkantoradmin = $_SESSION['a_global']->office_id;
 
         <div class="section">
             <div class="container">
-                <h2>Data Barang</h2>
+                <h2>Pencarian Barang</h2>
                 <div class="box1">
-                    <button><a href="add-product.php" style="text-decoration: none ; font-weight:bold;">Tambah Data Produk</a></button><br><br>
-                    <button><a href="stocking-product.php" style="text-decoration: none ; font-weight:bold;">Stocking Barang</a></button>
-                    <button><a href="stocking-history.php" style="text-decoration: none ; font-weight:bold;">Riwayat Stocking</a></button>
+                    <button><a href="product-data.php" style="text-decoration: none ; font-weight:bold;">Kembali</a></button><br><br>
+                </div>
+                <br>
+                <!-----------------------search-------------------------------------->
+                <div class="search">
+                    <form action="search-product.php" method="GET">
+                        <input type="text" name="search" placeholder="cari produk" value="<?php echo $_GET['search'] ?>">
+                        <input type="submit" name="cari" value="Cari">
+                    </form>
+                </div>
+                <br>
+                <div class="box">
+                    <table border="1" cellspacing="0" class="table">
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Kategori</th>
+                                <th>ID Barang</th>
+                                <th>Nama Barang</th>
+                                <th>Satuan</th>
+                                <th>Gambar</th>
+                                <th>Status</th>
+                                <th>Stock</th>
+                                <th>Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                            // if ($_GET['search'] != '') {
+                            // }
+                            $no = 1;
+                            $produk = mysqli_query($conn, "SELECT * FROM data_product LEFT JOIN data_category USING (category_id) LEFT JOIN data_unit USING (unit_id) WHERE office_id = '" . $idkantoradmin . "' AND product_name LIKE '%" . $_GET['search'] . "%' ORDER BY product_name ");
+                            if (mysqli_num_rows($produk) > 0) {
+                                while ($fetch_produk = mysqli_fetch_assoc($produk)) {
+                            ?>
+                                    <tr>
+                                        <td><?php echo $no++ ?></td>
+                                        <td><?php echo $fetch_produk['category_name'] ?></td>
+                                        <td><?php echo $fetch_produk['product_id'] ?></td>
+                                        <td><?php echo $fetch_produk['product_name'] ?></td>
+                                        <td><?php echo $fetch_produk['unit_name'] ?></td>
+                                        <td><img src="produk/<?php echo $fetch_produk['product_image'] ?>" width="50px"></td>
+                                        <td><?php echo ($fetch_produk['product_status'] == 0) ? 'Tidak Aktif' : 'Aktif' ?></td>
+                                        <td><?php echo $fetch_produk['stock'] ?></td>
+                                        <td>
+                                            <center>
+                                                <button>
+                                                    <a id="buttdetail" href="edit-product.php?id=<?php echo $fetch_produk['product_id'] ?>&idoffice=<?php echo $idkantoradmin ?>">Edit</a>
+                                                </button>
+                                                <button>
+                                                    <a id="buttdetail" href="delete-data.php?idp=<?php echo $fetch_produk['product_id'] ?>&idoffice=<?php echo $idkantoradmin ?>" onclick="return confirm('Yakin Hapus Barang ?') ">Hapus</a> </button>
+                                            </center>
+
+                                        </td>
+                                    </tr>
+                                <?php
+                                }
+                            } else {
+                                ?>
+                                <tr>
+                                    <td colspan="8" style="text-align: center ;">Tidak Ada Data</td>
+                                </tr>
+                            <?php
+                            }
+                            ?>
+                        </tbody>
+                    </table>
                 </div>
             </div>
-            <div class="box1">
-                <button><a href="product-data.php" style="text-decoration: none ; font-weight:bold;">Kembali</a></button><br><br>
-            </div>
-            <br>
-            <!-----------------------search-------------------------------------->
-            <div class="search">
-                <form action="search-product.php" method="GET">
-                    <input type="text" name="search" placeholder="cari produk">
-                    <input type="submit" name="cari" value="Cari">
-                </form>
-            </div>
-            <div class="box">
-                <table border="1" cellspacing="0" class="table">
-                    <thead>
-                        <tr>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
 
-                    </tbody>
-                </table>
-            </div>
+
         </div>
 
     <?php
@@ -222,8 +265,8 @@ $idkantoradmin = $_SESSION['a_global']->office_id;
                         </thead>
                         <tbody>
                             <?php
-                            if ($_GET['search'] != '') {
-                            }
+                            // if ($_GET['search'] != '') {
+                            // }
                             $no = 1;
                             $produk = mysqli_query($conn, "SELECT * FROM data_product LEFT JOIN data_category USING (category_id) LEFT JOIN data_unit USING (unit_id) WHERE office_id = '" . $_SESSION['search_office'] . "' AND product_name LIKE '%" . $_GET['search'] . "%' ORDER BY product_name ");
                             if (mysqli_num_rows($produk) > 0) {

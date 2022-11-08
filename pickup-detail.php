@@ -166,10 +166,10 @@ $idkantoradmin = $_SESSION['a_global']->office_id;
                             <button id="button-restock"><a href="choose-pickup-detail.php?id=<?php echo $idcart ?>">Edit Disini</a></button>
                             <center>
                                 <br>
-                                <input type="submit" name="gagal" class="input-control" value="Gagal Diambil" style="cursor: pointer ;">
+                                <input type="submit" name="berhasil" class="btn" value="Berhasil Diambil">
                             </center>
                             <center>
-                                <input type="submit" name="berhasil" class="btn" value="Berhasil Diambil">
+                                <input type="submit" name="gagal" class="input-control" value="Gagal Diambil" style="cursor: pointer ;">
                             </center>
                     </form>
 
@@ -234,7 +234,8 @@ $idkantoradmin = $_SESSION['a_global']->office_id;
                                         NOW(),
                                         '" . $fo_trans2['red_flag'] . "',
                                         '" . $status . "',
-                                        '" . $notes . "'
+                                        '" . $notes . "',
+                                        '0'
                                 )");
 
                                 $delete_data_transaction = mysqli_query($conn, "DELETE FROM data_transaction WHERE data_transaction.order_id = '" . $orderid . "' ");
@@ -301,7 +302,8 @@ $idkantoradmin = $_SESSION['a_global']->office_id;
                                         NOW(),
                                         '" . $fo_trans2['red_flag'] . "',
                                         '" . $status . "',
-                                        '" . $notes . "'
+                                        '" . $notes . "',
+                                        '0'
                                 )");
 
                                 $delete_data_transaction = mysqli_query($conn, "DELETE FROM data_transaction WHERE data_transaction.order_id = '" . $orderid . "' ");

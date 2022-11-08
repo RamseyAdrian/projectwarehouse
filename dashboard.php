@@ -8,8 +8,6 @@ if ($_SESSION['role_login'] == 'user') {
     echo '<script>window.location="login.php"</script>';
 }
 
-$piequery = "SELECT * FROM data_product";
-$piequeryrecords = mysqli_query($conn, $piequery);
 $kantor_admin = $_SESSION['a_global']->office_id;
 
 //Deklarasi 2 variabel untuk menampung cart_id dari table data_transaction
@@ -318,6 +316,7 @@ $_SESSION['jumlah_pesanan'] = $jml_keranjang;
                                 <th>Nama Barang</th>
                                 <th>Kategori</th>
                                 <th>Satuan</th>
+                                <th>Stock Awal</th>
                                 <th>Masuk</th>
                                 <th>Keluar</th>
                                 <th>Tersedia</th>
@@ -334,8 +333,10 @@ $_SESSION['jumlah_pesanan'] = $jml_keranjang;
                                         <td><?php echo $fetch_barang['product_name'] ?></td>
                                         <td><?php echo $fetch_barang['category_name'] ?></td>
                                         <td><?php echo $fetch_barang['unit_name'] ?></td>
+                                        <td><?php echo $fetch_barang['initial_stock'] ?></td>
                                         <?php
-                                        $query_stocking = mysqli_query($conn, "SELECT * FROM stocking_item WHERE product_id = '" . $fetch_barang['product_id'] . "' AND office_id = $kantor_admin ");
+                                        $reset = "AND reset_status = '0' ";
+                                        $query_stocking = mysqli_query($conn, "SELECT * FROM stocking_item WHERE product_id = '" . $fetch_barang['product_id'] . "' AND office_id = '" . $kantor_admin . "' $reset");
                                         if (mysqli_num_rows($query_stocking) > 0) {
                                             $masuk = 0;
                                             while ($fetch_stocking = mysqli_fetch_array($query_stocking)) {
@@ -613,9 +614,7 @@ $_SESSION['jumlah_pesanan'] = $jml_keranjang;
                     ?>
                         <center>
                             <br>
-                            <button class="btn">
-                                <a href="more-restock-product.php" style="font-size: 15px ; text-decoration :none;">Lihat Lebih Banyak</a>
-                            </button>
+                            <a href="more-restock-product.php" style="font-size: 15px ; text-decoration :none;"><button class="btn">Lihat Lebih Banyak</button></a>
                         </center>
                     <?php
                     }

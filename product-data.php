@@ -140,6 +140,14 @@ $idkantoradmin = $_SESSION['a_global']->office_id;
                     <button><a href="stocking-history.php" style="text-decoration: none ; font-weight:bold;">Riwayat Stocking</a></button>
                 </div>
                 <br>
+                <!-----------------------search-------------------------------------->
+                <div class="search">
+                    <form action="search-product.php" method="GET">
+                        <input type="text" name="search" placeholder="cari produk">
+                        <input type="submit" name="cari" value="Cari">
+                    </form>
+                </div>
+                <br>
                 <div class="box">
                     <table border="1" cellspacing="0" class="table">
                         <thead>
@@ -177,7 +185,7 @@ $idkantoradmin = $_SESSION['a_global']->office_id;
                                         <td><?php echo ($row['product_status'] == 0) ? 'Tidak AKtif' : 'Aktif' ?></td>
                                         <td><?php echo ($row['stock']) ?></td>
                                         <td style="text-align:center ;">
-                                            <a class="abutt" href="edit-product.php?id=<?php echo $row['product_id'] ?>&idoffice=<?php echo $idkantoradmin ?>">Edit</a><a class="abutt" href="delete-data.php?idp=<?php echo $row['product_id'] ?>&idoffice=<?php echo $idkantoradmin ?>" onclick="return confirm('R U Sure about dat ?') ">Hapus</a>
+                                            <a class="abutt" href="edit-product.php?id=<?php echo $row['product_id'] ?>&idoffice=<?php echo $idkantoradmin ?>">Edit</a><a class="abutt" href="delete-data.php?idp=<?php echo $row['product_id'] ?>&idoffice=<?php echo $idkantoradmin ?>" onclick="return confirm('Yakin Hapus Barang ?') ">Hapus</a>
                                         </td>
                                     </tr>
                                 <?php }
