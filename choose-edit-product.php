@@ -122,7 +122,7 @@ $idkantoradmin = $_SESSION['a_global']->office_id;
                         <div class="container-items">
                             <form action="" method="POST">
                                 <div class="items-img">
-                                    <img src="produk/<?php echo $fo_trans->product_image ?>" width="150px">
+                                    <img src="produk/<?php echo $fo_trans->product_image ?>" width="150px" height="150px">
                                 </div>
                                 <div class="items-content">
                                     <h2 id="h2produk"><?php echo $fo_trans->product_name ?></h2><br>

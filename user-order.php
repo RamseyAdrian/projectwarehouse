@@ -204,7 +204,7 @@ $kantoruser = $_SESSION['a_global']->office_id;
                         <?php
                         } else {
                         ?>
-                            <td colspan="8">Tidak Ada Data</td>
+                            <td colspan="8" style="text-align: center ;">Tidak Ada Data</td>
                         <?php
                         }
                         ?>

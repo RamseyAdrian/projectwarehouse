@@ -167,13 +167,14 @@ $idkantoradmin = $_SESSION['a_global']->office_id;
                             <th>Gambar</th>
                             <th>Status</th>
                             <th>Stock</th>
+                            <th width="5%">Batas</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
                         <?php
                         $no = 1;
-                        $stocking = mysqli_query($conn, "SELECT * FROM data_product LEFT JOIN data_category USING (category_id) WHERE office_id = '" . $idkantoradmin . "' AND product_name LIKE '%" . $_GET['search'] . "%' ORDER BY product_name ");
+                        $stocking = mysqli_query($conn, "SELECT * FROM data_product LEFT JOIN data_category USING (category_id) LEFT JOIN data_unit USING (unit_id) WHERE office_id = '" . $idkantoradmin . "' AND product_name LIKE '%" . $_GET['search'] . "%' ORDER BY product_name ");
                         if (mysqli_num_rows($stocking) > 0) {
                             while ($fetch_stocking = mysqli_fetch_assoc($stocking)) {
                         ?>
@@ -182,8 +183,23 @@ $idkantoradmin = $_SESSION['a_global']->office_id;
                                     <td><?php echo $fetch_stocking['category_name'] ?></td>
                                     <td><?php echo $fetch_stocking['product_name'] ?></td>
                                     <td><img src="produk/<?php echo $fetch_stocking['product_image'] ?>" width="50px"></td>
-                                    <td><?php echo ($fetch_stocking['product_status'] == 0) ? 'Tidak Aktif' : 'Aktif' ?></td>
-                                    <td><?php echo $fetch_stocking['stock'] ?></td>
+                                    <td>
+                                        <center>
+                                            <?php echo ($fetch_stocking['product_status'] == 0) ? 'Tidak Aktif' : 'Aktif' ?>
+                                        </center>
+                                    </td>
+                                    <?php
+                                    if ($fetch_stocking['stock'] > $fetch_stocking['stock_point']) {
+                                    ?>
+                                        <td><?php echo $fetch_stocking['stock'], " ", $fetch_stocking['unit_name'] ?></td>
+                                    <?php
+                                    } else {
+                                    ?>
+                                        <td style="color: red ;"><?php echo $fetch_stocking['stock'], " ", $fetch_stocking['unit_name'] ?></td>
+                                    <?php
+                                    }
+                                    ?>
+                                    <td><?php echo $fetch_stocking['stock_point'] ?></td>
                                     <td>
                                         <center>
                                             <a id="stocking" href="edit-stocking-product.php?id=<?php echo $fetch_stocking['product_id'] ?>">Stock Barang</a>
