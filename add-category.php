@@ -54,8 +54,8 @@ if ($_SESSION['role_login'] == 'user' || $_SESSION['role_login'] == 'admin') {
             <h2>Tambah Kategori</h2>
             <div class="box">
                 <form action="" method="POST">
-                    <h4>ID Kategori</h4>
-                    <input type="text" name="id" placeholder="ID Kategori" class="input-control" value="<?php echo rand() ?>" readonly>
+                    <!-- <h4>ID Kategori</h4> -->
+                    <input type="hidden" name="id" placeholder="ID Kategori" class="input-control" value="<?php echo rand() ?>" readonly>
                     <h4>Nama Kategori</h4>
                     <input type="text" name="nama" placeholder="Nama Kategori" class="input-control" required>
                     <input type="submit" name="submit" value="Submit" class="btn">

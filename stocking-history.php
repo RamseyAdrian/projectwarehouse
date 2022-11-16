@@ -138,7 +138,7 @@ $idkantoradmin = $_SESSION['a_global']->office_id;
                                 <?php }
                             } else { ?>
                                 <tr>
-                                    <td colspan="8">Tidak Ada Data</td>
+                                    <td colspan="8" style="text-align: center ;">Tidak Ada Data</td>
                                 </tr>
                             <?php } ?>
                         </tbody>
@@ -245,7 +245,7 @@ $idkantoradmin = $_SESSION['a_global']->office_id;
                                     <?php }
                                 } else { ?>
                                     <tr>
-                                        <td colspan="8">Tidak Ada Data</td>
+                                        <td colspan="8" style="text-align: center ;">Tidak Ada Data</td>
                                     </tr>
                                 <?php } ?>
                             </tbody>

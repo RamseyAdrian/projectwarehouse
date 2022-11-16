@@ -135,7 +135,7 @@ $idkantoradmin = $_SESSION['a_global']->office_id;
             <div class="container">
                 <h2>Data Barang</h2>
                 <div class="box1">
-                    <button><a href="add-product.php" style="text-decoration: none ; font-weight:bold;">Tambah Data Produk</a></button><br><br>
+                    <button><a href="add-product.php" style="text-decoration: none ; font-weight:bold;">Tambah Data Barang</a></button><br><br>
                     <button><a href="stocking-product.php" style="text-decoration: none ; font-weight:bold;">Stocking Barang</a></button>
                     <button><a href="stocking-history.php" style="text-decoration: none ; font-weight:bold;">Riwayat Stocking</a></button>
                 </div>

@@ -183,7 +183,7 @@ $idkantoradmin = $_SESSION['a_global']->office_id;
                                         <td style="text-align: center ;"><?php echo $row['stock_point'] ?></td>
                                         <td>
                                             <center>
-                                                <a id="stocking" href="edit-stocking-product.php?id=<?php echo $row['product_id'] ?>">Stock Barang</a>
+                                                <a id="stocking" href="edit-stocking-product.php?id=<?php echo $row['product_id'] ?>">Restock</a>
                                             </center>
                                         </td>
                                     </tr>

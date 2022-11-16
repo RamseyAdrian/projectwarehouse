@@ -54,9 +54,9 @@ if ($_SESSION['role_login'] == 'user' || $_SESSION['role_login'] == 'admin') {
             <h3>Tambah Data User</h3>
             <div class="box">
                 <form action="" method="POST">
-                    <h4>ID User</h4>
+                    <!-- <h4>ID User</h4> -->
                     <?php $id = rand() ?>
-                    <input type="text" name="id" class="input-control" value="<?php echo $id ?>" required>
+                    <input type="hidden" name="id" class="input-control" value="<?php echo $id ?>" required>
                     <h4>Perwakilan</h4>
                     <select name="perwakilan" class="input-control" required>
                         <option value="">--Pilih Perwakilan</option>
@@ -118,12 +118,11 @@ if ($_SESSION['role_login'] == 'user' || $_SESSION['role_login'] == 'admin') {
                                             '" . $address . "'
                                             ) ");
                         echo '<script>Swal.fire({
-                                title: "Berhasil Tambah User !",
-                                text: "Klik OK Untuk Lanjut.",
+                                title: "Berhasil Tambah User",
+                                text: "Klik OK Untuk Lanjut",
                                 icon: "success"
-                              },
-                              function(){
-                                window.location="user-data.php"
+                              }).then(function() {
+                                window.location = "user-data.php";
                               });
                             </script>';
                     } else {
@@ -131,10 +130,10 @@ if ($_SESSION['role_login'] == 'user' || $_SESSION['role_login'] == 'admin') {
                             title: "ID tidak tersedia",
                             text: "Input ID selain ini",
                             icon: "error"
-                        },
-                        function(){
-                            window.location="user-data.php"
-                        })</script>';
+                        }).then(function() {
+                            window.location = "user-data.php";
+                          });
+                        </script>';
                     }
                 }
                 ?>

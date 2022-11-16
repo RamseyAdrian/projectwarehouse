@@ -120,23 +120,26 @@ $_SESSION['jumlah_pesanan'] = $jml_keranjang;
                     <h4>Admin ID : <?php echo $_SESSION['a_global']->admin_id ?></h4>
                 </div>
                 <div class="box-dash-1">
-                    <div class="box">
-                        <?php
-                        if ($jml_keranjang == 0) {
-                        ?>
+                    <?php
+                    if ($jml_keranjang == 0) {
+                    ?>
+                        <div class="box">
                             <h2 style="color:green ;">Belum Ada Pesanan </h2>
                             <h3>Pastikan Semua Stock Aman Ya ! <br> Supaya Transaksi Barang Lancar</h3>
-                        <?php
-                        } else {
-                        ?>
-                            <a href="order-table.php" style="text-decoration: none ; cursor : pointer ;">
+                        </div>
+                    <?php
+                    } else {
+                    ?>
+                        <a href="order-table.php" style="text-decoration: none ; cursor : pointer ;">
+                            <div id="box-inout">
                                 <h2 style="color:red ;">Ada <?php echo $jml_keranjang ?> Pesanan User !</h2>
                                 <h3 style="color:red ;">Segera Proses</h3>
-                            </a>
-                        <?php
-                        }
-                        ?>
-                    </div>
+                            </div>
+                        </a>
+                    <?php
+                    }
+                    ?>
+
                     <div class="box">
                         <h2>Jumlah User</h2>
                         <?php
@@ -274,7 +277,8 @@ $_SESSION['jumlah_pesanan'] = $jml_keranjang;
                                 <th>Nama Barang</th>
                                 <th>Stock</th>
                                 <th>Batas</th>
-                                <th>Restock</th>
+                                <th>Status</th>
+                                <th width="20%">Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -287,12 +291,33 @@ $_SESSION['jumlah_pesanan'] = $jml_keranjang;
                                         <td><?php echo $fetch_stock['product_id'] ?></td>
                                         <td><?php echo $fetch_stock['category_name'] ?></td>
                                         <td><?php echo $fetch_stock['product_name'] ?></td>
-                                        <td><?php echo $fetch_stock['stock'] ?></td>
-                                        <td><?php echo $fetch_stock['stock_point'] ?></td>
                                         <td>
-                                            <center>
-                                                <button id="buttdetail"><a href="edit-stocking-product.php?id=<?php echo $fetch_stock['product_id'] ?>">Stock Barang</a></button>
-                                            </center>
+                                            <center><?php echo $fetch_stock['stock'] ?></center>
+                                        </td>
+                                        <td>
+                                            <center><?php echo $fetch_stock['stock_point'] ?></center>
+                                        </td>
+                                        <td>
+                                            <center><?php echo ($fetch_stock['product_status'] == 0) ? 'Tidak Aktif' : 'Aktif' ?></center>
+                                        </td>
+                                        <td>
+                                            <?php
+                                            if ($fetch_stock['product_status'] == 0) {
+                                            ?>
+                                                <center>
+                                                    <button id="buttdetail"><a href="edit-stocking-product.php?id=<?php echo $fetch_stock['product_id'] ?>">Restock</a></button>
+                                                    <button id="buttdetail"><a href="non-active.php?ida=<?php echo $fetch_stock['product_id'] ?>">Aktifkan</a></button>
+                                                </center>
+                                            <?php
+                                            } else {
+                                            ?>
+                                                <center>
+                                                    <button id="buttdetail"><a href="edit-stocking-product.php?id=<?php echo $fetch_stock['product_id'] ?>">Restock</a></button>
+                                                    <button id="buttdetail"><a href="non-active.php?id=<?php echo $fetch_stock['product_id'] ?>">Nonaktifkan</a></button>
+                                                </center>
+                                            <?php
+                                            }
+                                            ?>
                                         </td>
                                     </tr>
                                 <?php
@@ -333,7 +358,9 @@ $_SESSION['jumlah_pesanan'] = $jml_keranjang;
                                         <td><?php echo $fetch_barang['product_name'] ?></td>
                                         <td><?php echo $fetch_barang['category_name'] ?></td>
                                         <td><?php echo $fetch_barang['unit_name'] ?></td>
-                                        <td><?php echo $fetch_barang['initial_stock'] ?></td>
+                                        <td>
+                                            <center><?php echo $fetch_barang['initial_stock'] ?></center>
+                                        </td>
                                         <?php
                                         $reset = "AND reset_status = '0' ";
                                         $query_stocking = mysqli_query($conn, "SELECT * FROM stocking_item WHERE product_id = '" . $fetch_barang['product_id'] . "' AND office_id = '" . $kantor_admin . "' $reset");
@@ -343,11 +370,15 @@ $_SESSION['jumlah_pesanan'] = $jml_keranjang;
                                                 $masuk += $fetch_stocking['quantity'];
                                             }
                                         ?>
-                                            <td><?php echo $masuk ?></td>
+                                            <td>
+                                                <center><?php echo $masuk ?></center>
+                                            </td>
                                         <?php
                                         } else {
                                         ?>
-                                            <td><?php echo $fetch_barang['stock'] ?></td>
+                                            <td>
+                                                <center><?php echo $fetch_barang['stock'] ?></center>
+                                            </td>
                                         <?php
                                         }
                                         $query_trans = mysqli_query($conn, "SELECT * FROM transaction_history WHERE office_id = '" . $kantor_admin . "' AND product_id = '" . $fetch_barang['product_id'] . "' ");
@@ -357,15 +388,21 @@ $_SESSION['jumlah_pesanan'] = $jml_keranjang;
                                                 $keluar += $fetch_trans['quantity'];
                                             }
                                         ?>
-                                            <td><?php echo $keluar ?></td>
+                                            <td>
+                                                <center><?php echo $keluar ?></center>
+                                            </td>
                                         <?php
                                         } else {
                                         ?>
-                                            <td>0</td>
+                                            <td>
+                                                <center> 0</center>
+                                            </td>
                                         <?php
                                         }
                                         ?>
-                                        <td><?php echo $fetch_barang['stock'] ?></td>
+                                        <td>
+                                            <center><?php echo $fetch_barang['stock'] ?></center>
+                                        </td>
                                     </tr>
                                 <?php
                                 }
@@ -586,7 +623,7 @@ $_SESSION['jumlah_pesanan'] = $jml_keranjang;
                         <tbody>
                             <?php
                             $leftjoin_office = "LEFT JOIN data_office USING (office_id)";
-                            $stock_query = mysqli_query($conn, "SELECT * FROM data_product LEFT JOIN data_category USING (category_id) LEFT JOIN data_unit USING (unit_id) $leftjoin_office WHERE stock_point >= stock LIMIT 8 ");
+                            $stock_query = mysqli_query($conn, "SELECT * FROM data_product LEFT JOIN data_category USING (category_id) LEFT JOIN data_unit USING (unit_id) $leftjoin_office WHERE stock_point >= stock ORDER by data_product.office_id LIMIT 8 ");
                             $stock_query2 = mysqli_query($conn, "SELECT * FROM data_product LEFT JOIN data_category USING (category_id) LEFT JOIN data_unit USING (unit_id) $leftjoin_office WHERE stock_point >= stock ");
                             if (mysqli_num_rows($stock_query) > 0) {
                                 while ($fetch_stock = mysqli_fetch_array($stock_query)) {

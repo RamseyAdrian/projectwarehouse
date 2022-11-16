@@ -500,6 +500,47 @@ thead {
     margin-left: 30px;
 }
 
+/*----------------------------------Approve Disapprove Button---------------------*/
+
+#status-button {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 3em;
+}
+
+#status-button .approve-btn {
+    background-color: green;
+    width: 40%;
+    padding: 10px 20px;
+    border-radius: 10px;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+#status-button .disapprove-btn {
+    background-color: red;
+    width: 40%;
+    padding: 10px 20px;
+    border-radius: 10px;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+#status-button .approve-btn:hover {
+    box-shadow: 4px 4px 3px lightgray ;
+}
+
+#status-button .disapprove-btn:hover {
+    box-shadow: 4px 4px 3px lightgray ;
+}
+
 /*------------------------------------Footer----------------------------*/
 
 .footer-dark {

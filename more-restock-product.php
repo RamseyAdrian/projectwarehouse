@@ -120,7 +120,7 @@ $kantor_admin = $_SESSION['a_global']->office_id;
                         <tbody>
                             <?php
                             $leftjoin_office = "LEFT JOIN data_office USING (office_id)";
-                            $stock_query = mysqli_query($conn, "SELECT * FROM data_product LEFT JOIN data_category USING (category_id) LEFT JOIN data_unit USING (unit_id) $leftjoin_office WHERE stock_point >= stock ");
+                            $stock_query = mysqli_query($conn, "SELECT * FROM data_product LEFT JOIN data_category USING (category_id) LEFT JOIN data_unit USING (unit_id) $leftjoin_office WHERE stock_point >= stock ORDER BY data_product.office_id ");
                             if (mysqli_num_rows($stock_query)) {
                                 while ($fetch_stock = mysqli_fetch_array($stock_query)) {
                             ?>
