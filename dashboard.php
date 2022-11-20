@@ -283,7 +283,7 @@ $_SESSION['jumlah_pesanan'] = $jml_keranjang;
                         </thead>
                         <tbody>
                             <?php
-                            $stock_query = mysqli_query($conn, "SELECT * FROM data_product LEFT JOIN data_category USING (category_id) LEFT JOIN data_unit USING (unit_id) WHERE office_id = '" . $kantor_admin . "' AND stock_point >= stock ");
+                            $stock_query = mysqli_query($conn, "SELECT * FROM data_product LEFT JOIN data_category USING (category_id) LEFT JOIN data_unit USING (unit_id) WHERE office_id = '" . $kantor_admin . "' AND stock_point >= stock LIMIT 10 ");
                             if (mysqli_num_rows($stock_query) > 0) {
                                 while ($fetch_stock = mysqli_fetch_array($stock_query)) {
                             ?>
@@ -324,12 +324,21 @@ $_SESSION['jumlah_pesanan'] = $jml_keranjang;
                                 }
                             } else {
                                 ?>
-                                <td style="text-align:center ;" colspan="8">Tidak Ada Data</td>
+                                <td style="text-align:center ;" colspan="8">Semua Stock Aman</td>
                             <?php
                             }
                             ?>
                         </tbody>
                     </table>
+                    <?php
+                    $stock_query2 = mysqli_query($conn, "SELECT * FROM data_product LEFT JOIN data_category USING (category_id) LEFT JOIN data_unit USING (unit_id) WHERE office_id = '" . $kantor_admin . "' AND stock_point >= stock");
+                    if (mysqli_num_rows($stock_query2) > 10) {
+                    ?>
+                        <br>
+                        <a href="more-restock-product.php"><input type="submit" class="btn" value="Lihat Lebih Banyak"></a>
+                    <?php
+                    }
+                    ?>
                 </div>
                 <div class="box">
                     <h2>Keluar Masuk Barang</h2>

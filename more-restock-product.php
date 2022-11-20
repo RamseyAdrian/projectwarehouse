@@ -11,6 +11,8 @@ if ($_SESSION['role_login'] == 'user') {
 $piequery = "SELECT * FROM data_product";
 $piequeryrecords = mysqli_query($conn, $piequery);
 $kantor_admin = $_SESSION['a_global']->office_id;
+$stock_query_admin = mysqli_query($conn, "SELECT * FROM data_product LEFT JOIN data_category USING (category_id) LEFT JOIN data_unit USING (unit_id) WHERE office_id = '" . $kantor_admin . "' AND stock_point >= stock ");
+$jumlah_list = mysqli_num_rows($stock_query_admin);
 ?>
 
 <!DOCTYPE html>
@@ -75,6 +77,71 @@ $kantor_admin = $_SESSION['a_global']->office_id;
                 </ul>
             </div>
         </header>
+
+        <div class="section">
+            <div class="container">
+                <h2>Barang yang Perlu Restock</h2>
+                <br>
+                <div class="box">
+                    <h3>Menampilkan <?php echo $jumlah_list ?> Barang</h3>
+                    <br>
+                    <table border="1" cellspacing="0" class="table">
+                        <thead>
+                            <tr>
+                                <th>ID Barang</th>
+                                <th>Kategori</th>
+                                <th>Nama Barang</th>
+                                <th>Stock</th>
+                                <th>Batas</th>
+                                <th>Status</th>
+                                <th width="20%">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                            while ($fetch_stock = mysqli_fetch_assoc($stock_query_admin)) {
+                            ?>
+                                <tr>
+                                    <td><?php echo $fetch_stock['product_id'] ?></td>
+                                    <td><?php echo $fetch_stock['category_name'] ?></td>
+                                    <td><?php echo $fetch_stock['product_name'] ?></td>
+                                    <td>
+                                        <center><?php echo $fetch_stock['stock'] ?></center>
+                                    </td>
+                                    <td>
+                                        <center><?php echo $fetch_stock['stock_point'] ?></center>
+                                    </td>
+                                    <td>
+                                        <center><?php echo ($fetch_stock['product_status'] == 0) ? 'Tidak Aktif' : 'Aktif' ?></center>
+                                    </td>
+                                    <td>
+                                        <?php
+                                        if ($fetch_stock['product_status'] == 0) {
+                                        ?>
+                                            <center>
+                                                <button id="buttdetail"><a href="edit-stocking-product.php?id=<?php echo $fetch_stock['product_id'] ?>">Restock</a></button>
+                                                <button id="buttdetail"><a href="non-active.php?idam=<?php echo $fetch_stock['product_id'] ?>">Aktifkan</a></button>
+                                            </center>
+                                        <?php
+                                        } else {
+                                        ?>
+                                            <center>
+                                                <button id="buttdetail"><a href="edit-stocking-product.php?id=<?php echo $fetch_stock['product_id'] ?>">Restock</a></button>
+                                                <button id="buttdetail"><a href="non-active.php?idm=<?php echo $fetch_stock['product_id'] ?>">Nonaktifkan</a></button>
+                                            </center>
+                                        <?php
+                                        }
+                                        ?>
+                                    </td>
+                                </tr>
+                            <?php
+                            }
+                            ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
 
         <!--------------------------------------------------------------------------------- SUPER ADMIN ---------------------------------------------------------------------------->
     <?php

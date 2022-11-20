@@ -166,7 +166,7 @@ $kantor_admin = $_SESSION['a_global']->office_id;
                             text: "Klik OK Untuk Lanjut.",
                             icon: "success"
                           }).then(function() {
-                            window.location = "product-data.php";
+                            window.location = "stocking-product.php";
                           });
                           </script>';
                     } else {
