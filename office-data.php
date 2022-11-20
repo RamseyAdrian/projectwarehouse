@@ -21,6 +21,26 @@ if ($_SESSION['role_login'] == 'user' || $_SESSION['role_login'] == 'admin') {
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Quicksand&display=swap" rel="stylesheet">
+    <style>
+        .section .container .box table tbody tr td button {
+            font-size: 17px;
+            background-color: white;
+            color: black;
+            border-radius: 5px;
+            padding: 2px;
+        }
+
+        .section .container .box table tbody tr td button a {
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .section .container .box table tbody tr td button:hover {
+            background-color: black;
+            color: white;
+            transition-duration: 0.3s;
+        }
+    </style>
 </head>
 
 <body>
@@ -77,7 +97,11 @@ if ($_SESSION['role_login'] == 'user' || $_SESSION['role_login'] == 'admin') {
                                     <td><?php echo $row['office_fax'] ?></td>
                                     <td><?php echo $row['office_email'] ?></td>
                                     <td>
-                                        <a href="edit-office.php?id=<?php echo $row['office_id'] ?>">Edit</a></a>
+                                        <center>
+                                            <button>
+                                                <a id="buttdetail" href="edit-office.php?id=<?php echo $row['office_id'] ?>">Edit</a></a>
+                                            </button>
+                                        </center>
                                     </td>
                                 </tr>
                             <?php }

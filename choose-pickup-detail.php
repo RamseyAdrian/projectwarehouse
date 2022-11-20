@@ -35,6 +35,8 @@ $idkantoradmin = $_SESSION['a_global']->office_id;
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert-dev.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.css" rel="stylesheet" />
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!--------------------- Font Awesome ----------------------------->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <!--------------------- Additional CSS ----------------------------->
     <style>
         #h2produk {
@@ -114,6 +116,7 @@ $idkantoradmin = $_SESSION['a_global']->office_id;
         <div class="section">
             <div class="container">
                 <h2>Pilih Barang</h2>
+
                 <?php
                 $no = 1;
                 while ($fo_trans = mysqli_fetch_object($trans)) {
@@ -144,10 +147,8 @@ $idkantoradmin = $_SESSION['a_global']->office_id;
                             </form>
                         </div>
                     </a>
-
                 <?php
                 }
-
                 ?>
             </div>
         </div>

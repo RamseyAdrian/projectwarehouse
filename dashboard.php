@@ -618,6 +618,7 @@ $_SESSION['jumlah_pesanan'] = $jml_keranjang;
                                 <th>Nama Barang</th>
                                 <th>Stock</th>
                                 <th>Batas</th>
+                                <th>Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -635,6 +636,11 @@ $_SESSION['jumlah_pesanan'] = $jml_keranjang;
                                         <td><?php echo $fetch_stock['product_name'] ?></td>
                                         <td><?php echo $fetch_stock['stock'] ?></td>
                                         <td><?php echo $fetch_stock['stock_point'] ?></td>
+                                        <td>
+                                            <center>
+
+                                            </center>
+                                        </td>
                                     </tr>
                                 <?php
                                 }

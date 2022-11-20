@@ -220,7 +220,8 @@ $idkantoradmin = $_SESSION['a_global']->office_id;
                                 $notes = $_POST['notes'];
 
                                 $update_data_transaction = mysqli_query($conn, "UPDATE data_transaction SET
-                                                status = '" . $_POST['status'] . "'
+                                                status = '" . $_POST['status'] . "',
+                                                notes = '" . $notes . "'
                                                 WHERE cart_id = '" . $idcart . "'
                                     ");
 
@@ -339,7 +340,7 @@ $idkantoradmin = $_SESSION['a_global']->office_id;
                                     $delete_data_transaction = mysqli_query($conn, "DELETE FROM data_transaction WHERE data_transaction.order_id = '" . $orderid . "' ");
                                 }
                                 echo '<script>Swal.fire({
-                                    title: "Pesanan User Berhasil Diproses",
+                                    title: "Pesanan User Tidak Disetujui",
                                     text: "Klik OK Untuk Lanjut",
                                     icon : "success"
                                }).then(function() {

@@ -50,17 +50,15 @@
                 <div class="input-password">
                     <input type="password" id="pass-field" name="psw" required>
                 </div>
-                <div class="text-input">
+                <div class="text-input" style="margin-top: 0.8em ;">
                     <input type="checkbox" onclick="showPass()"> Show Password
                 </div>
             </div>
 
-
-
             <div class="captcha">
 
-                <div class="g-recaptcha" data-sitekey="6LdK0dchAAAAAKd12AE08TRkbZh6hH5nw529W1Ny"></div>
-                <br />
+                <div style="margin-bottom: 0.8em ;" class="g-recaptcha" data-sitekey="6LdK0dchAAAAAKd12AE08TRkbZh6hH5nw529W1Ny"></div>
+
                 <button type="submit" name="login" value="Login">Login</button>
 
             </div>

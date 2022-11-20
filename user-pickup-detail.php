@@ -102,7 +102,7 @@ $idkantor = $_SESSION['a_global']->office_id;
                         <h3 id="h2produk"><?php echo $fo_trans2->created ?></h3>
                         <br>
                         <h2>Catatan Dari Admin</h2>
-                        <input type="text" name="notes" class="input-control" value="<?php echo $fo_trans2->notes ?>" readonly>
+                        <textarea name="notes" class="input-control" readonly><?php echo $fo_trans2->notes ?></textarea>
                         <br>
                     <?php
                     }

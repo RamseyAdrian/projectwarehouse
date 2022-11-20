@@ -88,7 +88,7 @@ if ($_SESSION['role_login'] == 'user' || $_SESSION['role_login'] == 'admin') {
                     $usernameakun = $_POST['username'];
                     $idakun = $_POST['id'];
 
-                    $cek_data_sama = mysqli_query($conn, "SELECT * FROM data_user WHERE user_username = '" . $usernameakun . "' AND user_id = '" . $idakun . "'");
+                    $cek_data_sama = mysqli_query($conn, "SELECT * FROM data_user WHERE user_username = '" . $usernameakun . "' ");
                     $insert = true;
                     if (mysqli_num_rows($cek_data_sama) > 0) {
                         $after_check = mysqli_fetch_object($cek_data_sama);
@@ -127,12 +127,10 @@ if ($_SESSION['role_login'] == 'user' || $_SESSION['role_login'] == 'admin') {
                             </script>';
                     } else {
                         echo '<script>Swal.fire({
-                            title: "ID tidak tersedia",
-                            text: "Input ID selain ini",
+                            title: "Username tidak tersedia",
+                            text: "Masukkan Username lain",
                             icon: "error"
-                        }).then(function() {
-                            window.location = "user-data.php";
-                          });
+                        });
                         </script>';
                     }
                 }
@@ -141,41 +139,6 @@ if ($_SESSION['role_login'] == 'user' || $_SESSION['role_login'] == 'admin') {
         </div>
     </div>
 
-    <!---------------------- Footer ----------------------------------->
-
-    <div class="footer-dark">
-        <footer>
-            <div class="container">
-                <div class="row" style="display: flex ;">
-                    <div class="col-md-6 item text" style="margin-right: 90px ;">
-                        <h3>Ombudsman RI</h3>
-                        <p>Kantor Pusat <br>
-                            Jl. HR. Rasuna Said Kav. C-19 Kuningan, Jakarta Selatan 12920</p>
-                    </div>
-                    <div class="col-sm-6 col-md-3 item" style="margin-right: 90px ;">
-                        <h3>Kontak</h3>
-                        <ul>
-                            <li><a href="#">No Telfon : (021) 2251 3737</a></li>
-                            <li><a href="#">Fax : (021) 5296 0907 / 5296 0908</a></li>
-                            <li><a href="#">Email : humas@ombudsman.go.id</a></li>
-                        </ul>
-                    </div>
-                    <br>
-                    <div class="col-sm-6 col-md-3 item" style="margin-right: 90px ;">
-                        <h3>About</h3>
-                        <ul>
-                            <li><a href="https://ombudsman.go.id/">Ombudsman</a></li>
-                            <li><a href="dev-team.php">Dev Team</a></li>
-                        </ul>
-                    </div>
-                    <br>
-                </div>
-                <p class="copyright">Ombudsman RI © 2022</p>
-                <p class="copyright">Made By Divisi HTI & <a href="dev-team.php" target="-blank">Team RJN</a></p>
-                <i class="fa-regular fa-cart-shopping"></i>
-            </div>
-        </footer>
-    </div>
 
 </body>
 

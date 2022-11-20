@@ -91,7 +91,7 @@ if ($_SESSION['role_login'] == 'user' && $_SESSION['role_login'] == 'admin') {
                     $usernameakun = $_POST['username'];
                     $idakun = $_POST['id'];
 
-                    $cek_data_sama = mysqli_query($conn, "SELECT * FROM data_admin WHERE admin_username = '" . $usernameakun . "' AND admin_id = '" . $idakun . "'");
+                    $cek_data_sama = mysqli_query($conn, "SELECT * FROM data_admin WHERE admin_username = '" . $usernameakun . "' ");
                     $insert = true;
 
                     if (mysqli_num_rows($cek_data_sama) > 0) {
@@ -129,12 +129,10 @@ if ($_SESSION['role_login'] == 'user' && $_SESSION['role_login'] == 'admin') {
                         </script>';
                     } else {
                         echo '<script>Swal.fire({
-                            title: "ID Tidak Tersedia",
-                            text: "Klik OK Untuk Lanjut",
+                            title: "Username Tidak Tersedia",
+                            text: "Cari Username Lain",
                             icon: "error"
-                          }).then(function() {
-                            window.location = "admin-data.php";
-                          });
+                          })
                         </script>';
                     }
                 }
