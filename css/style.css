@@ -322,6 +322,17 @@ a {
     justify-content: space-evenly;
 }
 
+#order {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+#items-order {
+    border: 1px solid #ccc ;
+    padding: 10px;
+}
+
 /*choose-pickup-detail.php*/
 .section .container a .container-items {
     background-color: #fff;
@@ -539,6 +550,17 @@ thead {
 
 #status-button .disapprove-btn:hover {
     box-shadow: 4px 4px 3px lightgray ;
+}
+
+#delete-btn {
+    padding: 8px 15px;
+    box-sizing: border-box;
+    border-radius: 10px;
+    width: 100%;
+    background-color: blue;
+    color: #fff;
+    border: none;
+    cursor: pointer;
 }
 
 /*------------------------------------Footer----------------------------*/

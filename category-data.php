@@ -104,15 +104,7 @@ if ($_SESSION['role_login'] == 'user' || $_SESSION['role_login'] == 'admin') {
 </head>
 
 <body>
-    <?php
-    $per_page_record = 20;
-    if (isset($_GET["page"])) {
-        $page  = $_GET["page"];
-    } else {
-        $page = 1;
-    }
-    $start_from = ($page - 1) * $per_page_record;
-    ?>
+
     <!---------------------- header ----------------------------------->
     <header>
         <div class="container">
@@ -151,7 +143,7 @@ if ($_SESSION['role_login'] == 'user' || $_SESSION['role_login'] == 'admin') {
                     </thead>
                     <tbody>
                         <?php
-                        $kategori = mysqli_query($conn, "SELECT * FROM data_category ORDER BY category_name LIMIT $start_from, $per_page_record");
+                        $kategori = mysqli_query($conn, "SELECT * FROM data_category ORDER BY category_name ");
                         if (mysqli_num_rows($kategori) > 0) {
                             while ($row = mysqli_fetch_array($kategori)) {
                         ?>
@@ -180,48 +172,6 @@ if ($_SESSION['role_login'] == 'user' || $_SESSION['role_login'] == 'admin') {
             </div>
         </div>
     </div>
-
-    <center>
-        <div class="pagination">
-            <?php
-            $query = "SELECT COUNT(*) FROM data_category";
-            $rs_result = mysqli_query($conn, $query);
-            $row = mysqli_fetch_row($rs_result);
-            $total_records = $row[0];
-
-            echo "</br>";
-            $total_pages = ceil($total_records / $per_page_record);
-            $pagLink = "";
-
-            if ($page >= 2) {
-                echo "<a href='category-data.php?page=" . ($page - 1) . "'>  Prev </a>";
-            }
-
-            for ($i = 1; $i <= $total_pages; $i++) {
-                if ($i == $page) {
-                    $pagLink .= "<a class = 'active' href='category-data.php?page="
-                        . $i . "'>" . $i . " </a>";
-                } else {
-                    $pagLink .= "<a href='category-data.php?page=" . $i . "'>   
-                                        " . $i . " </a>";
-                }
-            };
-            echo $pagLink;
-
-            if ($page < $total_pages) {
-                echo "<a href='category-data.php?page=" . ($page + 1) . "'>  Next </a>";
-            }
-            ?>
-        </div><br><br><br><br>
-    </center>
-
-    <script>
-        function go2Page() {
-            var page = document.getElementById("page").value;
-            page = ((page > <?php echo $total_pages; ?>) ? <?php echo $total_pages; ?> : ((page < 1) ? 1 : page));
-            window.location.href = 'category-data.php?page=' + page;
-        }
-    </script>
 
 </body>
 

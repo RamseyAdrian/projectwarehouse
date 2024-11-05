@@ -114,7 +114,7 @@ $kantor_admin = $_SESSION['a_global']->office_id;
                         <select class="input-control" name="kategori" required>
                             <option value="">--Pilih--</option>
                             <?php
-                            $kategori = mysqli_query($conn, "SELECT * FROM data_category ORDER BY category_id DESC");
+                            $kategori = mysqli_query($conn, "SELECT * FROM data_category ORDER BY category_name");
                             while ($row_kategori = mysqli_fetch_array($kategori)) {
                             ?>
                                 <option value="<?php echo $row_kategori['category_id'] ?>"><?php echo $row_kategori['category_name'] ?> </option>
@@ -149,6 +149,7 @@ $kantor_admin = $_SESSION['a_global']->office_id;
                             <option value="1">Aktif</option>
                             <option value="0">Tidak Aktif</option>
                         </select>
+                        <br><br>
                         <input type="submit" name="submit" value="Submit" class="btn">
                     </form>
 
@@ -178,12 +179,21 @@ $kantor_admin = $_SESSION['a_global']->office_id;
                         //menampung data format file yang diizinkan
                         $tipe_diizinkan = array('jpg', 'jpeg', 'png', 'gif');
 
-                        //validasi format file
-                        if (!in_array($type2, $tipe_diizinkan)) {
-                            echo '<script>alert("Format file tidak diizinkan")</script>';
+                        $cek_barang = mysqli_query($conn, "SELECT * FROM data_product WHERE product_name = '" . $nama . "' AND office_id = '" . $kantor_admin . "' ");
+                        if (mysqli_num_rows($cek_barang) > 0) {
+                            echo '<script>Swal.fire({
+                                title: "Barang Sudah Ada",
+                                text: "Masukkan Barang Lain",
+                                icon: "warning"
+                              });
+                            </script>';
                         } else {
-                            move_uploaded_file($tmp_name, './produk/' . $newname);
-                            $insert = mysqli_query($conn, "INSERT INTO data_product VALUES (
+                            //validasi format file
+                            if (!in_array($type2, $tipe_diizinkan)) {
+                                echo '<script>alert("Format file tidak diizinkan")</script>';
+                            } else {
+                                move_uploaded_file($tmp_name, './produk/' . $newname);
+                                $insert = mysqli_query($conn, "INSERT INTO data_product VALUES (
                              '" . $idbarang . "', 
                              '" . $kategori . "',
                              '" . $idkantor . "',
@@ -198,8 +208,8 @@ $kantor_admin = $_SESSION['a_global']->office_id;
                              '0',
                              NOW() 
                         ) ");
-                            if ($insert) {
-                                echo '<script>Swal.fire({
+                                if ($insert) {
+                                    echo '<script>Swal.fire({
                                     title: "Berhasil Tambah Barang Baru",
                                     text: "Klik OK Untuk Lanjut",
                                     icon: "success"
@@ -207,8 +217,9 @@ $kantor_admin = $_SESSION['a_global']->office_id;
                                     window.location = "product-data.php";
                                   });
                                 </script>';
-                            } else {
-                                echo 'gagal' . mysqli_error($conn);
+                                } else {
+                                    echo 'gagal' . mysqli_error($conn);
+                                }
                             }
                         }
                     }

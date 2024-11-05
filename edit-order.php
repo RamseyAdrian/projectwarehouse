@@ -12,6 +12,8 @@ $trans = mysqli_query($conn, "SELECT * FROM data_transaction LEFT JOIN data_prod
 if (mysqli_num_rows($trans) == 0) {
     echo '<script>window.location="order-table.php"</script>';
 }
+
+$trans2 = mysqli_query($conn, "SELECT * FROM data_transaction LEFT JOIN data_product USING (product_id) WHERE cart_id = '" . $_GET['id'] . "' ");
 $idcart = $_GET['id'];
 $idkantoradmin = $_SESSION['a_global']->office_id;
 ?>
@@ -114,61 +116,76 @@ $idkantoradmin = $_SESSION['a_global']->office_id;
             <div class="container">
                 <h3>Detail Pesanan</h3>
                 <div class="box">
+                    <?php $fetch_trans = mysqli_fetch_assoc($trans2);
+                    $id_pemesan = $fetch_trans['user_id'];
+                    $nama_pemesan = $fetch_trans['user_name'];
+                    $id_pesanan = $fetch_trans['cart_id'];
+                    ?>
+                    <h2>Dipesan Oleh : <?php echo $nama_pemesan ?>/<?php echo $id_pemesan ?></h2>
+                    <h4 style="color: #ccc ;">ID Pesanan : <?php echo $id_pesanan ?></h4><br>
                     <form action="" method="POST" enctype="multipart/form-data">
-                        <?php
-                        $no = 1;
-                        $stock_ready = 0;
-                        if (mysqli_num_rows($trans) > 0) {
-                            while ($fo_trans = mysqli_fetch_object($trans)) {
+                        <div id="order">
 
-                        ?>
-                                <h1>Produk ke <?php echo $no ?></h1><br>
-                                <h2 id="h2produk"><?php echo $fo_trans->product_name ?></h2><br><br>
-                                <img src="produk/<?php echo $fo_trans->product_image ?>" width="100px">
-                                <br><br>
-                                <h3>Jumlah Pesanan</h3>
-                                <?php
-                                $satuan = mysqli_query($conn, "SELECT * FROM data_unit WHERE unit_id = '" . $fo_trans->unit_id . "' ");
-                                while ($fa_satuan = mysqli_fetch_array($satuan)) {
-                                ?>
-                                    <h3 style="color: red ;"><?php echo $fo_trans->quantity, " ", $fa_satuan['unit_name'] ?></h3><br>
-                                    <h3>Waktu Pesanan Dibuat</h3>
-                                    <h3 style="color: red ;"><?php echo $fo_trans->created ?></h3><br>
-                                    <h3>Ketersediaan Barang</h3>
-                                    <h4>Stock : <?php echo $fo_trans->stock, " ", $fa_satuan['unit_name'] ?></h4>
-                                <?php
-                                }
-                                ?>
-                                <br>
 
-                                <?php
-                                if ($fo_trans->stock >= $fo_trans->quantity) {
-                                    $stock_ready++;
-                                    $update_dt = mysqli_query($conn, "UPDATE data_transaction SET 
+                            <?php
+                            $no = 1;
+                            $stock_ready = 0;
+                            if (mysqli_num_rows($trans) > 0) {
+                                while ($fo_trans = mysqli_fetch_object($trans)) {
+
+                            ?>
+                                    <div id="items-order">
+                                        <!-- <h1>Produk ke <?php echo $no ?></h1><br> -->
+                                        <h2 id="h2produk"><?php echo $fo_trans->product_name ?></h2><br><br>
+                                        <img src="produk/<?php echo $fo_trans->product_image ?>" width="100px">
+                                        <br><br>
+                                        <h3>Jumlah Pesanan</h3>
+                                        <?php
+                                        $satuan = mysqli_query($conn, "SELECT * FROM data_unit WHERE unit_id = '" . $fo_trans->unit_id . "' ");
+                                        while ($fa_satuan = mysqli_fetch_array($satuan)) {
+                                            $waktu_dipesan = $fo_trans->created;
+                                        ?>
+                                            <h3 style="color: red ;"><?php echo $fo_trans->quantity, " ", $fa_satuan['unit_name'] ?></h3><br>
+                                            <h3>Ketersediaan Barang</h3>
+                                            <h4>Stock : <?php echo $fo_trans->stock, " ", $fa_satuan['unit_name'] ?></h4>
+                                        <?php
+                                        }
+                                        ?>
+                                        <br>
+
+                                        <?php
+                                        if ($fo_trans->stock >= $fo_trans->quantity) {
+                                            $stock_ready++;
+                                            $update_dt = mysqli_query($conn, "UPDATE data_transaction SET 
                                     red_flag = 'not red'
                                     WHERE order_id = '" . $fo_trans->order_id . "'
                                 ");
-                                ?>
-                                    <h4 style="color: green ;">Stock Ready</h4>
-                                <?php
-                                } else if ($fo_trans->stock < $fo_trans->quantity) {
-                                    $quantity_update = $fo_trans->stock;
-                                    $update_dt = mysqli_query($conn, "UPDATE data_transaction SET 
+                                        ?>
+                                            <h4 style="color: green ;">Stock Ready</h4>
+                                        <?php
+                                        } else if ($fo_trans->stock < $fo_trans->quantity) {
+                                            $quantity_update = $fo_trans->stock;
+                                            $update_dt = mysqli_query($conn, "UPDATE data_transaction SET 
                                     red_flag = 'red'
                                     WHERE order_id = '" . $fo_trans->order_id . "'
                                 ");
-                                ?>
-                                    <h4 style="color: red ;">Stock tidak mencukupi</h4>
-                                    <button id="button-restock"><a href="edit-stocking-product.php?id=<?php echo $fo_trans->product_id ?>">Restock</a></button>
-                                <?php
+                                        ?>
+                                            <h4 style="color: red ;">Stock tidak mencukupi</h4>
+                                            <button id="button-restock"><a href="edit-stocking-product.php?id=<?php echo $fo_trans->product_id ?>">Restock</a></button>
+                                        <?php
+                                        }
+                                        ?>
+                                        <br><br>
+                                    </div>
+
+                            <?php
+                                    $no++;
                                 }
-                                ?>
-                                <br><br>
-                        <?php
-                                $no++;
                             }
-                        }
-                        ?>
+                            ?>
+                        </div><br>
+                        <h3>Waktu Pesanan Dibuat</h3>
+                        <h2 id="h2produk"><?php echo $waktu_dipesan ?></h2><br>
                         <h3>Jumlah pesanan ingin diubah ?</h3>
                         <button id="button-restock"><a href="choose-edit-product.php?id=<?php echo $idcart ?>">Edit Disini</a></button>
                         <br><br>
@@ -334,7 +351,8 @@ $idkantoradmin = $_SESSION['a_global']->office_id;
                                         NOW(),
                                         '" . $fo_trans2['red_flag'] . "',
                                         'Tidak Disetujui Admin',
-                                        '" . $notes . "'
+                                        '" . $notes . "',
+                                        0
     
                                     )");
                                     $delete_data_transaction = mysqli_query($conn, "DELETE FROM data_transaction WHERE data_transaction.order_id = '" . $orderid . "' ");

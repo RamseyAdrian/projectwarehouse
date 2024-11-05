@@ -145,6 +145,7 @@ $kantor_admin = $_SESSION['a_global']->office_id;
                                         <td><?php echo $fetch_barang['initial_stock'] ?></td>
                                         <?php
                                         $reset = "AND reset_status = '0' ";
+                                        $status = "AND status = 'Berhasil Diambil' ";
                                         $query_stocking = mysqli_query($conn, "SELECT * FROM stocking_item WHERE product_id = '" . $fetch_barang['product_id'] . "' AND office_id = '" . $kantor_admin . "' $reset");
                                         if (mysqli_num_rows($query_stocking) > 0) {
                                             $masuk = 0;
@@ -160,7 +161,7 @@ $kantor_admin = $_SESSION['a_global']->office_id;
                                         <?php
                                         }
                                         $reset2 = "AND reset_status = '0' ";
-                                        $query_trans = mysqli_query($conn, "SELECT * FROM transaction_history WHERE office_id = '" . $kantor_admin . "' AND product_id = '" . $fetch_barang['product_id'] . "' $reset2 ");
+                                        $query_trans = mysqli_query($conn, "SELECT * FROM transaction_history WHERE office_id = '" . $kantor_admin . "' AND product_id = '" . $fetch_barang['product_id'] . "' $reset2 $status ");
                                         if (mysqli_num_rows($query_trans) > 0) {
                                             $keluar = 0;
                                             while ($fetch_trans = mysqli_fetch_array($query_trans)) {

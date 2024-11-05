@@ -153,11 +153,11 @@ $idkantoradmin = $_SESSION['a_global']->office_id;
                         <thead>
                             <tr>
                                 <th>No</th>
+                                <th>Gambar</th>
+                                <th>Nama Barang</th>
                                 <th>Kategori</th>
                                 <th>ID Barang</th>
-                                <th>Nama Barang</th>
                                 <th>Satuan</th>
-                                <th>Gambar</th>
                                 <th>Status</th>
                                 <th>Stock</th>
                                 <th>Aksi</th>
@@ -177,11 +177,11 @@ $idkantoradmin = $_SESSION['a_global']->office_id;
                             ?>
                                     <tr>
                                         <td><?php echo $no++ ?></td>
+                                        <td> <img src="produk/<?php echo $row['product_image'] ?>" width="50px"></td>
+                                        <td><?php echo $row['product_name'] ?></td>
                                         <td><?php echo $row['category_name'] ?></td>
                                         <td><?php echo $row['product_id'] ?></td>
-                                        <td><?php echo $row['product_name'] ?></td>
                                         <td><?php echo $fa_satuan['unit_name'] ?></td>
-                                        <td> <img src="produk/<?php echo $row['product_image'] ?>" width="50px"></td>
                                         <td><?php echo ($row['product_status'] == 0) ? 'Tidak AKtif' : 'Aktif' ?></td>
                                         <td><?php echo ($row['stock']) ?></td>
                                         <td style="text-align:center ;">
@@ -303,7 +303,6 @@ $idkantoradmin = $_SESSION['a_global']->office_id;
                                                     <button>
                                                         <a id="buttdetail" href="delete-data.php?idp=<?php echo $row['product_id'] ?>&idoffice=<?php echo $_POST['perwakilan'] ?>" onclick="return confirm('Yakin Hapus Barang ?') ">Hapus</a> </button>
                                                 </center>
-
                                             </td>
                                         </tr>
                                     <?php }

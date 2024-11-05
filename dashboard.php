@@ -372,6 +372,7 @@ $_SESSION['jumlah_pesanan'] = $jml_keranjang;
                                         </td>
                                         <?php
                                         $reset = "AND reset_status = '0' ";
+                                        $status = "AND status = 'Berhasil Diambil' ";
                                         $query_stocking = mysqli_query($conn, "SELECT * FROM stocking_item WHERE product_id = '" . $fetch_barang['product_id'] . "' AND office_id = '" . $kantor_admin . "' $reset");
                                         if (mysqli_num_rows($query_stocking) > 0) {
                                             $masuk = 0;
@@ -390,7 +391,7 @@ $_SESSION['jumlah_pesanan'] = $jml_keranjang;
                                             </td>
                                         <?php
                                         }
-                                        $query_trans = mysqli_query($conn, "SELECT * FROM transaction_history WHERE office_id = '" . $kantor_admin . "' AND product_id = '" . $fetch_barang['product_id'] . "' ");
+                                        $query_trans = mysqli_query($conn, "SELECT * FROM transaction_history WHERE office_id = '" . $kantor_admin . "' AND product_id = '" . $fetch_barang['product_id'] . "' $reset $status ");
                                         if (mysqli_num_rows($query_trans) > 0) {
                                             $keluar = 0;
                                             while ($fetch_trans = mysqli_fetch_array($query_trans)) {

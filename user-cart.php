@@ -154,10 +154,10 @@ $kantoruser = $_SESSION['a_global']->office_id;
                                     }
                                     ?>
                                     <td style="text-align:center ;">
-                                        <a class="abutt" href="edit-user-cart.php?id=<?php echo $fo_keranjang['product_id'] ?>">Edit</a>
+                                        <a class="abutt" href="edit-user-cart.php?id=<?php echo $fo_keranjang['product_id'] ?>&iduser=<?php echo $iduser ?>">Edit</a>
                                     </td>
                                     <td style="text-align:center ;">
-                                        <a class="abutt" href="delete-data.php?idc=<?php echo $fo_keranjang['product_id'] ?>" onclick="return confirm('Lanjut Hapus Barang ?') ">Hapus</a>
+                                        <a class="abutt" href="delete-data.php?idc=<?php echo $fo_keranjang['product_id'] ?>&iduser=<?php echo $iduser ?>" onclick="return confirm('Lanjut Hapus Barang ?') ">Hapus</a>
                                     </td>
                                 </tr>
                             <?php

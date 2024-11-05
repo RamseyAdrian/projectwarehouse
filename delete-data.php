@@ -32,12 +32,18 @@ if (isset($_GET['ido'])) {
     echo '<script>window.location="office-data.php"</script>';
 }
 
-if (isset($_GET['idc'])) {
-    $delete = mysqli_query($conn, "DELETE FROM data_cart WHERE product_id = '" . $_GET['idc'] . "' ");
+if (isset($_GET['idc']) && isset($_GET['iduser'])) {
+    $delete = mysqli_query($conn, "DELETE FROM data_cart WHERE product_id = '" . $_GET['idc'] . "' AND user_id = '" . $_GET['iduser'] . "' ");
+
     echo '<script>window.location="user-cart.php"</script>';
 }
 
 if (isset($_GET['ids'])) {
     $delete = mysqli_query($conn, "DELETE FROM data_unit WHERE unit_id = '" . $_GET['ids'] . "' ");
     echo '<script>window.location="unit-data.php"</script>';
+}
+
+if (isset($_GET['idpd'])) {
+    $delete = mysqli_query($conn, "DELETE FROM data_transaction WHERE order_id = '" . $_GET['idpd'] . "' ");
+    echo '<script>window.location="pickup-product.php"</script>';
 }

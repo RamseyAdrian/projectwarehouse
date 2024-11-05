@@ -64,7 +64,8 @@ $row_kategori = mysqli_fetch_object($kategori);
                     <h4>ID Kategori</h4>
                     <input type="text" name="id" placeholder="ID Kategori" class="input-control" value="<?php echo $row_kategori->category_id ?>" readonly>
                     <h4>Nama Kategori</h4>
-                    <input type="text" name="nama" placeholder="Nama Kategori" class="input-control" value="<?php echo $row_kategori->category_name ?>" required>
+                    <input type="text" name="nama" placeholder="Nama Kategori" class="input-control" value="<?php echo $row_kategori->category_name;
+                                                                                                            $nama_kategori = $row_kategori->category_name; ?>" required>
                     <input type="submit" name="submit" value="Submit" class="btn">
                 </form>
                 <?php
@@ -75,8 +76,9 @@ $row_kategori = mysqli_fetch_object($kategori);
                     $update = mysqli_query($conn, "UPDATE data_category SET  
                                            category_id = '" . $id . "', 
                                            category_name = '" . $nama . "' 
-                                           WHERE category_id = '" . $k->category_id . "'
+                                           WHERE category_id = '" . $row_kategori->category_id . "'
                                            ");
+
                     if ($update) {
                         echo '<script>Swal.fire({
                             title: "Berhasil Edit Kategori",
